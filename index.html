@@ -4,143 +4,67 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Trusted System</title>
+<title>Trusted System Pro</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-body{
-  margin:0;
-  font-family:'Orbitron',sans-serif;
-  background:#000;
-  color:#fff;
-}
+body{margin:0;font-family:'Orbitron';background:#000;color:#fff}
 
 /* INTRO */
 #splash{
-  position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#000;
-  z-index:999;
+position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#000;z-index:999
 }
+.logo{width:80px;border-radius:50%;box-shadow:0 0 20px #0ff}
+.typing{text-align:center;margin-top:20px;font-size:20px}
 
-.introBox{text-align:center}
-
-/* LOGO */
-.logo{
-  width:80px;
-  border-radius:50%;
-  margin-bottom:20px;
-  box-shadow:0 0 20px #0ff;
-  animation:pop 1s ease;
+/* LOGIN */
+#login{
+display:none;
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+gap:10px;
 }
-@keyframes pop{
-  from{transform:scale(0)}
-  to{transform:scale(1)}
-}
+input{padding:10px;border-radius:10px;border:none}
+button{padding:10px;border:none;border-radius:10px}
 
-/* TYPING */
-.typing{
-  font-size:20px;
-  min-height:50px;
-
-  background:linear-gradient(90deg,#f0f,#0ff,#0f0,#ff0);
-  background-size:300%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  animation:rgb 4s linear infinite;
-}
-
-@keyframes rgb{
-  100%{background-position:300%}
-}
-
+/* APP */
 #app{display:none}
 
 /* HEADER */
-header{
-  text-align:center;
-  padding:20px;
-  text-shadow:0 0 10px #0ff;
-}
+header{text-align:center;padding:20px;text-shadow:0 0 10px #0ff}
+
+/* SEARCH */
+.search{margin:10px;padding:10px;width:90%}
 
 /* TABS */
-.tabs{
-  display:flex;
-  margin:10px;
-  background:#111;
-  border-radius:10px;
-}
-.tabs button{
-  flex:1;
-  padding:10px;
-  border:none;
-  background:none;
-  color:#888;
-}
-.active{
-  color:#fff;
-  text-shadow:0 0 10px #0ff;
-}
+.tabs{display:flex;margin:10px;background:#111;border-radius:10px}
+.tabs button{flex:1;padding:10px;background:none;border:none;color:#888}
+.active{color:#fff}
 
 /* CARD */
-.card{
-  margin:10px;
-  padding:15px;
-  border-radius:14px;
-}
-.midman{border:1px solid #22c55e;box-shadow:0 0 10px #22c55e}
-.seller{border:1px solid #3b82f6;box-shadow:0 0 10px #3b82f6}
-.scam{border:1px solid #ef4444;box-shadow:0 0 10px #ef4444}
+.card{margin:10px;padding:15px;border-radius:14px}
+.midman{border:1px solid #22c55e}
+.seller{border:1px solid #3b82f6}
+.scam{border:1px solid #ef4444}
 
 /* PROFILE */
-.profile{
-  display:flex;
-  gap:10px;
-  cursor:pointer;
-}
-.avatar{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-}
+.profile{display:flex;gap:10px}
+.avatar{width:45px;height:45px;border-radius:50%}
 
 /* VERIFY */
-.verify{
-  display:inline-block;
-  margin-left:5px;
-  width:16px;
-  height:16px;
-  background:#3b82f6;
-  border-radius:50%;
-  text-align:center;
-  line-height:16px;
-}
+.verify{background:#3b82f6;border-radius:50%;padding:2px 5px;margin-left:5px}
 
-/* BUTTON */
-.btn{
-  display:block;
-  margin-top:10px;
-  padding:10px;
-  text-align:center;
-  border:1px solid #0ff;
-  border-radius:10px;
-  color:#fff;
-  text-decoration:none;
-}
+/* BTN */
+.btn{display:block;margin-top:10px;padding:10px;text-align:center;border:1px solid #0ff;border-radius:10px;color:#fff;text-decoration:none}
 
-/* ADD */
-.add{
-  margin:10px;
-  padding:10px;
-  text-align:center;
-  border:1px solid #333;
-  border-radius:10px;
-}
+/* DELETE */
+.delete{color:red;font-size:12px;margin-top:5px}
 </style>
 </head>
 
@@ -148,10 +72,17 @@ header{
 
 <!-- INTRO -->
 <div id="splash">
-  <div class="introBox">
-    <img src="https://i.imgur.com/2DhmtJ4.png" class="logo">
-    <div class="typing" id="typing"></div>
-  </div>
+<div>
+<img src="https://i.imgur.com/2DhmtJ4.png" class="logo">
+<div class="typing" id="typing"></div>
+</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login">
+<input type="password" id="pass" placeholder="Admin Password">
+<button onclick="login()">Login Admin</button>
+<button onclick="enterUser()">Masuk sebagai User</button>
 </div>
 
 <!-- APP -->
@@ -159,13 +90,15 @@ header{
 
 <header>LIST MIDMAN TRUSTED MALAYSIA</header>
 
+<input class="search" placeholder="Search..." oninput="searchData(this.value)">
+
 <div class="tabs">
 <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
 <button onclick="setTab('seller')" id="btnSeller">Seller</button>
-<button onclick="setTab('scam')" id="btnScam">Scammer</button>
+<button onclick="setTab('scam')" id="btnScam">Scam</button>
 </div>
 
-<div class="add" onclick="addData()">+ Tambah</div>
+<div id="addBtn" onclick="addData()" style="display:none">+ Tambah</div>
 
 <div id="list"></div>
 
@@ -173,125 +106,113 @@ header{
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs }
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* FIREBASE CONFIG */
-const firebaseConfig = {
-apiKey:"ISI",
-authDomain:"ISI",
-projectId:"ISI"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+/* CONFIG */
+const firebaseConfig={apiKey:"ISI",authDomain:"ISI",projectId:"ISI"};
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
 
 let tab="midman";
 let allData=[];
+let filtered=[];
+let isAdmin=false;
 
-/* TYPING EFFECT */
-const textList = [
-"Welcome To",
-"List Midman Trusted Malaysia",
-"Seller Trusted & Scammer List"
-];
+/* INTRO + LOGIN */
+setTimeout(()=>{
+splash.style.display="none";
+login.style.display="flex";
+},3000);
 
-let i=0, j=0, current="", deleting=false;
-
+/* TYPING */
+const text=["Welcome","Trusted System","Midman Seller Scammer"];
+let ti=0,tj=0,del=false;
 function type(){
-  current = textList[i];
-
-  if(!deleting){
-    typing.innerHTML = current.substring(0,j++);
-    if(j > current.length){
-      deleting = true;
-      setTimeout(type,1000);
-      return;
-    }
-  }else{
-    typing.innerHTML = current.substring(0,j--);
-    if(j==0){
-      deleting=false;
-      i=(i+1)%textList.length;
-    }
-  }
-  setTimeout(type,50);
+let t=text[ti];
+typing.innerHTML=t.substring(0,tj);
+if(!del){tj++;if(tj>t.length){del=true;setTimeout(type,1000);return}}
+else{tj--;if(tj==0){del=false;ti=(ti+1)%text.length}}
+setTimeout(type,60);
 }
 type();
 
-/* LOAD DATA */
+/* LOGIN */
+window.login=function(){
+if(pass.value==="ipanzz"){
+isAdmin=true;
+startApp();
+addBtn.style.display="block";
+}else alert("Wrong");
+}
+
+window.enterUser=function(){
+startApp();
+}
+
+function startApp(){
+login.style.display="none";
+app.style.display="block";
+loadData();
+}
+
+/* LOAD */
 async function loadData(){
-const snap = await getDocs(collection(db,"list"));
+const snap=await getDocs(collection(db,"list"));
 allData=[];
-snap.forEach(d=>allData.push(d.data()));
+snap.forEach(d=>allData.push({...d.data(),id:d.id}));
+filtered=[...allData];
 render();
 }
 
-/* COPY */
-function copyWa(num){
-navigator.clipboard.writeText("https://wa.me/"+num);
-alert("Copied");
+/* SEARCH */
+window.searchData=function(q){
+filtered=allData.filter(d=>d.nama.toLowerCase().includes(q.toLowerCase()));
+render();
 }
 
 /* RENDER */
 function render(){
 let html="";
-allData.forEach(d=>{
+filtered.forEach(d=>{
 if(d.type!==tab) return;
 
 html+=`
 <div class="card ${d.type}">
-<div class="profile" onclick="copyWa('${d.phone}')">
+<div class="profile">
 <img class="avatar" src="${d.avatar}">
 <div>
-<div>
-${d.nama}
-${d.verified?'<span class="verify">✔</span>':''}
-</div>
+<div>${d.nama} ${d.verified?'<span class="verify">✔</span>':''}</div>
 <div>${d.phone}</div>
 </div>
 </div>
+
 <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
+
+${isAdmin?`<div class="delete" onclick="del('${d.id}')">Delete</div>`:""}
 </div>`;
 });
 list.innerHTML=html;
 }
 
-/* UPLOAD */
-async function uploadImage(file){
-let form=new FormData();
-form.append("file",file);
-form.append("upload_preset","ISI_PRESET");
-
-let res=await fetch("https://api.cloudinary.com/v1_1/ISI_CLOUD/image/upload",{
-method:"POST",body:form
-});
-let data=await res.json();
-return data.secure_url;
+/* DELETE */
+window.del=async function(id){
+await deleteDoc(doc(db,"list",id));
+loadData();
 }
 
 /* ADD */
 window.addData=async function(){
 let nama=prompt("Nama:");
 let phone=prompt("Phone:");
-let type=prompt("Type (midman/seller/scam):");
+let type=prompt("Type:");
 let verified=confirm("Verified?");
 
-let input=document.createElement("input");
-input.type="file";
-
-input.onchange=async ()=>{
-let file=input.files[0];
-let avatar=await uploadImage(file);
-
 await addDoc(collection(db,"list"),{
-nama,phone,type,avatar,verified
+nama,phone,type,verified,
+avatar:"https://i.imgur.com/2DhmtJ4.png"
 });
-
 loadData();
-};
-
-input.click();
 }
 
 /* TAB */
@@ -303,14 +224,6 @@ if(t==="seller") btnSeller.classList.add("active");
 if(t==="scam") btnScam.classList.add("active");
 render();
 }
-
-/* INTRO EXIT */
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("app").style.display="block";
-},3500);
-
-loadData();
 </script>
 
 </body>
