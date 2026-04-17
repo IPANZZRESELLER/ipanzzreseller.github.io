@@ -41,7 +41,7 @@ header{
 }
 
 .card:hover{
-  transform:scale(1.05) rotateX(5deg);
+  transform:scale(1.05);
   box-shadow:0 0 25px #00ffcc;
 }
 
@@ -124,20 +124,24 @@ header{
 
 <div id="list"></div>
 
+<!-- 🎵 MUSIC -->
 <audio id="bgm" loop>
-  <source src="https://files.catbox.moe/3x0u8v.mp3">
+  <source src="https://files.catbox.moe/3x0u8v.mp3" type="audio/mpeg">
 </audio>
 
+<!-- 🔊 CLICK SOUND -->
 <audio id="clickSound">
-  <source src="https://files.catbox.moe/9f4r3k.mp3">
+  <source src="https://files.catbox.moe/9f4r3k.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
 /* 🌌 STARFIELD */
-let c = bg, ctx = c.getContext("2d");
-c.width=innerWidth;
-c.height=innerHeight;
+let c = document.getElementById("bg");
+let ctx = c.getContext("2d");
+
+c.width = innerWidth;
+c.height = innerHeight;
 
 let stars = Array.from({length:120},()=>({
   x:Math.random()*c.width,
@@ -147,10 +151,11 @@ let stars = Array.from({length:120},()=>({
 
 function anim(){
   ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle="#fff";
   stars.forEach(s=>{
     ctx.fillRect(s.x,s.y,s.z,s.z);
-    s.y+=s.z;
-    if(s.y>c.height) s.y=0;
+    s.y += s.z;
+    if(s.y > c.height) s.y = 0;
   });
   requestAnimationFrame(anim);
 }
@@ -163,35 +168,47 @@ let data=[
 ];
 
 function render(){
-  list.innerHTML="";
+  let html="";
   data.forEach(d=>{
-    list.innerHTML+=`
+    html += `
     <div class="card">
       <div class="name">${d.nama}</div>
       <p>${d.phone}</p>
       <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
     </div>`;
   });
+  document.getElementById("list").innerHTML = html;
 }
 render();
 
-/* 🎵 MUSIC */
+/* 🎵 MUSIC FIX */
 let musicOn=false;
+
 function toggleMusic(){
-  let a=bgm;
-  if(!musicOn){a.play(); musicOn=true;}
-  else{a.pause(); musicOn=false;}
+  let audio = document.getElementById("bgm");
+
+  if(!musicOn){
+    audio.play().then(()=>{
+      musicOn = true;
+    }).catch(()=>{
+      alert("Tekan sekali lagi untuk aktifkan sound");
+    });
+  }else{
+    audio.pause();
+    musicOn = false;
+  }
 }
 
 /* 🔊 CLICK SOUND + SPARK */
-document.addEventListener("click",e=>{
-  clickSound.currentTime=0;
-  clickSound.play();
+document.addEventListener("click", e=>{
+  let sfx = document.getElementById("clickSound");
+  sfx.currentTime = 0;
+  sfx.play().catch(()=>{});
 
-  let s=document.createElement("div");
+  let s = document.createElement("div");
   s.className="spark";
-  s.style.left=e.clientX+"px";
-  s.style.top=e.clientY+"px";
+  s.style.left = e.clientX+"px";
+  s.style.top = e.clientY+"px";
   document.body.appendChild(s);
 
   setTimeout(()=>s.remove(),500);
