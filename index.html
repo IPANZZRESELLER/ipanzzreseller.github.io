@@ -223,3 +223,30 @@ card.style.display = card.innerText.toLowerCase().includes(value)
 
 </body>
 </html>
+
+<button onclick="adminLogin()" class="btn">+ Tambah Midman</button>
+<script>
+function adminLogin(){
+  let pass = prompt("Masukkan password admin:");
+
+  if(pass === "IPANZZ"){ // tukar password sini
+    let nama = prompt("Nama midman:");
+    let phone = prompt("No phone (contoh 60123456789):");
+
+    if(nama && phone){
+      let card = `
+      <div class="midman">
+        <h3>${nama} <span class="badge">NEW</span></h3>
+        <p>${phone}</p>
+        <a class="btn" href="https://wa.me/${phone}">WhatsApp</a>
+      </div>
+      `;
+      document.getElementById("list").innerHTML += card;
+    }
+
+  } else {
+    alert("Password salah!");
+  }
+}
+</script>
+<div id="list"></div>
