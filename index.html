@@ -14,7 +14,20 @@ body{
   color:#fff;
 }
 
-/* INTRO */
+/* 🌈 RAINBOW ANIMATION */
+@keyframes rainbow{
+  0%{background-position:0%}
+  100%{background-position:400%}
+}
+
+/* 🧊 GLASS */
+.glass{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* 🎬 INTRO */
 #splash{
   position:fixed;
   inset:0;
@@ -28,11 +41,15 @@ body{
 .logo{
   font-size:28px;
   font-weight:600;
-  background:linear-gradient(90deg,#d946ef,#3b82f6);
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet,red);
+  background-size:400%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 20px #d946ef55;
-  animation:fade 1.5s ease;
+
+  text-shadow:0 0 15px #ffffff33;
+
+  animation:rainbow 6s linear infinite, fade 1.5s ease;
 }
 
 @keyframes fade{
@@ -40,22 +57,26 @@ body{
   to{opacity:1; transform:translateY(0)}
 }
 
-/* APP */
 #app{display:none}
 
 /* HEADER */
 header{
   text-align:center;
   padding:20px;
-  font-size:18px;
   font-weight:600;
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:rainbow 8s linear infinite;
 }
 
 /* TABS */
 .tabs{
   display:flex;
   margin:10px;
-  background:#111;
   border-radius:12px;
   padding:5px;
 }
@@ -67,38 +88,36 @@ header{
   background:transparent;
   color:#aaa;
   border-radius:10px;
-  transition:0.2s;
-}
-
-.tabs button:hover{
-  color:#fff;
 }
 
 .active{
   background:linear-gradient(90deg,#d946ef,#3b82f6);
   color:#fff;
-  box-shadow:0 0 10px #3b82f6aa;
 }
 
 /* CARD */
 .card{
-  background:#111;
   margin:10px;
   padding:15px;
   border-radius:14px;
-  border:1px solid #222;
-  transition:0.2s;
+  animation:fadeUp 0.4s ease;
 }
 
-.card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 15px #3b82f633;
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(10px)}
+  to{opacity:1; transform:translateY(0)}
 }
 
 /* NAME */
 .name{
   font-weight:600;
-  margin-bottom:5px;
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:rainbow 10s linear infinite;
 }
 
 /* PHONE */
@@ -114,14 +133,24 @@ header{
   padding:12px;
   text-align:center;
   border-radius:10px;
-  background:linear-gradient(90deg,#d946ef,#3b82f6);
-  color:#fff;
+  color:#000;
   text-decoration:none;
-  transition:0.2s;
+  font-weight:bold;
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  animation:rainbow 6s linear infinite;
+
+  box-shadow:0 0 10px #3b82f655;
 }
 
-.btn:hover{
-  box-shadow:0 0 12px #3b82f6aa;
+/* ADMIN */
+.admin{
+  margin:10px;
+  padding:10px;
+  border-radius:10px;
+  cursor:pointer;
+  text-align:center;
 }
 
 /* MUSIC */
@@ -131,7 +160,6 @@ header{
   right:10px;
   background:#111;
   border:1px solid #333;
-  color:#fff;
   padding:8px;
   border-radius:10px;
 }
@@ -145,18 +173,19 @@ header{
   <div class="logo">Midman Trusted Malaysia</div>
 </div>
 
-<!-- APP -->
 <div id="app">
 
 <header>Midman Trusted Malaysia</header>
 
 <button class="music" id="musicBtn">🎵</button>
 
-<div class="tabs">
+<div class="tabs glass">
   <button id="btnMid" class="active">Midman</button>
   <button id="btnSeller">Seller</button>
   <button id="btnScam">Scam</button>
 </div>
+
+<div class="admin glass" onclick="addData()">+ Tambah</div>
 
 <div id="list"></div>
 
@@ -186,15 +215,17 @@ setTimeout(()=>{
   app.style.display="block";
 },1500);
 
-/* DATA */
-let data = [
-  {nama:"MID IPANZZ", phone:"60175970694", type:"midman"},
-  {nama:"SLRMYAPI", phone:"60104331830", type:"midman"},
-  {nama:"SHOP ABC", phone:"60122222222", type:"seller"},
-  {nama:"SCAMMER XYZ", phone:"60111111111", type:"scam"}
+/* LOAD DATA */
+let data = JSON.parse(localStorage.getItem("midmanData")) || [
+  {nama:"MID IPANZZ", phone:"60175970694", type:"midman"}
 ];
 
 let currentTab="midman";
+
+/* SAVE */
+function save(){
+  localStorage.setItem("midmanData", JSON.stringify(data));
+}
 
 /* RENDER */
 function render(){
@@ -203,7 +234,7 @@ function render(){
     if(d.type !== currentTab) return;
 
     html += `
-    <div class="card">
+    <div class="card glass">
       <div class="name">${d.nama}</div>
       <div class="phone">${d.phone}</div>
       <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
@@ -223,6 +254,20 @@ btnScam.onclick=()=>{currentTab="scam";setActive(btnScam);}
 function setActive(btn){
   [btnMid,btnSeller,btnScam].forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
+  render();
+}
+
+/* ADD DATA */
+function addData(){
+  let pass = prompt("Password:");
+  if(pass !== "ipanzz") return alert("Salah");
+
+  let nama = prompt("Nama:");
+  let phone = prompt("Phone:");
+  let type = prompt("Type (midman/seller/scam):");
+
+  data.push({nama,phone,type});
+  save();
   render();
 }
 
