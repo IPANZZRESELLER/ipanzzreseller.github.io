@@ -37,14 +37,14 @@ input{
   border:none;
   background:#111;
   color:#fff;
-  margin-bottom:15px;
+  margin-bottom:10px;
 }
 
-/* TAB BUTTON */
+/* TAB */
 .tabs{
   display:flex;
   gap:5px;
-  margin-bottom:15px;
+  margin-bottom:10px;
 }
 
 .tabs button{
@@ -54,11 +54,19 @@ input{
   border-radius:8px;
   background:#111;
   color:#fff;
+  cursor:pointer;
 }
 
 .active{
   background:#00ff99;
   color:#000;
+}
+
+/* TOTAL */
+.total{
+  font-size:12px;
+  color:#888;
+  margin-bottom:10px;
 }
 
 /* CARD */
@@ -67,6 +75,12 @@ input{
   border-radius:12px;
   padding:15px;
   margin-bottom:10px;
+  border:1px solid #1a1a1a;
+  transition:0.2s;
+}
+
+.card:hover{
+  transform:scale(1.02);
 }
 
 /* BUTTON */
@@ -88,9 +102,20 @@ input{
   padding:8px;
   border-radius:8px;
   margin-top:5px;
+  width:100%;
 }
 
-/* TITLE COLOR */
+/* BADGE */
+.badge{
+  background:#00ff99;
+  color:#000;
+  font-size:10px;
+  padding:3px 6px;
+  border-radius:5px;
+  margin-left:5px;
+}
+
+/* COLOR */
 .seller{color:#00ffcc;}
 .midman{color:#00ff99;}
 .scam{color:red;}
@@ -114,6 +139,8 @@ input{
   <button onclick="setTab('scam')" id="btnScam">Scam</button>
 </div>
 
+<div class="total" id="total"></div>
+
 <div id="list"></div>
 
 </div>
@@ -122,12 +149,12 @@ input{
 
 /* DATA */
 let data = [
-  {nama:"MID IPANZZ", phone:"60175970694", type:"midman"},
-  {nama:"SLRMYAPI", phone:"60104331830", type:"midman"},
+  {nama:"MID IPANZZ", phone:"60175970694", type:"midman", rating:5, verified:true},
+  {nama:"SLRMYAPI", phone:"60104331830", type:"midman", rating:5},
 
-  {nama:"SHOP ABC", phone:"60122222222", type:"seller"},
+  {nama:"SHOP ABC", phone:"60122222222", type:"seller", rating:5, verified:true},
 
-  {nama:"SCAMMER XYZ", phone:"60111111111", type:"scam"}
+  {nama:"SCAMMER XYZ", phone:"60111111111", type:"scam", rating:1}
 ];
 
 let currentTab = "midman";
@@ -135,14 +162,22 @@ let currentTab = "midman";
 /* RENDER */
 function render(){
   let html="";
+  let count=0;
 
   data.forEach(d=>{
     if(d.type !== currentTab) return;
 
+    count++;
+
     html += `
     <div class="card">
-      <b class="${d.type}">${d.nama}</b>
+      <b class="${d.type}">
+        ${d.nama}
+        ${d.verified ? '<span class="badge">VERIFIED</span>' : ''}
+      </b>
+
       <p>${d.phone}</p>
+      <p>${"⭐".repeat(d.rating || 5)}</p>
 
       <button class="copy" onclick="copy('${d.phone}')">Copy</button>
       <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
@@ -151,17 +186,18 @@ function render(){
   });
 
   document.getElementById("list").innerHTML = html;
+  document.getElementById("total").innerText = "Total: " + count;
 }
 
-/* TAB SWITCH */
+/* TAB */
 function setTab(tab){
   currentTab = tab;
 
   document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-  
-  if(tab==="seller") document.getElementById("btnSeller").classList.add("active");
-  if(tab==="midman") document.getElementById("btnMidman").classList.add("active");
-  if(tab==="scam") document.getElementById("btnScam").classList.add("active");
+
+  if(tab==="seller") btnSeller.classList.add("active");
+  if(tab==="midman") btnMidman.classList.add("active");
+  if(tab==="scam") btnScam.classList.add("active");
 
   render();
 }
