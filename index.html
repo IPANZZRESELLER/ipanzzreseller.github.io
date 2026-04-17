@@ -7,141 +7,116 @@
 <title>Trusted System</title>
 
 <style>
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-  background:#000;
-  color:#fff;
-}
+body{margin:0;font-family:-apple-system;background:#000;color:#fff}
 
-/* 🌈 RAINBOW */
+/* RAINBOW */
 @keyframes rainbow{
-  0%{background-position:0%}
-  100%{background-position:400%}
+0%{background-position:0%}
+100%{background-position:300%}
 }
 
-/* 🎬 INTRO */
+/* INTRO */
 #splash{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
+position:fixed;inset:0;background:#000;
+display:flex;justify-content:center;align-items:center;z-index:999;
 }
 
 .logo{
-  font-size:26px;
-  font-weight:600;
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:rainbow 8s linear infinite;
+font-size:24px;
+font-weight:600;
+text-align:center;
+line-height:1.6;
+}
+
+.line{
+display:block;
+opacity:0;
+transform:translateY(15px);
+
+background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+background-size:300%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.line.show{
+animation:fadeUp 0.6s ease forwards, rainbow 10s linear infinite;
+}
+
+@keyframes fadeUp{
+to{opacity:1; transform:translateY(0)}
 }
 
 #app{display:none}
 
 /* HEADER */
 header{
-  text-align:center;
-  padding:25px;
-  font-size:22px;
+text-align:center;
+padding:25px;
+font-size:22px;
 
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+background-size:300%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 
-  animation:rainbow 12s linear infinite;
+animation:rainbow 12s linear infinite;
 }
 
 /* TABS */
-.tabs{
-  display:flex;
-  margin:10px;
-  background:#111;
-  border-radius:14px;
-  padding:5px;
-}
-
-.tabs button{
-  flex:1;
-  padding:10px;
-  border:none;
-  background:transparent;
-  color:#aaa;
-  border-radius:10px;
-}
-
-.active{
-  color:#fff;
-  background:#222;
-}
+.tabs{display:flex;margin:10px;background:#111;border-radius:14px;padding:5px}
+.tabs button{flex:1;padding:10px;border:none;background:transparent;color:#aaa}
+.active{color:#fff;background:#222}
 
 /* ADD */
 .add{
-  margin:10px;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid #333;
-  text-align:center;
+margin:10px;padding:12px;border-radius:14px;border:1px solid #333;
+text-align:center;display:none;
 }
 
-/* CARD BASE */
-.card{
-  margin:10px;
-  padding:15px;
-  border-radius:16px;
-  border:1px solid #222;
-}
+/* CARD */
+.card{margin:10px;padding:15px;border-radius:16px;border:1px solid #222}
 
-/* COLORS BY TYPE */
-.midman{ background:#0f1f0f; border-color:#22c55e; }
-.seller{ background:#0f172a; border-color:#3b82f6; }
-.scam{ background:#1f0f0f; border-color:#ef4444; }
+/* COLORS */
+.midman{background:#0f1f0f;border-color:#22c55e}
+.seller{background:#0f172a;border-color:#3b82f6}
+.scam{background:#1f0f0f;border-color:#ef4444}
 
 /* NAME */
 .name{
-  font-weight:600;
-  font-size:16px;
-
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  animation:rainbow 10s linear infinite;
+font-weight:600;
+background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+background-size:300%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:rainbow 10s linear infinite;
 }
 
 /* VERIFIED */
-.verify{
-  color:#3b82f6;
-  margin-left:5px;
-}
+.verify{color:#3b82f6;margin-left:5px}
 
-/* PHONE */
-.phone{
-  color:#aaa;
-  font-size:13px;
+/* DELETE */
+.delete{
+margin-top:8px;
+color:#ef4444;
+font-size:12px;
+display:none;
 }
 
 /* BUTTON */
 .btn{
-  display:block;
-  margin-top:12px;
-  padding:12px;
-  border-radius:12px;
-  text-align:center;
-  text-decoration:none;
-  font-weight:600;
+display:block;
+margin-top:12px;
+padding:12px;
+border-radius:12px;
+text-align:center;
+text-decoration:none;
 
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  animation:rainbow 8s linear infinite;
+background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+background-size:300%;
+animation:rainbow 8s linear infinite;
 
-  color:#000;
+color:#000;
 }
 </style>
 </head>
@@ -150,20 +125,24 @@ header{
 
 <!-- INTRO -->
 <div id="splash">
-  <div class="logo">Trusted System</div>
+  <div class="logo">
+    <span class="line">Welcome to</span>
+    <span class="line">Midman / Seller Trusted</span>
+    <span class="line">& List Scammer</span>
+  </div>
 </div>
 
 <div id="app">
 
-<header>Trusted List</header>
+<header>Trusted System</header>
 
 <div class="tabs">
-  <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
-  <button onclick="setTab('seller')" id="btnSeller">Seller Trusted</button>
-  <button onclick="setTab('scam')" id="btnScam">Scammer</button>
+<button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
+<button onclick="setTab('seller')" id="btnSeller">Seller Trusted</button>
+<button onclick="setTab('scam')" id="btnScam">Scammer</button>
 </div>
 
-<div class="add" onclick="addData()">+ Tambah</div>
+<div class="add" id="addBtn" onclick="addData()">+ Tambah</div>
 
 <div id="list"></div>
 
@@ -171,16 +150,16 @@ header{
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* 🔥 PASTE CONFIG SINI */
+/* CONFIG */
 const firebaseConfig = {
-  apiKey: "ISI",
-  authDomain: "ISI",
-  projectId: "ISI",
-  storageBucket: "ISI",
-  messagingSenderId: "ISI",
-  appId: "ISI"
+  apiKey:"ISI",
+  authDomain:"ISI",
+  projectId:"ISI",
+  storageBucket:"ISI",
+  messagingSenderId:"ISI",
+  appId:"ISI"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -188,67 +167,86 @@ const db = getFirestore(app);
 
 let currentTab="midman";
 let allData=[];
+let isAdmin=false;
 
-/* INTRO */
+/* INTRO ANIMATION */
 setTimeout(()=>{
-  splash.style.display="none";
-  app.style.display="block";
-},1500);
+const lines=document.querySelectorAll(".line");
+lines.forEach((el,i)=>{
+setTimeout(()=> el.classList.add("show"), i*600);
+});
+
+/* masuk app */
+setTimeout(()=>{
+splash.style.display="none";
+app.style.display="block";
+
+/* ADMIN LOGIN */
+let pass=prompt("Admin password (cancel kalau user):");
+if(pass==="ipanzz"){
+isAdmin=true;
+addBtn.style.display="block";
+}
+
+},2500);
+
+},300);
 
 /* LOAD */
 async function loadData(){
-  const snap = await getDocs(collection(db,"data"));
-  allData=[];
-  snap.forEach(doc=> allData.push(doc.data()));
-  render();
+const snap=await getDocs(collection(db,"data"));
+allData=[];
+snap.forEach(d=> allData.push({id:d.id,...d.data()}));
+render();
 }
 
 /* RENDER */
 function render(){
-  let html="";
-  allData.forEach(d=>{
-    if(d.type!==currentTab) return;
+let html="";
+allData.forEach(d=>{
+if(d.type!==currentTab) return;
 
-    html+=`
-    <div class="card ${d.type}">
-      <div class="name">
-        ${d.nama}
-        ${d.verified ? '<span class="verify">✔️</span>' : ''}
-      </div>
-      <div class="phone">${d.phone}</div>
-      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
-    </div>`;
-  });
-  list.innerHTML=html;
+html+=`
+<div class="card ${d.type}">
+<div class="name">
+${d.nama}
+${d.verified?'<span class="verify">✔️</span>':''}
+</div>
+<div class="phone">${d.phone}</div>
+
+<a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
+
+${isAdmin?`<div class="delete" onclick="del('${d.id}')">Delete</div>`:""}
+</div>`;
+});
+list.innerHTML=html;
+}
+
+/* DELETE */
+window.del=async function(id){
+await deleteDoc(doc(db,"data",id));
+loadData();
 }
 
 /* ADD */
-window.addData = async function(){
-  let pass = prompt("Password:");
-  if(pass!=="ipanzz") return alert("Salah");
+window.addData=async function(){
+let nama=prompt("Nama:");
+let phone=prompt("Phone:");
+let type=prompt("Type (midman/seller/scam):");
+let verified=confirm("Verified?");
 
-  let nama = prompt("Nama:");
-  let phone = prompt("Phone:");
-  let type = prompt("Type (midman/seller/scam):");
-  let verified = confirm("Verified?");
-
-  await addDoc(collection(db,"data"),{
-    nama, phone, type, verified
-  });
-
-  loadData();
+await addDoc(collection(db,"data"),{nama,phone,type,verified});
+loadData();
 }
 
 /* TAB */
 window.setTab=function(tab){
-  currentTab=tab;
-
-  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-  if(tab==="midman") btnMid.classList.add("active");
-  if(tab==="seller") btnSeller.classList.add("active");
-  if(tab==="scam") btnScam.classList.add("active");
-
-  render();
+currentTab=tab;
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+if(tab==="midman") btnMid.classList.add("active");
+if(tab==="seller") btnSeller.classList.add("active");
+if(tab==="scam") btnScam.classList.add("active");
+render();
 }
 
 /* START */
