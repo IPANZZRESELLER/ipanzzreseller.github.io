@@ -8,63 +8,86 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
 <style>
-body{margin:0;font-family:Arial;background:#0b0b0b;color:#fff}
-.container{max-width:500px;margin:auto;padding:15px}
+body{
+  margin:0;
+  font-family:Arial;
+  background:#000;
+  color:#fff;
+}
 
-/* CARD */
+header{
+  text-align:center;
+  padding:30px;
+}
+
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:15px;
+}
+
 .card{
   background:#111;
   padding:15px;
-  border-radius:15px;
-  margin-bottom:12px;
+  border-radius:12px;
+  margin-bottom:10px;
 }
 
-/* AVATAR */
 .avatar{
-  width:50px;height:50px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(45deg,#d946ef,#3b82f6);
-  font-weight:bold;margin-bottom:5px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#00ffcc;
+  color:#000;
+  font-weight:bold;
+  margin-bottom:5px;
 }
-.avatar img{width:100%;height:100%;border-radius:50%}
 
-/* BTN */
 .btn{
-  display:block;margin-top:5px;padding:8px;
-  background:#25D366;text-align:center;
-  border-radius:8px;color:#fff;text-decoration:none;
-}
-
-/* REVIEW */
-.review{
-  background:#1a1a1a;
-  padding:8px;
+  display:block;
   margin-top:5px;
+  padding:10px;
   border-radius:8px;
-  font-size:12px;
+  background:#25D366;
+  text-align:center;
+  text-decoration:none;
+  color:#fff;
 }
 
 button{
   width:100%;
-  padding:8px;
+  padding:10px;
   margin-top:5px;
   border-radius:8px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  margin-bottom:10px;
 }
 </style>
 </head>
 
 <body>
 
+<header>
+<h2>MIDMAN TRUSTED MALAYSIA</h2>
+<p id="date"></p>
+</header>
+
 <div class="container">
 
-<h2>Midman Trusted Malaysia</h2>
+<input id="search" placeholder="Cari midman...">
 
-<input id="search" placeholder="Search...">
-
-<div id="topUI"></div>
+<div id="adminUI"></div>
 <div id="list"></div>
 
 </div>
@@ -73,38 +96,48 @@ button{
 
 /* CONFIG */
 const firebaseConfig = {
-  apiKey: "PASTE",
-  authDomain: "PASTE",
-  projectId: "PASTE",
-  storageBucket: "PASTE"
+  apiKey: "PASTE_APIKEY",
+  authDomain: "PASTE_AUTHDOMAIN",
+  projectId: "PASTE_PROJECTID"
 };
 
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 const auth = firebase.auth();
-const storage = firebase.storage();
 
+/* ADMIN EMAIL */
 const ADMIN_EMAIL = "EMAIL_KAU";
-let isAdmin = false;
 
-/* LOGIN */
+/* CHECK LOGIN */
 auth.onAuthStateChanged(user=>{
-  isAdmin = user && user.email === ADMIN_EMAIL;
-  renderUI();
+  if(user && user.email === ADMIN_EMAIL){
+    showAdmin();
+  } else {
+    hideAdmin();
+  }
 });
 
-function renderUI(){
-  document.getElementById("topUI").innerHTML = isAdmin
-  ? `<button onclick="addMidman()">+ Tambah</button>
-     <button onclick="logout()">Logout</button>`
-  : `<button onclick="login()">🔐 Admin</button>`;
+/* ADMIN UI */
+function showAdmin(){
+  document.getElementById("adminUI").innerHTML = `
+    <button onclick="addMidman()">+ Tambah Midman</button>
+    <button onclick="logout()">Logout</button>
+  `;
 }
 
+function hideAdmin(){
+  document.getElementById("adminUI").innerHTML = `
+    <button onclick="login()">🔐 Login Admin</button>
+  `;
+}
+
+/* LOGIN */
 function login(){
   let email = prompt("Email:");
   let pass = prompt("Password:");
-  auth.signInWithEmailAndPassword(email, pass);
+  auth.signInWithEmailAndPassword(email, pass)
+  .catch(()=>alert("Login gagal"));
 }
 
 function logout(){
@@ -112,68 +145,54 @@ function logout(){
 }
 
 /* AVATAR */
-function avatar(nama,img){
-  if(img){
-    return `<div class="avatar"><img src="${img}"></div>`;
-  }
+function avatar(nama){
   return `<div class="avatar">${nama[0].toUpperCase()}</div>`;
 }
 
-/* LOAD MIDMAN */
+/* LOAD DATA */
 db.collection("midman").onSnapshot(snapshot=>{
   let html="";
+
+  if(snapshot.empty){
+    html = "<p style='text-align:center;color:#888'>Tiada data lagi</p>";
+  }
 
   snapshot.forEach(doc=>{
     let d = doc.data();
 
-    html+=`
+    html += `
     <div class="card">
-      ${avatar(d.nama,d.img)}
+      ${avatar(d.nama)}
 
       <b>${d.nama}</b><br>
+      ${d.phone}<br>
       ⭐ ${d.rating || 5}
 
-      <a class="btn" href="https://wa.me/${d.phone}">WhatsApp</a>
+      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
+      WhatsApp
+      </a>
 
-      <button onclick="addReview('${doc.id}')">💬 Review</button>
-
-      <div id="review-${doc.id}"></div>
-
-      ${isAdmin ? `
-        <button onclick="editMidman('${doc.id}','${d.nama}','${d.phone}')">Edit</button>
+      ${auth.currentUser && auth.currentUser.email === ADMIN_EMAIL ? `
         <button onclick="deleteMidman('${doc.id}')">Delete</button>
-      `:""}
+      ` : ""}
     </div>
     `;
-
-    loadReview(doc.id);
   });
 
   document.getElementById("list").innerHTML = html;
 });
 
-/* ADD MIDMAN + UPLOAD */
+/* ADD */
 function addMidman(){
   let nama = prompt("Nama:");
-  let phone = prompt("Phone:");
+  let phone = prompt("Phone (601..):");
   let rating = prompt("Rating:");
 
-  let input = document.createElement("input");
-  input.type="file";
-
-  input.onchange = async e=>{
-    let file = e.target.files[0];
-    let ref = storage.ref("midman/"+file.name);
-
-    await ref.put(file);
-    let url = await ref.getDownloadURL();
-
-    db.collection("midman").add({
-      nama, phone, rating, img:url
-    });
-  };
-
-  input.click();
+  db.collection("midman").add({
+    nama,
+    phone,
+    rating
+  });
 }
 
 /* DELETE */
@@ -181,54 +200,18 @@ function deleteMidman(id){
   db.collection("midman").doc(id).delete();
 }
 
-/* EDIT */
-function editMidman(id,nama,phone){
-  let n = prompt("Nama:",nama);
-  let p = prompt("Phone:",phone);
-
-  db.collection("midman").doc(id).update({
-    nama:n, phone:p
-  });
-}
-
-/* REVIEW */
-function addReview(midmanId){
-  let text = prompt("Tulis review:");
-  let rating = prompt("Rating (1-5):");
-
-  db.collection("review").add({
-    midmanId,
-    text,
-    rating
-  });
-}
-
-/* LOAD REVIEW */
-function loadReview(id){
-  db.collection("review")
-  .where("midmanId","==",id)
-  .onSnapshot(snapshot=>{
-    let html="";
-    snapshot.forEach(doc=>{
-      let d = doc.data();
-      html+=`
-      <div class="review">
-        ⭐ ${d.rating}<br>
-        ${d.text}
-      </div>`;
-    });
-    document.getElementById("review-"+id).innerHTML = html;
-  });
-}
-
 /* SEARCH */
 document.getElementById("search").addEventListener("keyup", function(){
-  let val=this.value.toLowerCase();
+  let val = this.value.toLowerCase();
   document.querySelectorAll(".card").forEach(card=>{
     card.style.display =
     card.innerText.toLowerCase().includes(val) ? "" : "none";
   });
 });
+
+/* DATE */
+document.getElementById("date").innerText =
+new Date().toLocaleDateString("ms-MY");
 
 </script>
 
