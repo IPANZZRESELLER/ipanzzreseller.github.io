@@ -4,174 +4,158 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Trusted System</title>
+<title>List Trusted</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 body{
-margin:0;
-font-family:'Orbitron',sans-serif;
-background:#000;
-color:#fff;
+  margin:0;
+  font-family:'Orbitron',sans-serif;
+  background:#000;
+  color:#fff;
 }
 
 /* INTRO */
 #splash{
-position:fixed;inset:0;
-display:flex;justify-content:center;align-items:center;
-background:#000;z-index:999;
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#000;
 }
-.line{opacity:0;display:block;font-size:22px}
-.line.show{animation:fade .6s forwards}
-@keyframes fade{to{opacity:1}}
-
-#login{
-display:none;
-position:fixed;inset:0;
-background:#000;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-gap:15px;
+.line{
+  opacity:0;
+  display:block;
+  text-align:center;
+  font-size:20px;
 }
-
-/* LOGIN */
-.btnLogin{
-padding:12px 20px;
-border-radius:12px;
-border:1px solid #0ff;
-background:#111;
-color:#fff;
-box-shadow:0 0 10px #0ff;
+.line.show{
+  animation:fade 0.6s forwards;
 }
-input{
-padding:10px;
-border-radius:10px;
-border:none;
+@keyframes fade{
+  to{opacity:1}
 }
 
-/* APP */
 #app{display:none}
 
-/* HEADER CYBER */
-.cyber-header{
-text-align:center;
-padding:25px 10px;
-font-size:18px;
-letter-spacing:2px;
-position:relative;
-}
+/* HEADER NEON */
+header{
+  text-align:center;
+  padding:20px;
+  font-size:18px;
+  letter-spacing:1px;
 
-.cyber-header span{
-background:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff00ff);
-background-size:300%;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-animation:rgbMove 6s linear infinite;
-
-text-shadow:
-0 0 5px #fff,
-0 0 10px #ff00ff,
-0 0 20px #00ffff,
-0 0 40px #ff00ff;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #f0f,
+    0 0 20px #f0f;
 }
-
-@keyframes rgbMove{
-0%{background-position:0%}
-100%{background-position:300%}
-}
-
-.cyber-header::before,
-.cyber-header::after{
-content:"";
-position:absolute;
-left:20%;
-width:60%;
-height:2px;
-background:linear-gradient(90deg,#0ff,#f0f,#0ff);
-box-shadow:0 0 10px #0ff;
-}
-.cyber-header::before{top:0;}
-.cyber-header::after{bottom:0;}
 
 /* TABS */
 .tabs{
-display:flex;
-margin:10px;
-background:#111;
-border-radius:12px;
+  display:flex;
+  margin:10px;
+  background:#111;
+  border-radius:12px;
 }
 .tabs button{
-flex:1;
-padding:10px;
-border:none;
-background:none;
-color:#aaa;
+  flex:1;
+  padding:10px;
+  border:none;
+  background:none;
+  color:#888;
+  font-family:'Orbitron';
 }
-.active{color:#fff}
-
-/* ADD */
-#addBox{
-display:none;
-margin:10px;
-padding:10px;
-border:1px solid #333;
-border-radius:10px;
-text-align:center;
+.active{
+  color:#fff;
+  text-shadow:0 0 8px #0ff;
 }
 
 /* CARD */
 .card{
-margin:10px;
-padding:15px;
-border-radius:15px;
+  margin:10px;
+  padding:15px;
+  border-radius:14px;
 }
 
-.midman{border:1px solid #22c55e;box-shadow:0 0 10px #22c55e}
-.seller{border:1px solid #3b82f6;box-shadow:0 0 10px #3b82f6}
-.scam{border:1px solid #ef4444;box-shadow:0 0 10px #ef4444}
+/* COLORS + GLOW */
+.midman{
+  border:1px solid #22c55e;
+  box-shadow:0 0 10px #22c55e;
+}
+.seller{
+  border:1px solid #3b82f6;
+  box-shadow:0 0 10px #3b82f6;
+}
+.scam{
+  border:1px solid #ef4444;
+  box-shadow:0 0 10px #ef4444;
+}
 
 /* PROFILE */
 .profile{
-display:flex;
-gap:10px;
-cursor:pointer;
+  display:flex;
+  gap:10px;
+  cursor:pointer;
 }
+
 .avatar{
-width:45px;height:45px;border-radius:50%;
-}
-.logoSmall{
-width:18px;height:18px;border-radius:50%;margin-left:5px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  border:2px solid #222;
 }
 
-/* NAME */
+/* NAME NEON */
 .name{
-font-weight:700;
-text-shadow:0 0 5px #fff,0 0 10px #0ff,0 0 20px #0ff;
+  font-weight:700;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #0ff,
+    0 0 20px #0ff;
 }
 
-/* VERIFIED */
-.verifyStar{
-color:#ffd700;
-text-shadow:0 0 5px #ffd700;
+/* TELEGRAM VERIFY */
+.verify{
+  display:inline-block;
+  margin-left:6px;
+  width:16px;
+  height:16px;
+  background:#3b82f6;
+  border-radius:50%;
+  color:#fff;
+  font-size:11px;
+  text-align:center;
+  line-height:16px;
+
+  box-shadow:0 0 8px #3b82f6;
 }
 
 /* BUTTON */
 .btn{
-display:block;
-margin-top:10px;
-padding:10px;
-text-align:center;
-border-radius:10px;
-color:#fff;
-border:1px solid #0ff;
-box-shadow:0 0 10px #0ff;
-text-decoration:none;
+  display:block;
+  margin-top:10px;
+  padding:10px;
+  text-align:center;
+  border-radius:10px;
+  text-decoration:none;
+  color:#fff;
+
+  border:1px solid #0ff;
+  box-shadow:0 0 10px #0ff;
 }
 
-.delete{color:red;font-size:12px}
+/* ADD */
+.add{
+  margin:10px;
+  padding:10px;
+  text-align:center;
+  border:1px solid #333;
+  border-radius:10px;
+  box-shadow:0 0 8px #333;
+}
 </style>
 </head>
 
@@ -179,34 +163,24 @@ text-decoration:none;
 
 <!-- INTRO -->
 <div id="splash">
-<div>
-<span class="line">Welcome to</span>
-<span class="line">Midman / Seller Trusted</span>
-<span class="line">& List Scammer</span>
-</div>
-</div>
-
-<!-- LOGIN -->
-<div id="login">
-<button class="btnLogin" onclick="userMode()">Masuk sebagai User</button>
-<input type="password" id="pass" placeholder="Admin password">
-<button class="btnLogin" onclick="adminLogin()">Login Admin</button>
+  <div>
+    <span class="line">Welcome to</span>
+    <span class="line">Midman / Seller Trusted</span>
+    <span class="line">& List Scammer</span>
+  </div>
 </div>
 
-<!-- APP -->
 <div id="app">
 
-<header class="cyber-header">
-<span>LIST MIDMAN TRUSTED MALAYSIA</span>
-</header>
+<header>LIST MIDMAN TRUSTED MALAYSIA</header>
 
 <div class="tabs">
 <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
 <button onclick="setTab('seller')" id="btnSeller">Seller</button>
-<button onclick="setTab('scam')" id="btnScam">Scam</button>
+<button onclick="setTab('scam')" id="btnScam">Scammer</button>
 </div>
 
-<div id="addBox" onclick="addData()">+ Tambah</div>
+<div class="add" onclick="addData()">+ Tambah</div>
 
 <div id="list"></div>
 
@@ -214,26 +188,14 @@ text-decoration:none;
 
 <script>
 let tab="midman";
-let isAdmin=false;
 
 let data=[
 {
-nama:"MID IPANZZ",
-phone:"60175970694",
-type:"midman",
-verified:true,
-avatar:"https://i.imgur.com/2DhmtJ4.png",
-logo:""
-}
-];
-
-{
-nama:"MID KERIZ",
-phone:"0162531397",
-type:"midman",
-verified:true,
-avatar:"https://i.imgur.com/2DhmtJ4.png",
-logo:""
+  nama:"MID IPANZZ",
+  phone:"60175970694",
+  type:"midman",
+  verified:true,
+  avatar:"https://i.imgur.com/2DhmtJ4.png"
 }
 ];
 
@@ -244,41 +206,21 @@ setTimeout(()=>e.classList.add("show"),i*500);
 });
 setTimeout(()=>{
 splash.style.display="none";
-login.style.display="flex";
+app.style.display="block";
 },2000);
 },300);
-
-/* LOGIN */
-function userMode(){
-login.style.display="none";
-app.style.display="block";
-render();
-}
-
-function adminLogin(){
-let p=document.getElementById("pass").value;
-if(p==="ipanzz"){
-isAdmin=true;
-login.style.display="none";
-app.style.display="block";
-addBox.style.display="block";
-render();
-}else{
-alert("Password salah");
-}
-}
 
 /* COPY */
 function copyWa(num){
 let link="https://wa.me/"+num;
 navigator.clipboard.writeText(link);
-alert("Link disalin:\n"+link);
+alert("Copy:\n"+link);
 }
 
 /* RENDER */
 function render(){
 let html="";
-data.forEach((d,i)=>{
+data.forEach((d)=>{
 if(d.type!==tab) return;
 
 html+=`
@@ -288,16 +230,13 @@ html+=`
 <div>
 <div class="name">
 ${d.nama}
-${d.verified?'<span class="verifyStar">★</span>':''}
-${d.logo?`<img src="${d.logo}" class="logoSmall">`:''}
+${d.verified?'<span class="verify">✔</span>':''}
 </div>
 <div>${d.phone}</div>
 </div>
 </div>
 
 <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
-
-${isAdmin?`<div class="delete" onclick="del(${i})">Delete</div>`:""}
 </div>
 `;
 });
@@ -310,16 +249,9 @@ let nama=prompt("Nama:");
 let phone=prompt("Phone:");
 let type=prompt("Type (midman/seller/scam):");
 let avatar=prompt("Link gambar:");
-let logo=prompt("Logo:");
 let verified=confirm("Verified?");
 
-data.push({nama,phone,type,avatar,logo,verified});
-render();
-}
-
-/* DELETE */
-function del(i){
-data.splice(i,1);
+data.push({nama,phone,type,avatar,verified});
 render();
 }
 
@@ -332,6 +264,8 @@ if(t==="seller") btnSeller.classList.add("active");
 if(t==="scam") btnScam.classList.add("active");
 render();
 }
+
+render();
 </script>
 
 </body>
