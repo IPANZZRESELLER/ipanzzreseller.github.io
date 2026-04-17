@@ -19,7 +19,6 @@ body{margin:0;font-family:-apple-system;background:#000;color:#fff}
 position:fixed;inset:0;background:#000;
 display:flex;justify-content:center;align-items:center;z-index:999;
 }
-
 .logo{text-align:center;font-size:24px;line-height:1.6}
 .line{
 display:block;
@@ -30,11 +29,9 @@ background-size:300%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
-
 .line.show{
 animation:fadeUp 0.6s ease forwards, rainbow 10s linear infinite;
 }
-
 @keyframes fadeUp{
 to{opacity:1;transform:translateY(0)}
 }
@@ -43,9 +40,7 @@ to{opacity:1;transform:translateY(0)}
 
 /* HEADER */
 header{
-text-align:center;
-padding:25px;
-font-size:22px;
+text-align:center;padding:25px;font-size:22px;
 background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
 background-size:300%;
 -webkit-background-clip:text;
@@ -66,23 +61,18 @@ text-align:center;display:none;
 
 /* CARD */
 .card{margin:10px;padding:15px;border-radius:16px;border:1px solid #222}
-
-/* COLORS */
 .midman{background:#0f1f0f;border-color:#22c55e}
 .seller{background:#0f172a;border-color:#3b82f6}
 .scam{background:#1f0f0f;border-color:#ef4444}
 
 /* PROFILE */
 .profile{display:flex;gap:10px;align-items:center}
-
 .avatar{
 width:45px;height:45px;border-radius:50%;
 object-fit:cover;border:2px solid #333;
 }
-
 .logoSmall{
-width:18px;height:18px;border-radius:50%;
-margin-left:5px;
+width:18px;height:18px;border-radius:50%;margin-left:5px;
 }
 
 /* NAME */
@@ -94,7 +84,6 @@ background-size:300%;
 -webkit-text-fill-color:transparent;
 animation:rainbow 10s linear infinite;
 }
-
 .verify{color:#3b82f6;margin-left:5px}
 
 /* BUTTON */
@@ -139,160 +128,100 @@ color:#000;
 
 </div>
 
-<!-- 🔥 CLOUDINARY UPLOAD -->
 <script>
-async function uploadImage(){
-  let input = document.createElement("input");
-  input.type="file";
-  input.accept="image/*";
-
-  return new Promise(resolve=>{
-    input.onchange=async ()=>{
-      let file=input.files[0];
-
-      let form=new FormData();
-      form.append("file",file);
-      form.append("upload_preset","ISI_PRESET_KAU");
-
-      let res=await fetch("https://api.cloudinary.com/v1_1/ISI_CLOUD_NAME/image/upload",{
-        method:"POST",
-        body:form
-      });
-
-      let data=await res.json();
-      resolve(data.secure_url);
-    };
-    input.click();
-  });
-}
-</script>
-
-<!-- 🔥 FIREBASE -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-/* CONFIG */
-const firebaseConfig = {
-  apiKey:"ISI",
-  authDomain:"ISI",
-  projectId:"ISI"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
 let currentTab="midman";
-let allData=[];
+let data=[
+{
+  nama:"MID IPANZZ",
+  phone:"60175970694",
+  type:"midman",
+  verified:true,
+  avatar:"https://i.imgur.com/2DhmtJ4.png",
+  logo:""
+}
+];
+
 let isAdmin=false;
 
 /* INTRO */
 setTimeout(()=>{
-const lines=document.querySelectorAll(".line");
-lines.forEach((el,i)=>{
-setTimeout(()=> el.classList.add("show"), i*600);
-});
+  document.querySelectorAll(".line").forEach((el,i)=>{
+    setTimeout(()=>el.classList.add("show"),i*600);
+  });
 
-setTimeout(()=>{
-document.getElementById("splash").style.display="none";
-document.getElementById("app").style.display="block";
+  setTimeout(()=>{
+    document.getElementById("splash").style.display="none";
+    document.getElementById("app").style.display="block";
 
-let pass=prompt("Admin password:");
-if(pass==="ipanzz"){
-isAdmin=true;
-document.getElementById("addBtn").style.display="block";
-}
+    let pass=prompt("Admin password:");
+    if(pass==="ipanzz"){
+      isAdmin=true;
+      document.getElementById("addBtn").style.display="block";
+    }
 
-},2500);
-
+  },2500);
 },300);
-
-/* LOAD */
-async function loadData(){
-const snap=await getDocs(collection(db,"data"));
-allData=[];
-snap.forEach(d=> allData.push({id:d.id,...d.data()}));
-render();
-}
 
 /* RENDER */
 function render(){
 let html="";
-allData.forEach(d=>{
+data.forEach((d,i)=>{
 if(d.type!==currentTab) return;
 
 html+=`
 <div class="card ${d.type}">
-
 <div class="profile">
-<img class="avatar" src="${d.avatar || 'https://i.imgur.com/2DhmtJ4.png'}">
-
+<img class="avatar" src="${d.avatar}">
 <div>
 <div class="name">
 ${d.nama}
 ${d.verified?'<span class="verify">✔️</span>':''}
 ${d.logo?`<img src="${d.logo}" class="logoSmall">`:''}
 </div>
-
 <div class="phone">${d.phone}</div>
 </div>
 </div>
 
 <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
 
-${isAdmin?`<div class="delete" onclick="del('${d.id}')">Delete</div>`:""}
-
+${isAdmin?`<div class="delete" onclick="del(${i})">Delete</div>`:""}
 </div>`;
 });
 document.getElementById("list").innerHTML=html;
 }
 
-/* DELETE */
-window.del=async function(id){
-await deleteDoc(doc(db,"data",id));
-loadData();
-}
-
 /* ADD */
-window.addData=async function(){
-
+function addData(){
 let nama=prompt("Nama:");
 let phone=prompt("Phone:");
 let type=prompt("Type (midman/seller/scam):");
 
-alert("Upload gambar profile");
-let avatar=await uploadImage();
-
-let logo="";
-if(confirm("Nak upload logo?")){
-  logo=await uploadImage();
-}
+let avatar=prompt("Link gambar profile:");
+let logo=prompt("Link logo:");
 
 let verified=confirm("Verified?");
 
-await addDoc(collection(db,"data"),{
-nama,phone,type,verified,avatar,logo
-});
+data.push({nama,phone,type,verified,avatar,logo});
+render();
+}
 
-loadData();
+/* DELETE */
+function del(i){
+data.splice(i,1);
+render();
 }
 
 /* TAB */
-window.setTab=function(tab){
+function setTab(tab){
 currentTab=tab;
-
 document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
 if(tab==="midman") btnMid.classList.add("active");
 if(tab==="seller") btnSeller.classList.add("active");
 if(tab==="scam") btnScam.classList.add("active");
-
 render();
 }
 
-/* START */
-loadData();
-
+render();
 </script>
 
 </body>
