@@ -71,18 +71,13 @@ input{
 }
 
 .midman::before{
-  content:"";
-  position:absolute;
-  top:-2px;
-  left:-2px;
-  right:-2px;
-  bottom:-2px;
-  background: linear-gradient(270deg,
-    red, orange, yellow, green, cyan, blue, violet, red);
-  background-size:400%;
-  border-radius:18px;
-  z-index:-1;
-  animation: rgbBorder 6s linear infinite;
+  background:#00ffc3;
+  filter: blur(10px);
+}
+
+.midman:hover{
+  box-shadow: 0 0 15px #00ffc3;
+}
   
   @keyframes rgbBorder{
   0%{ background-position:0% }
@@ -123,17 +118,9 @@ input{
 
 /* BUTTON */
 .btn{
-  display:block;
-  text-align:center;
-  margin-top:12px;
-  padding:12px;
-  border-radius:12px;
-  background: linear-gradient(270deg, red, orange, yellow, green, cyan, blue, violet);
-  background-size: 400% 400%;
+  background: linear-gradient(90deg,#00ffc3,#00aaff);
   color:#000;
-  text-decoration:none;
-  font-weight:600;
-  animation: rainbowBtn 5s ease infinite;
+}
   
   @keyframes rainbowBtn{
   0%{ background-position:0% 50% }
