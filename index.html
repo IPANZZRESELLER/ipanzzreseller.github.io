@@ -152,6 +152,7 @@ document.getElementById("search").addEventListener("keyup", function(){
   let value = this.value.toLowerCase();
   document.querySelectorAll(".midman").forEach(function(card){
     card.style.display = card.innerText.toLowerCase().includes(value)
+  
     ? "" : "none";
   });
 });
@@ -159,3 +160,8 @@ document.getElementById("search").addEventListener("keyup", function(){
 
 </body>
 </html>
+
+.profile{
+  background:#fff;
+  padding:5px;
+}
