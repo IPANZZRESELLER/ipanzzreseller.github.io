@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Midman Trusted Malaysia</title>
+<title>MIDMAN TRUSTED MALAYSIA</title>
 
 <style>
 body{
@@ -20,11 +20,12 @@ header{
 }
 
 .profile{
-  width:90px;
+  width:100px;
+  height:100px;
   border-radius:50%;
   background:#fff;
   padding:5px;
-  margin-bottom:10px;
+  box-shadow:0 0 25px #00ffc3;
 }
 
 .container{
@@ -43,15 +44,18 @@ input{
   margin-bottom:10px;
 }
 
-.admin-btn{
+button{
   width:100%;
   padding:10px;
+  margin-bottom:10px;
   border-radius:10px;
-  border:1px solid #d946ef;
-  color:#d946ef;
-  background:transparent;
-  margin-bottom:15px;
+  border:none;
+  cursor:pointer;
 }
+
+.login-btn{background:#111;border:1px solid #00ffc3;color:#00ffc3;}
+.admin-btn{background:#111;border:1px solid #d946ef;color:#d946ef;}
+.logout-btn{background:#111;border:1px solid red;color:red;}
 
 .midman{
   background:#111;
@@ -62,46 +66,29 @@ input{
 }
 
 .midman img{
-  width:40px;
-  height:40px;
+  width:45px;
+  height:45px;
   border-radius:50%;
-  margin-bottom:5px;
-}
-
-.status{
-  font-size:12px;
-  color:#00ff99;
 }
 
 .btn{
   display:block;
-  text-align:center;
   margin-top:10px;
-  padding:12px;
+  padding:10px;
+  text-align:center;
   border-radius:10px;
-  background: linear-gradient(90deg,#d946ef,#3b82f6);
+  background:linear-gradient(90deg,#d946ef,#3b82f6);
   color:#fff;
   text-decoration:none;
 }
 
 .actions button{
-  margin-right:5px;
-  margin-top:8px;
-  padding:6px 10px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
+  width:auto;
+  padding:5px 10px;
 }
 
-.edit{
-  background:#3b82f6;
-  color:#fff;
-}
-
-.delete{
-  background:#ff3b3b;
-  color:#fff;
-}
+.edit{background:#3b82f6;color:#fff;}
+.delete{background:red;color:#fff;}
 
 .badge{
   background:#00ff99;
@@ -109,7 +96,22 @@ input{
   font-size:10px;
   padding:3px 6px;
   border-radius:5px;
-  margin-left:5px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-box{
+  background:#111;
+  padding:20px;
+  border-radius:10px;
 }
 </style>
 </head>
@@ -117,64 +119,77 @@ input{
 <body>
 
 <header>
-<img src="logo_transparent_v2.png" class="profile">
-<h2>Midman Trusted Malaysia</h2>
-<p>Updated <span id="date"></span></p>
+<img src="logo.png" class="profile">
+<h2>MIDMAN TRUSTED MALAYSIA</h2>
+<p id="date"></p>
 </header>
 
 <div class="container">
 
 <input type="text" id="search" placeholder="Search midman...">
 
-<div id="adminArea"></div>
-
+<div id="topUI"></div>
 <div id="list"></div>
 
 </div>
 
+<!-- LOGIN -->
+<div class="modal" id="loginModal">
+  <div class="modal-box">
+    <h3>Admin Login</h3>
+    <input type="password" id="pass">
+    <button onclick="login()">Login</button>
+  </div>
+</div>
+
 <script>
 
-/* ADMIN CHECK (URL) */
-const urlParams = new URLSearchParams(window.location.search);
-const isAdmin = urlParams.get("admin") === "ipanzz";
+/* ADMIN STATE */
+let isAdmin = localStorage.getItem("isAdmin") === "true";
 
-/* SHOW ADMIN BUTTON */
-if(isAdmin){
-  document.getElementById("adminArea").innerHTML =
-  '<button class="admin-btn" onclick="addMidman()">+ Tambah Midman</button>';
-}
+/* DATA */
+let data = JSON.parse(localStorage.getItem("midmanData")) || [];
 
-/* AUTO LOAD */
-let data = JSON.parse(localStorage.getItem("midmanData")) || [
-  {
-    nama:"MID IPANZZ",
-    phone:"60175970694",
-    verified:true,
-    rating:5,
-    img:"https://via.placeholder.com/40"
+/* UI */
+function updateUI(){
+  let ui = "";
+
+  if(!isAdmin){
+    ui += '<button class="login-btn" onclick="openLogin()">🔐 Login Admin</button>';
+  } else {
+    ui += `
+      <button class="admin-btn" onclick="addMidman()">+ Tambah</button>
+      <button class="admin-btn" onclick="exportData()">📤 Export</button>
+      <button class="admin-btn" onclick="importData()">📥 Import</button>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    `;
   }
-];
+
+  document.getElementById("topUI").innerHTML = ui;
+}
 
 /* RENDER */
 function render(){
+  updateUI();
   let list = document.getElementById("list");
   list.innerHTML = "";
 
   data.forEach((item,index)=>{
+    let img = item.img || "https://via.placeholder.com/40";
+
     list.innerHTML += `
     <div class="midman">
-      <img src="${item.img}">
+      <img src="${img}">
       <h3>${item.nama} ${item.verified ? '<span class="badge">VERIFIED</span>' : ''}</h3>
       <p>${item.phone}</p>
-      <p class="status">⭐ ${item.rating}/5</p>
+      <p>⭐ ${item.rating}/5</p>
       <a class="btn" href="https://wa.me/${item.phone}">WhatsApp</a>
 
       ${isAdmin ? `
       <div class="actions">
         <button class="edit" onclick="editMidman(${index})">Edit</button>
         <button class="delete" onclick="deleteMidman(${index})">Delete</button>
-      </div>
-      ` : ""}
+      </div>` : ""}
     </div>
     `;
   });
@@ -184,14 +199,29 @@ function render(){
 
 render();
 
-/* SEARCH */
-document.getElementById("search").addEventListener("keyup", function(){
-  let value = this.value.toLowerCase();
-  document.querySelectorAll(".midman").forEach(card=>{
-    card.style.display = card.innerText.toLowerCase().includes(value)
-    ? "" : "none";
-  });
-});
+/* LOGIN */
+function openLogin(){
+  document.getElementById("loginModal").style.display="flex";
+}
+
+function login(){
+  let pass = document.getElementById("pass").value;
+
+  if(pass === "ipanzz"){
+    isAdmin = true;
+    localStorage.setItem("isAdmin","true");
+    document.getElementById("loginModal").style.display="none";
+    render();
+  } else {
+    alert("Salah password");
+  }
+}
+
+function logout(){
+  isAdmin = false;
+  localStorage.removeItem("isAdmin");
+  render();
+}
 
 /* ADD */
 function addMidman(){
@@ -205,25 +235,62 @@ function addMidman(){
 }
 
 /* DELETE */
-function deleteMidman(index){
-  if(confirm("Padam midman ni?")){
-    data.splice(index,1);
+function deleteMidman(i){
+  if(confirm("Padam?")){
+    data.splice(i,1);
     render();
   }
 }
 
 /* EDIT */
-function editMidman(index){
-  let item = data[index];
+function editMidman(i){
+  let item = data[i];
 
   let nama = prompt("Nama:", item.nama);
   let phone = prompt("Phone:", item.phone);
   let rating = prompt("Rating:", item.rating);
   let img = prompt("Link gambar:", item.img);
 
-  data[index] = {nama, phone, rating, img, verified:true};
+  data[i] = {nama, phone, rating, img, verified:true};
   render();
 }
+
+/* EXPORT */
+function exportData(){
+  let blob = new Blob([JSON.stringify(data)], {type:"application/json"});
+  let a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "midman.json";
+  a.click();
+}
+
+/* IMPORT */
+function importData(){
+  let input = document.createElement("input");
+  input.type = "file";
+
+  input.onchange = e=>{
+    let file = e.target.files[0];
+    let reader = new FileReader();
+
+    reader.onload = ()=>{
+      data = JSON.parse(reader.result);
+      render();
+    };
+
+    reader.readAsText(file);
+  };
+
+  input.click();
+}
+
+/* SEARCH */
+document.getElementById("search").addEventListener("keyup", function(){
+  let val = this.value.toLowerCase();
+  document.querySelectorAll(".midman").forEach(card=>{
+    card.style.display = card.innerText.toLowerCase().includes(val) ? "" : "none";
+  });
+});
 
 /* DATE */
 document.getElementById("date").innerText =
