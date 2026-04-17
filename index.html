@@ -12,7 +12,6 @@ body{
   font-family:Arial;
   background:#000;
   color:#fff;
-  overflow-x:hidden;
 }
 
 /* HEADER */
@@ -61,80 +60,52 @@ input{
   color:#000;
 }
 
-/* SLIDE */
-#list{
-  transition:0.3s;
-}
-
 /* CARD */
 .card{
   background:#111;
   border-radius:12px;
   padding:15px;
   margin-bottom:10px;
-  display:flex;
-  gap:10px;
-  align-items:center;
 }
 
-/* AVATAR */
-.avatar{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  background:#00ff99;
-  color:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
+/* 🔥 HIGHLIGHT TEXT */
+.glow{
+  color:#00ff99;
+  text-shadow:0 0 5px #00ff99,
+              0 0 10px #00ff99,
+              0 0 20px #00ff99;
 }
 
-/* INFO */
-.info{flex:1}
+.glow-blue{
+  color:#00ccff;
+  text-shadow:0 0 5px #00ccff,
+              0 0 10px #00ccff;
+}
+
+.glow-red{
+  color:#ff3b3b;
+  text-shadow:0 0 5px #ff3b3b,
+              0 0 10px #ff3b3b;
+}
 
 /* BUTTON */
 .btn{
   display:block;
-  margin-top:5px;
-  padding:8px;
+  margin-top:8px;
+  padding:10px;
   border-radius:8px;
   text-align:center;
   text-decoration:none;
   background:#25D366;
   color:#fff;
 }
-
-.copy{
-  background:#222;
-  border:none;
-  color:#fff;
-  padding:6px;
-  border-radius:6px;
-  margin-top:5px;
-}
-
-/* BADGE */
-.badge{
-  background:#00ff99;
-  color:#000;
-  font-size:10px;
-  padding:2px 5px;
-  border-radius:5px;
-  margin-left:5px;
-}
-
-/* COLOR */
-.seller{color:#00ffcc;}
-.midman{color:#00ff99;}
-.scam{color:red;}
 </style>
 </head>
 
 <body>
 
 <header>
-<h2>Midman Trusted Malaysia</h2>
+<h2 class="glow">Midman Trusted Malaysia</h2>
 <p class="sub">Updated <span id="date"></span></p>
 </header>
 
@@ -154,47 +125,31 @@ input{
 
 <script>
 
-/* DATA */
 let data = [
-  {nama:"MID IPANZZ", phone:"60175970694", type:"midman", rating:5, verified:true},
-  {nama:"SLRMYAPI", phone:"60104331830", type:"midman", rating:4},
-
-  {nama:"SHOP ABC", phone:"60122222222", type:"seller", rating:5},
-
-  {nama:"SCAMMER XYZ", phone:"60111111111", type:"scam", rating:1}
+  {nama:"MID IPANZZ", phone:"60175970694", type:"midman"},
+  {nama:"SHOP ABC", phone:"60122222222", type:"seller"},
+  {nama:"SCAMMER XYZ", phone:"60111111111", type:"scam"}
 ];
 
 let currentTab = "midman";
-
-/* AVATAR */
-function avatar(name){
-  return name.charAt(0);
-}
 
 /* RENDER */
 function render(){
   let html="";
 
-  let list = data
-    .filter(d=>d.type===currentTab)
-    .sort((a,b)=>(b.rating||0)-(a.rating||0)); // top dulu
+  data.forEach(d=>{
+    if(d.type !== currentTab) return;
 
-  list.forEach(d=>{
+    let colorClass = d.type==="midman" ? "glow" :
+                     d.type==="seller" ? "glow-blue" :
+                     "glow-red";
+
     html += `
     <div class="card">
-      <div class="avatar">${avatar(d.nama)}</div>
+      <b class="${colorClass}">${d.nama}</b>
+      <p>${d.phone}</p>
 
-      <div class="info">
-        <b class="${d.type}">
-          ${d.nama}
-          ${d.verified ? '<span class="badge">VERIFIED</span>' : ''}
-        </b>
-
-        <div>${"⭐".repeat(d.rating||5)}</div>
-
-        <button class="copy" onclick="copy('${d.phone}')">Copy</button>
-        <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
-      </div>
+      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
     </div>
     `;
   });
@@ -212,33 +167,8 @@ function setTab(tab){
   if(tab==="midman") btnMidman.classList.add("active");
   if(tab==="scam") btnScam.classList.add("active");
 
-  document.getElementById("list").style.transform="translateX(20px)";
-  setTimeout(()=>{
-    document.getElementById("list").style.transform="translateX(0)";
-    render();
-  },100);
+  render();
 }
-
-/* SWIPE */
-let startX = 0;
-
-document.addEventListener("touchstart", e=>{
-  startX = e.touches[0].clientX;
-});
-
-document.addEventListener("touchend", e=>{
-  let endX = e.changedTouches[0].clientX;
-
-  if(startX - endX > 50){
-    if(currentTab==="seller") setTab("midman");
-    else if(currentTab==="midman") setTab("scam");
-  }
-
-  if(endX - startX > 50){
-    if(currentTab==="scam") setTab("midman");
-    else if(currentTab==="midman") setTab("seller");
-  }
-});
 
 /* SEARCH */
 document.getElementById("search").addEventListener("keyup", function(){
@@ -248,12 +178,6 @@ document.getElementById("search").addEventListener("keyup", function(){
     card.innerText.toLowerCase().includes(val) ? "" : "none";
   });
 });
-
-/* COPY */
-function copy(num){
-  navigator.clipboard.writeText(num);
-  alert("Copied!");
-}
 
 /* DATE */
 document.getElementById("date").innerText =
