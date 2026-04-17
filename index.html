@@ -9,192 +9,40 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-body{
-margin:0;
-font-family:'Orbitron',sans-serif;
-background:#000;
-color:#fff;
-}
+body{margin:0;font-family:'Orbitron';background:#000;color:#fff}
 
-/* INTRO */
-#splash{
-position:fixed;inset:0;
-display:flex;justify-content:center;align-items:center;
-background:#000;z-index:999;
-}
-.line{opacity:0;display:block;font-size:22px}
-.line.show{animation:fade .6s forwards}
-@keyframes fade{to{opacity:1}}
-
-#login{
-display:none;
-position:fixed;inset:0;
-background:#000;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-gap:15px;
-}
-
-/* LOGIN */
-.btnLogin{
-padding:12px 20px;
-border-radius:12px;
-border:1px solid #0ff;
-background:#111;
-color:#fff;
-box-shadow:0 0 10px #0ff;
-}
-input{
-padding:10px;
-border-radius:10px;
-border:none;
-}
-
-/* APP */
-#app{display:none}
-
-/* HEADER CYBER */
-.cyber-header{
-text-align:center;
-padding:25px 10px;
-font-size:18px;
-letter-spacing:2px;
-position:relative;
-}
-
+/* HEADER */
+.cyber-header{text-align:center;padding:20px;font-size:18px}
 .cyber-header span{
-background:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff00ff);
-background-size:300%;
+background:linear-gradient(90deg,#f0f,#0ff,#0f0,#ff0);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-animation:rgbMove 6s linear infinite;
+animation:move 5s linear infinite;
+}
+@keyframes move{100%{background-position:300%}}
 
-text-shadow:
-0 0 5px #fff,
-0 0 10px #ff00ff,
-0 0 20px #00ffff,
-0 0 40px #ff00ff;
-}
-
-@keyframes rgbMove{
-0%{background-position:0%}
-100%{background-position:300%}
-}
-
-.cyber-header::before,
-.cyber-header::after{
-content:"";
-position:absolute;
-left:20%;
-width:60%;
-height:2px;
-background:linear-gradient(90deg,#0ff,#f0f,#0ff);
-box-shadow:0 0 10px #0ff;
-}
-.cyber-header::before{top:0;}
-.cyber-header::after{bottom:0;}
-
-/* TABS */
-.tabs{
-display:flex;
-margin:10px;
-background:#111;
-border-radius:12px;
-}
-.tabs button{
-flex:1;
-padding:10px;
-border:none;
-background:none;
-color:#aaa;
-}
+.tabs{display:flex;margin:10px;background:#111;border-radius:10px}
+.tabs button{flex:1;padding:10px;background:none;border:none;color:#aaa}
 .active{color:#fff}
 
-/* ADD */
-#addBox{
-display:none;
-margin:10px;
-padding:10px;
-border:1px solid #333;
-border-radius:10px;
-text-align:center;
-}
+.card{margin:10px;padding:15px;border-radius:15px}
+.midman{box-shadow:0 0 10px #22c55e}
+.seller{box-shadow:0 0 10px #3b82f6}
+.scam{box-shadow:0 0 10px #ef4444}
 
-/* CARD */
-.card{
-margin:10px;
-padding:15px;
-border-radius:15px;
-}
+.profile{display:flex;gap:10px;cursor:pointer}
+.avatar{width:45px;height:45px;border-radius:50%}
 
-.midman{border:1px solid #22c55e;box-shadow:0 0 10px #22c55e}
-.seller{border:1px solid #3b82f6;box-shadow:0 0 10px #3b82f6}
-.scam{border:1px solid #ef4444;box-shadow:0 0 10px #ef4444}
+.name{font-weight:700}
+.verifyStar{color:gold}
 
-/* PROFILE */
-.profile{
-display:flex;
-gap:10px;
-cursor:pointer;
-}
-.avatar{
-width:45px;height:45px;border-radius:50%;
-}
-.logoSmall{
-width:18px;height:18px;border-radius:50%;margin-left:5px;
-}
+.btn{display:block;margin-top:10px;padding:10px;text-align:center;
+border:1px solid #0ff;border-radius:10px;color:#fff;text-decoration:none}
 
-/* NAME */
-.name{
-font-weight:700;
-text-shadow:0 0 5px #fff,0 0 10px #0ff,0 0 20px #0ff;
-}
-
-/* VERIFIED */
-.verifyStar{
-color:#ffd700;
-text-shadow:0 0 5px #ffd700;
-}
-
-/* BUTTON */
-.btn{
-display:block;
-margin-top:10px;
-padding:10px;
-text-align:center;
-border-radius:10px;
-color:#fff;
-border:1px solid #0ff;
-box-shadow:0 0 10px #0ff;
-text-decoration:none;
-}
-
-.delete{color:red;font-size:12px}
 </style>
 </head>
 
 <body>
-
-<!-- INTRO -->
-<div id="splash">
-<div>
-<span class="line">Welcome to</span>
-<span class="line">Midman / Seller Trusted</span>
-<span class="line">& List Scammer</span>
-</div>
-</div>
-
-<!-- LOGIN -->
-<div id="login">
-<button class="btnLogin" onclick="userMode()">Masuk sebagai User</button>
-<input type="password" id="pass" placeholder="Admin password">
-<button class="btnLogin" onclick="adminLogin()">Login Admin</button>
-</div>
-
-<!-- APP -->
-<div id="app">
 
 <header class="cyber-header">
 <span>LIST MIDMAN TRUSTED MALAYSIA</span>
@@ -206,69 +54,49 @@ text-decoration:none;
 <button onclick="setTab('scam')" id="btnScam">Scam</button>
 </div>
 
-<div id="addBox" onclick="addData()">+ Tambah</div>
+<div onclick="addData()" style="margin:10px;padding:10px;border:1px solid #333;text-align:center">
++ Tambah
+</div>
 
 <div id="list"></div>
 
-</div>
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<script>
+/* 🔥 MASUKKAN CONFIG SINI */
+const firebaseConfig = {
+apiKey:"ISI",
+authDomain:"ISI",
+projectId:"ISI"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 let tab="midman";
-let isAdmin=false;
+let allData=[];
 
-let data=[
-{
-nama:"MID IPANZZ",
-phone:"60175970694",
-type:"midman",
-verified:true,
-avatar:"https://i.imgur.com/2DhmtJ4.png",
-logo:""
-}
-];
-
-/* INTRO */
-setTimeout(()=>{
-document.querySelectorAll(".line").forEach((e,i)=>{
-setTimeout(()=>e.classList.add("show"),i*500);
-});
-setTimeout(()=>{
-splash.style.display="none";
-login.style.display="flex";
-},2000);
-},300);
-
-/* LOGIN */
-function userMode(){
-login.style.display="none";
-app.style.display="block";
+/* LOAD DATA */
+async function loadData(){
+const snap = await getDocs(collection(db,"data"));
+allData=[];
+snap.forEach(d=>allData.push(d.data()));
 render();
-}
-
-function adminLogin(){
-let p=document.getElementById("pass").value;
-if(p==="ipanzz"){
-isAdmin=true;
-login.style.display="none";
-app.style.display="block";
-addBox.style.display="block";
-render();
-}else{
-alert("Password salah");
-}
 }
 
 /* COPY */
 function copyWa(num){
-let link="https://wa.me/"+num;
-navigator.clipboard.writeText(link);
-alert("Link disalin:\n"+link);
+navigator.clipboard.writeText("https://wa.me/"+num);
+alert("Copied");
 }
 
 /* RENDER */
 function render(){
 let html="";
-data.forEach((d,i)=>{
+allData.forEach(d=>{
 if(d.type!==tab) return;
 
 html+=`
@@ -277,44 +105,61 @@ html+=`
 <img class="avatar" src="${d.avatar}">
 <div>
 <div class="name">
-${d.nama}
-${d.verified?'<span class="verifyStar">★</span>':''}
-${d.logo?`<img src="${d.logo}" class="logoSmall">`:''}
+${d.nama} ${d.verified?'<span class="verifyStar">★</span>':''}
 </div>
 <div>${d.phone}</div>
 </div>
 </div>
-
 <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
-
-${isAdmin?`<div class="delete" onclick="del(${i})">Delete</div>`:""}
 </div>
 `;
 });
 list.innerHTML=html;
 }
 
-/* ADD */
-function addData(){
-let nama=prompt("Nama:");
-let phone=prompt("Phone:");
-let type=prompt("Type (midman/seller/scam):");
-let avatar=prompt("Link gambar:");
-let logo=prompt("Logo:");
-let verified=confirm("Verified?");
+/* UPLOAD IMAGE */
+async function uploadImage(file){
+let form=new FormData();
+form.append("file",file);
+form.append("upload_preset","ISI_PRESET");
 
-data.push({nama,phone,type,avatar,logo,verified});
-render();
+let res=await fetch("https://api.cloudinary.com/v1_1/ISI_CLOUD/image/upload",{
+method:"POST",
+body:form
+});
+
+let data=await res.json();
+return data.secure_url;
 }
 
-/* DELETE */
-function del(i){
-data.splice(i,1);
-render();
+/* ADD */
+window.addData=async function(){
+
+let nama=prompt("Nama:");
+let phone=prompt("Phone:");
+let type=prompt("Type:");
+
+let fileInput=document.createElement("input");
+fileInput.type="file";
+
+fileInput.onchange=async ()=>{
+let file=fileInput.files[0];
+let avatar=await uploadImage(file);
+
+let verified=confirm("Verified?");
+
+await addDoc(collection(db,"data"),{
+nama,phone,type,avatar,verified
+});
+
+loadData();
+};
+
+fileInput.click();
 }
 
 /* TAB */
-function setTab(t){
+window.setTab=function(t){
 tab=t;
 document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
 if(t==="midman") btnMid.classList.add("active");
@@ -322,6 +167,8 @@ if(t==="seller") btnSeller.classList.add("active");
 if(t==="scam") btnScam.classList.add("active");
 render();
 }
+
+loadData();
 </script>
 
 </body>
