@@ -9,19 +9,31 @@
 <style>
 body{
   margin:0;
-  font-family:-apple-system, BlinkMacSystemFont, sans-serif;
-  background:linear-gradient(180deg,#000,#050505);
+  font-family:Arial;
+  background:#000;
   color:#fff;
 }
 
 /* HEADER */
 header{
   padding:20px;
-  font-size:20px;
+}
+
+/* 🌈 TITLE ULTRA */
+.title{
+  font-size:22px;
   font-weight:bold;
-  text-align:center;
-  color:#fff;
-  text-shadow:0 0 10px #00ffcc;
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet,red);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:rainbowMove 5s linear infinite;
+  text-shadow:0 0 10px #fff,0 0 20px #0ff,0 0 40px #0ff;
+}
+
+@keyframes rainbowMove{
+  0%{background-position:0%}
+  100%{background-position:400%}
 }
 
 /* CONTAINER */
@@ -35,100 +47,111 @@ header{
 input{
   width:100%;
   padding:12px;
-  border-radius:14px;
+  border-radius:10px;
   border:none;
-  outline:none;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(10px);
+  background:#111;
   color:#fff;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
-/* TABS (iOS STYLE) */
+/* TAB */
 .tabs{
   display:flex;
-  background:rgba(255,255,255,0.05);
-  border-radius:14px;
-  padding:4px;
-  backdrop-filter:blur(10px);
-  margin-bottom:15px;
+  gap:5px;
+  margin-bottom:10px;
 }
 
 .tabs button{
   flex:1;
   padding:10px;
   border:none;
-  border-radius:10px;
-  background:transparent;
-  color:#aaa;
-  font-weight:500;
+  border-radius:8px;
+  background:#111;
+  color:#fff;
   transition:0.3s;
 }
 
-.active{
-  background:#00ffcc;
-  color:#000;
+.tabs button:hover{
   box-shadow:0 0 10px #00ffcc;
 }
 
-/* CARD (GLASS) */
+.active{
+  background:#00ff99;
+  color:#000;
+  box-shadow:0 0 15px #00ff99;
+}
+
+/* 🌈 CARD NEON */
 .card{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
-  border-radius:18px;
+  background:#111;
+  border-radius:12px;
   padding:15px;
   margin-bottom:12px;
-  transition:0.3s;
+  position:relative;
+  overflow:hidden;
 }
 
-.card:active{
-  transform:scale(0.97);
+/* RAINBOW BORDER */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  padding:2px;
+  border-radius:12px;
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  animation:rainbowMove 6s linear infinite;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
 }
 
-/* NAME */
+/* HOVER EFFECT */
+.card:hover{
+  transform:scale(1.03);
+  box-shadow:0 0 15px #00ffcc;
+}
+
+/* NAME GLOW */
 .name{
   font-weight:bold;
   font-size:16px;
   color:#00ffcc;
-  text-shadow:0 0 5px #00ffcc;
+  text-shadow:0 0 5px #00ffcc,0 0 15px #00ffcc;
 }
 
 /* TOP TRUSTED */
 .top{
   color:#fff;
-  text-shadow:0 0 10px gold;
-}
-
-/* PHONE */
-.phone{
-  font-size:13px;
-  color:#aaa;
+  text-shadow:0 0 10px gold,0 0 20px gold,0 0 40px gold;
 }
 
 /* BUTTON */
 .btn{
   display:block;
-  margin-top:10px;
+  margin-top:8px;
   padding:10px;
-  border-radius:12px;
+  border-radius:8px;
   text-align:center;
   text-decoration:none;
-  background:linear-gradient(90deg,#00ffcc,#00aaff);
-  color:#000;
-  font-weight:bold;
-  box-shadow:0 0 10px #00ffcc;
+  background:#25D366;
+  color:#fff;
   transition:0.3s;
 }
 
-.btn:active{
-  transform:scale(0.95);
+.btn:hover{
+  box-shadow:0 0 10px #25D366;
 }
 </style>
 </head>
 
 <body>
 
-<header>Midman Trusted Malaysia</header>
+<header>
+<div class="title">Midman Trusted Malaysia</div>
+</header>
 
 <div class="container">
 
@@ -170,11 +193,9 @@ function render(){
         ${d.top ? '🔥 ' : ''}${d.nama}
       </div>
 
-      <div class="phone">${d.phone}</div>
+      <p>${d.phone}</p>
 
-      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
-        WhatsApp
-      </a>
+      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
     </div>
     `;
   });
