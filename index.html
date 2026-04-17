@@ -14,7 +14,7 @@ body{
   color:#fff;
 }
 
-/* 🔥 SPLASH SCREEN */
+/* SPLASH */
 #splash{
   position:fixed;
   inset:0;
@@ -22,43 +22,36 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
   z-index:9999;
 }
 
-/* LOGO ANIMATION */
+/* 🌈 RAINBOW TITLE */
 .logo{
   font-size:26px;
   font-weight:bold;
-  color:#00ffcc;
-  text-shadow:0 0 20px #00ffcc,0 0 40px #00ffcc;
-  animation:zoom 1.5s ease;
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet,red);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:rainbow 4s linear infinite, zoom 1.5s ease;
+}
+
+@keyframes rainbow{
+  0%{background-position:0%}
+  100%{background-position:400%}
 }
 
 @keyframes zoom{
-  0%{transform:scale(0.7);opacity:0}
-  100%{transform:scale(1);opacity:1}
+  from{transform:scale(0.7);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
-/* FADE OUT */
-.hide{
-  animation:fadeOut 0.8s forwards;
-}
+/* HIDE */
+.hide{animation:fade 0.8s forwards}
+@keyframes fade{to{opacity:0;visibility:hidden}}
 
-@keyframes fadeOut{
-  to{opacity:0;visibility:hidden}
-}
-
-/* MAIN APP */
-#app{
-  display:none;
-  animation:fadeIn 1s forwards;
-}
-
-@keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
-}
+/* APP */
+#app{display:none}
 
 /* HEADER */
 header{
@@ -66,16 +59,16 @@ header{
   padding:20px;
   font-size:20px;
   font-weight:bold;
-  color:#00ffcc;
-  text-shadow:0 0 10px #00ffcc;
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:rainbow 5s linear infinite;
 }
 
 /* CONTAINER */
-.container{
-  max-width:500px;
-  margin:auto;
-  padding:15px;
-}
+.container{padding:15px;max-width:500px;margin:auto}
 
 /* SEARCH */
 input{
@@ -83,7 +76,7 @@ input{
   padding:12px;
   border-radius:14px;
   border:none;
-  background:rgba(255,255,255,0.05);
+  background:#111;
   color:#fff;
   margin-bottom:15px;
 }
@@ -91,7 +84,7 @@ input{
 /* TAB */
 .tabs{
   display:flex;
-  background:rgba(255,255,255,0.05);
+  background:#111;
   border-radius:14px;
   padding:4px;
   margin-bottom:15px;
@@ -113,30 +106,33 @@ input{
 
 /* CARD */
 .card{
-  background:rgba(255,255,255,0.05);
+  background:#111;
   border-radius:18px;
   padding:15px;
   margin-bottom:12px;
 }
 
-/* TEXT */
+/* NAME */
 .name{
   font-weight:bold;
-  color:#00ffcc;
+  font-size:16px;
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:rainbow 5s linear infinite;
 }
 
 .top{
-  color:#fff;
-  text-shadow:0 0 10px gold;
+  text-shadow:0 0 15px gold;
 }
 
-.phone{
-  font-size:13px;
-  color:#aaa;
-}
+/* PHONE */
+.phone{color:#aaa;font-size:13px}
 
-/* 🌈 BUTTON */
-.rainbow-btn{
+/* 🌈 BUTTON FULL */
+.btn{
   display:block;
   margin-top:10px;
   padding:10px;
@@ -146,16 +142,14 @@ input{
   font-weight:bold;
   color:#000;
 
-  background:linear-gradient(90deg,#00ffcc,#00aaff,#00ffcc);
-  background-size:200%;
-  animation:move 3s linear infinite;
+  background:linear-gradient(
+    90deg,
+    red,orange,yellow,lime,cyan,blue,violet,red
+  );
+  background-size:400%;
+  animation:rainbow 4s linear infinite;
 
-  box-shadow:0 0 12px #00ffcc;
-}
-
-@keyframes move{
-  0%{background-position:0%}
-  100%{background-position:200%}
+  box-shadow:0 0 15px #00ffcc;
 }
 
 /* BOTTOM */
@@ -165,7 +159,7 @@ input{
   width:100%;
   display:flex;
   justify-content:space-around;
-  background:rgba(0,0,0,0.7);
+  background:#000;
   padding:10px 0;
 }
 
@@ -183,12 +177,10 @@ input{
 
 <body>
 
-<!-- 🔥 SPLASH -->
 <div id="splash">
   <div class="logo">Midman Trusted Malaysia</div>
 </div>
 
-<!-- APP -->
 <div id="app">
 
 <header>Midman Trusted Malaysia</header>
@@ -217,16 +209,16 @@ input{
 
 <script>
 
-/* SPLASH CONTROL */
+/* SPLASH */
 setTimeout(()=>{
-  document.getElementById("splash").classList.add("hide");
-  document.getElementById("app").style.display="block";
+  splash.classList.add("hide");
+  app.style.display="block";
 },2500);
 
 /* DATA */
 let data=[
-  {nama:"MID IPANZZ", phone:"60175970694", type:"midman", top:true},
-  {nama:"SLRMYAPI", phone:"60104331830", type:"midman"}
+  {nama:"MID IPANZZ",phone:"60175970694",type:"midman",top:true},
+  {nama:"SLRMYAPI",phone:"60104331830",type:"midman"}
 ];
 
 let currentTab="midman";
@@ -234,7 +226,6 @@ let currentTab="midman";
 /* RENDER */
 function render(){
   let html="";
-
   data.forEach(d=>{
     if(d.type!==currentTab) return;
 
@@ -244,13 +235,11 @@ function render(){
         ${d.top?'🔥 ':''}${d.nama}
       </div>
       <div class="phone">${d.phone}</div>
-
-      <a class="rainbow-btn" href="https://wa.me/${d.phone}" target="_blank">
+      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
         WhatsApp
       </a>
     </div>`;
   });
-
   list.innerHTML=html;
 }
 
@@ -276,9 +265,7 @@ search.addEventListener("keyup",function(){
   });
 });
 
-/* START */
 render();
-
 </script>
 
 </body>
