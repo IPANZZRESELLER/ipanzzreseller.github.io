@@ -9,31 +9,19 @@
 <style>
 body{
   margin:0;
-  font-family:Arial;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
   background:#000;
   color:#fff;
 }
 
 /* HEADER */
 header{
+  text-align:center;
   padding:20px;
-}
-
-/* 🌈 TITLE ULTRA */
-.title{
-  font-size:22px;
+  font-size:20px;
   font-weight:bold;
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet,red);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:rainbowMove 5s linear infinite;
-  text-shadow:0 0 10px #fff,0 0 20px #0ff,0 0 40px #0ff;
-}
-
-@keyframes rainbowMove{
-  0%{background-position:0%}
-  100%{background-position:400%}
+  color:#00ffcc;
+  text-shadow:0 0 10px #00ffcc;
 }
 
 /* CONTAINER */
@@ -47,111 +35,133 @@ header{
 input{
   width:100%;
   padding:12px;
-  border-radius:10px;
+  border-radius:14px;
   border:none;
-  background:#111;
+  outline:none;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
   color:#fff;
-  margin-bottom:10px;
+  margin-bottom:15px;
 }
 
-/* TAB */
+/* TAB (iOS STYLE) */
 .tabs{
   display:flex;
-  gap:5px;
-  margin-bottom:10px;
+  background:rgba(255,255,255,0.05);
+  border-radius:14px;
+  padding:4px;
+  backdrop-filter:blur(10px);
+  margin-bottom:15px;
 }
 
 .tabs button{
   flex:1;
   padding:10px;
   border:none;
-  border-radius:8px;
-  background:#111;
-  color:#fff;
+  border-radius:10px;
+  background:transparent;
+  color:#aaa;
   transition:0.3s;
 }
 
-.tabs button:hover{
+.active{
+  background:#00ffcc;
+  color:#000;
   box-shadow:0 0 10px #00ffcc;
 }
 
-.active{
-  background:#00ff99;
-  color:#000;
-  box-shadow:0 0 15px #00ff99;
-}
-
-/* 🌈 CARD NEON */
+/* CARD */
 .card{
-  background:#111;
-  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border-radius:18px;
   padding:15px;
   margin-bottom:12px;
-  position:relative;
-  overflow:hidden;
+  transition:0.2s;
 }
 
-/* RAINBOW BORDER */
-.card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  padding:2px;
-  border-radius:12px;
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  animation:rainbowMove 6s linear infinite;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
+.card:active{
+  transform:scale(0.97);
 }
 
-/* HOVER EFFECT */
-.card:hover{
-  transform:scale(1.03);
-  box-shadow:0 0 15px #00ffcc;
-}
-
-/* NAME GLOW */
+/* NAME */
 .name{
   font-weight:bold;
   font-size:16px;
   color:#00ffcc;
-  text-shadow:0 0 5px #00ffcc,0 0 15px #00ffcc;
 }
 
-/* TOP TRUSTED */
 .top{
   color:#fff;
-  text-shadow:0 0 10px gold,0 0 20px gold,0 0 40px gold;
+  text-shadow:0 0 10px gold;
 }
 
-/* BUTTON */
-.btn{
+/* PHONE */
+.phone{
+  font-size:13px;
+  color:#aaa;
+}
+
+/* 🌈 RAINBOW BUTTON */
+.rainbow-btn{
   display:block;
-  margin-top:8px;
+  margin-top:10px;
   padding:10px;
-  border-radius:8px;
+  border-radius:12px;
   text-align:center;
   text-decoration:none;
-  background:#25D366;
-  color:#fff;
-  transition:0.3s;
+  font-weight:bold;
+  color:#000;
+
+  background:linear-gradient(
+    90deg,
+    #00ffcc,#00aaff,#00ffcc
+  );
+  background-size:200%;
+  animation:rainbowMove 3s linear infinite;
+
+  box-shadow:0 0 12px #00ffcc;
 }
 
-.btn:hover{
-  box-shadow:0 0 10px #25D366;
+@keyframes rainbowMove{
+  0%{background-position:0%}
+  100%{background-position:200%}
+}
+
+.rainbow-btn:active{
+  transform:scale(0.95);
+}
+
+/* BOTTOM MENU */
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(15px);
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+}
+
+.bottom button{
+  background:none;
+  border:none;
+  color:#aaa;
+  font-size:12px;
+}
+
+.bottom .active{
+  color:#00ffcc;
+  text-shadow:0 0 10px #00ffcc;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<div class="title">Midman Trusted Malaysia</div>
-</header>
+<header>Midman Trusted Malaysia</header>
 
 <div class="container">
 
@@ -165,6 +175,13 @@ input{
 
 <div id="list"></div>
 
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom">
+  <button onclick="setTab('midman')" id="bMid" class="active">⭐<br>Midman</button>
+  <button onclick="setTab('seller')" id="bSeller">🛒<br>Seller</button>
+  <button onclick="setTab('scam')" id="bScam">⚠️<br>Scam</button>
 </div>
 
 <script>
@@ -193,9 +210,11 @@ function render(){
         ${d.top ? '🔥 ' : ''}${d.nama}
       </div>
 
-      <p>${d.phone}</p>
+      <div class="phone">${d.phone}</div>
 
-      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
+      <a class="rainbow-btn" href="https://wa.me/${d.phone}" target="_blank">
+        WhatsApp
+      </a>
     </div>
     `;
   });
@@ -208,10 +227,11 @@ function setTab(tab){
   currentTab = tab;
 
   document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".bottom button").forEach(b=>b.classList.remove("active"));
 
-  if(tab==="seller") btnSeller.classList.add("active");
-  if(tab==="midman") btnMidman.classList.add("active");
-  if(tab==="scam") btnScam.classList.add("active");
+  if(tab==="seller"){ btnSeller.classList.add("active"); bSeller.classList.add("active"); }
+  if(tab==="midman"){ btnMidman.classList.add("active"); bMid.classList.add("active"); }
+  if(tab==="scam"){ btnScam.classList.add("active"); bScam.classList.add("active"); }
 
   render();
 }
