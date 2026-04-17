@@ -64,14 +64,47 @@ input{
 
 /* CARD */
 .midman{
-  background: rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
+  position: relative;
+  background: #111;
   border-radius:16px;
   padding:18px;
   margin-bottom:15px;
-  transition:0.3s;
-  animation: fadeUp 0.6s ease;
+  z-index:1;
+  overflow:hidden;
+}
+
+.midman::before{
+  content:"";
+  position:absolute;
+  top:-2px;
+  left:-2px;
+  right:-2px;
+  bottom:-2px;
+  background: linear-gradient(270deg,
+    red, orange, yellow, green, cyan, blue, violet, red);
+  background-size:400%;
+  border-radius:18px;
+  z-index:-1;
+  animation: rgbBorder 6s linear infinite;
+  
+  @keyframes rgbBorder{
+  0%{ background-position:0% }
+  100%{ background-position:300% }
+}
+}
+
+.midman::after{
+  content:"";
+  position:absolute;
+  top:2px;
+  left:2px;
+  right:2px;
+  bottom:2px;
+  background:#111;
+  border-radius:14px;
+  z-index:-1;
+}
+
 }
 
 .midman:hover{
