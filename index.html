@@ -3,63 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MIDMAN TRUSTED MALAYSIA</title>
+<title>Midman Trusted Malaysia</title>
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
 <style>
 body{margin:0;font-family:Arial;background:#0b0b0b;color:#fff}
-header{text-align:center;padding:25px}
-.profile{width:90px;border-radius:50%;box-shadow:0 0 20px #00ffc3}
 .container{max-width:500px;margin:auto;padding:15px}
 
-input{
-  width:100%;padding:12px;border-radius:10px;
-  border:none;background:#111;color:#fff;margin-bottom:10px;
+/* CARD */
+.card{
+  background:#111;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:12px;
+}
+
+/* AVATAR */
+.avatar{
+  width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(45deg,#d946ef,#3b82f6);
+  font-weight:bold;margin-bottom:5px;
+}
+.avatar img{width:100%;height:100%;border-radius:50%}
+
+/* BTN */
+.btn{
+  display:block;margin-top:5px;padding:8px;
+  background:#25D366;text-align:center;
+  border-radius:8px;color:#fff;text-decoration:none;
+}
+
+/* REVIEW */
+.review{
+  background:#1a1a1a;
+  padding:8px;
+  margin-top:5px;
+  border-radius:8px;
+  font-size:12px;
 }
 
 button{
-  width:100%;padding:10px;border-radius:10px;
-  margin-bottom:10px;border:none;cursor:pointer;
-}
-
-.login{border:1px solid #00ffc3;background:#111;color:#00ffc3}
-.admin{border:1px solid #d946ef;background:#111;color:#d946ef}
-.logout{border:1px solid red;background:#111;color:red}
-
-.midman{
-  background:#111;padding:15px;
-  border-radius:12px;margin-bottom:10px;
-}
-
-.btn{
-  display:block;margin-top:10px;
-  padding:10px;text-align:center;
-  background:linear-gradient(90deg,#d946ef,#3b82f6);
-  border-radius:10px;color:#fff;text-decoration:none;
-}
-
-.badge{
-  background:#00ff99;color:#000;
-  font-size:10px;padding:3px 6px;border-radius:5px;
+  width:100%;
+  padding:8px;
+  margin-top:5px;
+  border-radius:8px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<img src="logo.png" class="profile">
-<h2>MIDMAN TRUSTED MALAYSIA</h2>
-<p id="date"></p>
-</header>
-
 <div class="container">
 
-<input id="search" placeholder="Cari midman...">
+<h2>Midman Trusted Malaysia</h2>
+
+<input id="search" placeholder="Search...">
 
 <div id="topUI"></div>
 <div id="list"></div>
@@ -68,131 +71,164 @@ button{
 
 <script>
 
-/* 🔥 CONFIG (PASTE DARI FIREBASE) */
+/* CONFIG */
 const firebaseConfig = {
   apiKey: "PASTE",
   authDomain: "PASTE",
   projectId: "PASTE",
+  storageBucket: "PASTE"
 };
 
 firebase.initializeApp(firebaseConfig);
+
 const db = firebase.firestore();
 const auth = firebase.auth();
+const storage = firebase.storage();
 
-/* 🔐 ADMIN EMAIL (LETak EMAIL KAU) */
-const ADMIN_EMAIL = "kau@email.com";
-
+const ADMIN_EMAIL = "EMAIL_KAU";
 let isAdmin = false;
 
-/* 🔄 CHECK LOGIN */
+/* LOGIN */
 auth.onAuthStateChanged(user=>{
-  if(user && user.email === ADMIN_EMAIL){
-    isAdmin = true;
-  } else {
-    isAdmin = false;
-  }
+  isAdmin = user && user.email === ADMIN_EMAIL;
   renderUI();
 });
 
-/* UI */
 function renderUI(){
-  let html = "";
-
-  if(!isAdmin){
-    html += `<button class="login" onclick="login()">🔐 Login Admin</button>`;
-  } else {
-    html += `
-      <button class="admin" onclick="addMidman()">+ Tambah</button>
-      <button class="logout" onclick="logout()">Logout</button>
-    `;
-  }
-
-  document.getElementById("topUI").innerHTML = html;
+  document.getElementById("topUI").innerHTML = isAdmin
+  ? `<button onclick="addMidman()">+ Tambah</button>
+     <button onclick="logout()">Logout</button>`
+  : `<button onclick="login()">🔐 Admin</button>`;
 }
 
-/* LOGIN */
 function login(){
   let email = prompt("Email:");
   let pass = prompt("Password:");
-
-  auth.signInWithEmailAndPassword(email, pass)
-  .catch(()=>alert("Login gagal"));
+  auth.signInWithEmailAndPassword(email, pass);
 }
 
 function logout(){
   auth.signOut();
 }
 
-/* REALTIME LOAD */
+/* AVATAR */
+function avatar(nama,img){
+  if(img){
+    return `<div class="avatar"><img src="${img}"></div>`;
+  }
+  return `<div class="avatar">${nama[0].toUpperCase()}</div>`;
+}
+
+/* LOAD MIDMAN */
 db.collection("midman").onSnapshot(snapshot=>{
-  let html = "";
+  let html="";
 
   snapshot.forEach(doc=>{
     let d = doc.data();
 
-    html += `
-    <div class="midman">
-      <h3>${d.nama} <span class="badge">VERIFIED</span></h3>
-      <p>${d.phone}</p>
-      <p>⭐ ${d.rating || 5}</p>
-      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
+    html+=`
+    <div class="card">
+      ${avatar(d.nama,d.img)}
+
+      <b>${d.nama}</b><br>
+      ⭐ ${d.rating || 5}
+
+      <a class="btn" href="https://wa.me/${d.phone}">WhatsApp</a>
+
+      <button onclick="addReview('${doc.id}')">💬 Review</button>
+
+      <div id="review-${doc.id}"></div>
 
       ${isAdmin ? `
-        <button onclick="editMidman('${doc.id}','${d.nama}','${d.phone}','${d.rating}')">Edit</button>
+        <button onclick="editMidman('${doc.id}','${d.nama}','${d.phone}')">Edit</button>
         <button onclick="deleteMidman('${doc.id}')">Delete</button>
-      ` : ""}
+      `:""}
     </div>
     `;
+
+    loadReview(doc.id);
   });
 
   document.getElementById("list").innerHTML = html;
 });
 
-/* ADD */
+/* ADD MIDMAN + UPLOAD */
 function addMidman(){
   let nama = prompt("Nama:");
   let phone = prompt("Phone:");
   let rating = prompt("Rating:");
 
-  db.collection("midman").add({
-    nama,
-    phone,
-    rating
-  });
+  let input = document.createElement("input");
+  input.type="file";
+
+  input.onchange = async e=>{
+    let file = e.target.files[0];
+    let ref = storage.ref("midman/"+file.name);
+
+    await ref.put(file);
+    let url = await ref.getDownloadURL();
+
+    db.collection("midman").add({
+      nama, phone, rating, img:url
+    });
+  };
+
+  input.click();
 }
 
 /* DELETE */
 function deleteMidman(id){
-  if(confirm("Padam?")){
-    db.collection("midman").doc(id).delete();
-  }
+  db.collection("midman").doc(id).delete();
 }
 
 /* EDIT */
-function editMidman(id,nama,phone,rating){
+function editMidman(id,nama,phone){
   let n = prompt("Nama:",nama);
   let p = prompt("Phone:",phone);
-  let r = prompt("Rating:",rating);
 
   db.collection("midman").doc(id).update({
-    nama:n,
-    phone:p,
-    rating:r
+    nama:n, phone:p
+  });
+}
+
+/* REVIEW */
+function addReview(midmanId){
+  let text = prompt("Tulis review:");
+  let rating = prompt("Rating (1-5):");
+
+  db.collection("review").add({
+    midmanId,
+    text,
+    rating
+  });
+}
+
+/* LOAD REVIEW */
+function loadReview(id){
+  db.collection("review")
+  .where("midmanId","==",id)
+  .onSnapshot(snapshot=>{
+    let html="";
+    snapshot.forEach(doc=>{
+      let d = doc.data();
+      html+=`
+      <div class="review">
+        ⭐ ${d.rating}<br>
+        ${d.text}
+      </div>`;
+    });
+    document.getElementById("review-"+id).innerHTML = html;
   });
 }
 
 /* SEARCH */
 document.getElementById("search").addEventListener("keyup", function(){
-  let val = this.value.toLowerCase();
-  document.querySelectorAll(".midman").forEach(card=>{
+  let val=this.value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card=>{
     card.style.display =
     card.innerText.toLowerCase().includes(val) ? "" : "none";
   });
 });
-
-/* DATE */
-document.getElementById("date").innerText =
-new Date().toLocaleDateString("ms-MY");
 
 </script>
 
