@@ -4,28 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List Midman Trusted Malaysia</title>
+<title>Midman Trusted Malaysia</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background: linear-gradient(135deg,#0f0f0f,#1a1a1a);
+  font-family:'Inter',sans-serif;
+  background: radial-gradient(circle at top,#111,#000);
   color:#fff;
 }
 
 /* HEADER */
 header{
   text-align:center;
-  padding:40px 20px 20px;
+  padding:50px 20px 20px;
 }
 header h1{
+  font-size:28px;
   margin:0;
-  font-size:26px;
 }
 header p{
-  color:#aaa;
-  font-size:14px;
+  color:#888;
 }
 
 /* CONTAINER */
@@ -38,28 +39,30 @@ header p{
 /* SEARCH */
 input{
   width:100%;
-  padding:14px;
-  border-radius:12px;
+  padding:15px;
+  border-radius:14px;
   border:none;
   outline:none;
-  background:#1f1f1f;
+  background:#111;
   color:#fff;
   margin-bottom:20px;
+  font-size:14px;
 }
 
 /* CARD */
 .midman{
-  backdrop-filter: blur(10px);
   background: rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:15px;
-  padding:15px;
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border-radius:16px;
+  padding:18px;
   margin-bottom:15px;
-  transition:0.2s;
+  transition:0.25s;
 }
 
 .midman:hover{
-  transform:scale(1.02);
+  transform: translateY(-3px);
+  border-color:#00ffc3;
 }
 
 .midman h3{
@@ -68,38 +71,38 @@ input{
 }
 
 .status{
-  font-size:13px;
-  color:#00ffcc;
+  font-size:12px;
+  color:#00ffc3;
 }
 
 /* BUTTON */
 .btn{
   display:block;
   text-align:center;
-  margin-top:10px;
+  margin-top:12px;
   padding:12px;
-  border-radius:10px;
+  border-radius:12px;
+  background: linear-gradient(90deg,#00ffc3,#00aaff);
+  color:#000;
   text-decoration:none;
-  color:#fff;
-  background: linear-gradient(90deg,#00ffcc,#00ccff);
-  font-weight:bold;
+  font-weight:600;
 }
 
 /* BADGE */
 .badge{
-  background:#00ffcc;
+  background:#00ffc3;
   color:#000;
-  padding:3px 8px;
-  font-size:11px;
+  font-size:10px;
+  padding:3px 7px;
   border-radius:5px;
-  margin-left:5px;
+  margin-left:6px;
 }
 
 /* FOOTER */
 footer{
   text-align:center;
+  color:#666;
   font-size:12px;
-  color:#777;
   padding:20px;
 }
 </style>
@@ -109,12 +112,12 @@ footer{
 
 <header>
   <h1>Midman Trusted Malaysia</h1>
-  <p>Dikemaskini <span id="date"></span></p>
+  <p>Updated <span id="date"></span></p>
 </header>
 
 <div class="container">
 
-<input type="text" id="search" placeholder="Cari nama midman...">
+<input type="text" id="search" placeholder="Search midman...">
 
 <div class="midman">
   <h3>MID IPANZZ <span class="badge">VERIFIED</span></h3>
@@ -137,15 +140,15 @@ footer{
 </footer>
 
 <script>
-document.getElementById("date").innerHTML =
-  new Date().toLocaleDateString("ms-MY");
+document.getElementById("date").innerText =
+new Date().toLocaleDateString("ms-MY");
 
 document.getElementById("search").addEventListener("keyup", function(){
-  let value = this.value.toLowerCase();
-  document.querySelectorAll(".midman").forEach(function(card){
-    card.style.display = card.innerText.toLowerCase().includes(value)
-    ? "" : "none";
-  });
+let value = this.value.toLowerCase();
+document.querySelectorAll(".midman").forEach(function(card){
+card.style.display = card.innerText.toLowerCase().includes(value)
+? "" : "none";
+});
 });
 </script>
 
