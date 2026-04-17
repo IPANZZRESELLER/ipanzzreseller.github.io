@@ -84,6 +84,29 @@ input{
   text-decoration:none;
 }
 
+/* ADMIN ACTION */
+.actions{
+  margin-top:10px;
+}
+
+.actions button{
+  margin-right:5px;
+  padding:6px 10px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.edit{
+  background:#3b82f6;
+  color:#fff;
+}
+
+.delete{
+  background:#ff3b3b;
+  color:#fff;
+}
+
 .badge{
   background:#00ff99;
   color:#000;
@@ -114,7 +137,9 @@ input{
 </div>
 
 <script>
-let data = [
+
+/* AUTO LOAD */
+let data = JSON.parse(localStorage.getItem("midmanData")) || [
   {
     nama:"MID IPANZZ",
     phone:"60175970694",
@@ -124,11 +149,12 @@ let data = [
   }
 ];
 
+/* RENDER */
 function render(){
   let list = document.getElementById("list");
   list.innerHTML = "";
 
-  data.forEach(item=>{
+  data.forEach((item,index)=>{
     list.innerHTML += `
     <div class="midman">
       <img src="${item.img}">
@@ -136,9 +162,16 @@ function render(){
       <p>${item.phone}</p>
       <p class="status">⭐ ${item.rating}/5</p>
       <a class="btn" href="https://wa.me/${item.phone}">WhatsApp</a>
+
+      <div class="actions">
+        <button class="edit" onclick="editMidman(${index})">Edit</button>
+        <button class="delete" onclick="deleteMidman(${index})">Delete</button>
+      </div>
     </div>
     `;
   });
+
+  localStorage.setItem("midmanData", JSON.stringify(data));
 }
 
 render();
@@ -152,33 +185,51 @@ document.getElementById("search").addEventListener("keyup", function(){
   });
 });
 
-/* ADMIN */
+/* ADD */
 function addMidman(){
   let pass = prompt("Password:");
-
   if(pass === "ipanzz"){
     let nama = prompt("Nama:");
-    let phone = prompt("Phone (601..):");
-    let rating = prompt("Rating (1-5):");
+    let phone = prompt("Phone:");
+    let rating = prompt("Rating:");
     let img = prompt("Link gambar:");
 
-    data.push({
-      nama,
-      phone,
-      verified:true,
-      rating,
-      img
-    });
-
+    data.push({nama, phone, rating, img, verified:true});
     render();
-  } else {
-    alert("Salah password");
-  }
+  } else alert("Salah password");
+}
+
+/* DELETE */
+function deleteMidman(index){
+  let pass = prompt("Password:");
+  if(pass === "ipanzz"){
+    if(confirm("Padam midman ni?")){
+      data.splice(index,1);
+      render();
+    }
+  } else alert("Salah password");
+}
+
+/* EDIT */
+function editMidman(index){
+  let pass = prompt("Password:");
+  if(pass === "ipanzz"){
+    let item = data[index];
+
+    let nama = prompt("Nama:", item.nama);
+    let phone = prompt("Phone:", item.phone);
+    let rating = prompt("Rating:", item.rating);
+    let img = prompt("Link gambar:", item.img);
+
+    data[index] = {nama, phone, rating, img, verified:true};
+    render();
+  } else alert("Salah password");
 }
 
 /* DATE */
 document.getElementById("date").innerText =
 new Date().toLocaleDateString("ms-MY");
+
 </script>
 
 </body>
