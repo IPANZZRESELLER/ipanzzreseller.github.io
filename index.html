@@ -14,7 +14,7 @@ body{
   color:#fff;
 }
 
-/* 🎬 INTRO (SMOOTH) */
+/* INTRO */
 #splash{
   position:fixed;
   inset:0;
@@ -31,11 +31,12 @@ body{
   background:linear-gradient(90deg,#d946ef,#3b82f6);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:fadeIn 1.5s ease;
+  text-shadow:0 0 20px #d946ef55;
+  animation:fade 1.5s ease;
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px)}
+@keyframes fade{
+  from{opacity:0; transform:translateY(10px)}
   to{opacity:1; transform:translateY(0)}
 }
 
@@ -66,11 +67,17 @@ header{
   background:transparent;
   color:#aaa;
   border-radius:10px;
+  transition:0.2s;
+}
+
+.tabs button:hover{
+  color:#fff;
 }
 
 .active{
-  background:#d946ef;
+  background:linear-gradient(90deg,#d946ef,#3b82f6);
   color:#fff;
+  box-shadow:0 0 10px #3b82f6aa;
 }
 
 /* CARD */
@@ -80,13 +87,21 @@ header{
   padding:15px;
   border-radius:14px;
   border:1px solid #222;
+  transition:0.2s;
 }
 
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 15px #3b82f633;
+}
+
+/* NAME */
 .name{
   font-weight:600;
   margin-bottom:5px;
 }
 
+/* PHONE */
 .phone{
   font-size:13px;
   color:#aaa;
@@ -102,6 +117,11 @@ header{
   background:linear-gradient(90deg,#d946ef,#3b82f6);
   color:#fff;
   text-decoration:none;
+  transition:0.2s;
+}
+
+.btn:hover{
+  box-shadow:0 0 12px #3b82f6aa;
 }
 
 /* MUSIC */
