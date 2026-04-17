@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Midman Game UI</title>
+<title>Midman Trusted</title>
 
 <style>
 body{
@@ -15,14 +15,14 @@ body{
   overflow:hidden;
 }
 
-/* 🌌 BACKGROUND */
+/* BACKGROUND */
 canvas{
   position:fixed;
   inset:0;
   z-index:-1;
 }
 
-/* 🎬 SPLASH */
+/* SPLASH */
 #splash{
   position:fixed;
   inset:0;
@@ -34,9 +34,10 @@ canvas{
 }
 
 .logo{
-  font-size:28px;
+  font-size:26px;
   font-weight:bold;
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   animation:rainbow 4s linear infinite;
@@ -55,19 +56,17 @@ header{
   text-align:center;
   padding:15px;
   font-size:20px;
-  text-shadow:0 0 15px cyan;
 }
 
-/* TAB */
+/* TABS */
 .tabs{
   display:flex;
   justify-content:center;
   gap:5px;
-  padding:10px;
 }
 
 .tabs button{
-  padding:8px 15px;
+  padding:8px 12px;
   border:none;
   border-radius:10px;
   background:#111;
@@ -84,23 +83,15 @@ header{
   background:#111;
   margin:10px;
   padding:15px;
-  border-radius:15px;
-  box-shadow:0 0 15px #00ffcc44;
-  transition:0.3s;
+  border-radius:12px;
 }
 
-.card:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 25px #00ffcc;
-}
-
-/* NAME */
 .name{
   font-weight:bold;
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:rainbow 4s linear infinite;
+  animation:rainbow 5s linear infinite;
 }
 
 /* BUTTON */
@@ -108,23 +99,18 @@ header{
   display:block;
   margin-top:10px;
   padding:10px;
-  border-radius:10px;
   text-align:center;
+  border-radius:10px;
   text-decoration:none;
-  font-weight:bold;
   color:#000;
+  font-weight:bold;
 
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
   background-size:400%;
-  animation:rainbow 4s linear infinite, pulse 1s infinite;
+  animation:rainbow 4s linear infinite;
 }
 
-@keyframes pulse{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.08)}
-}
-
-/* MUSIC BTN */
+/* MUSIC */
 .music{
   position:fixed;
   top:10px;
@@ -132,7 +118,7 @@ header{
   background:#111;
   border:1px solid cyan;
   color:cyan;
-  padding:10px;
+  padding:8px;
   border-radius:10px;
 }
 </style>
@@ -142,34 +128,43 @@ header{
 
 <canvas id="bg"></canvas>
 
-<!-- SPLASH -->
 <div id="splash">
   <div class="logo">Midman Trusted</div>
 </div>
 
-<!-- APP -->
 <div id="app">
 
-<header>🎮 Midman Trusted Malaysia</header>
+<header>Midman Trusted Malaysia</header>
 
-<button class="music" onclick="toggleMusic()">🎵</button>
+<button class="music" id="musicBtn">🎵</button>
 
 <div class="tabs">
-  <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
-  <button onclick="setTab('seller')" id="btnSeller">Seller</button>
-  <button onclick="setTab('scam')" id="btnScam">Scam</button>
+  <button id="btnMid" class="active">Midman</button>
+  <button id="btnSeller">Seller</button>
+  <button id="btnScam">Scam</button>
 </div>
 
 <div id="list"></div>
 
 </div>
 
-<!-- AUDIO -->
 <audio id="bgm" loop>
   <source src="https://files.catbox.moe/3x0u8v.mp3">
 </audio>
 
 <script>
+
+/* GET ELEMENT (IMPORTANT FIX) */
+const splash = document.getElementById("splash");
+const app = document.getElementById("app");
+const list = document.getElementById("list");
+
+const btnMid = document.getElementById("btnMid");
+const btnSeller = document.getElementById("btnSeller");
+const btnScam = document.getElementById("btnScam");
+
+const musicBtn = document.getElementById("musicBtn");
+const bgm = document.getElementById("bgm");
 
 /* SPLASH */
 setTimeout(()=>{
@@ -177,83 +172,98 @@ setTimeout(()=>{
   app.style.display="block";
 },2000);
 
-/* STAR */
-let c = bg, ctx = c.getContext("2d");
-c.width=innerWidth;
-c.height=innerHeight;
+/* STAR BG */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 let stars = Array.from({length:100},()=>({
-  x:Math.random()*c.width,
-  y:Math.random()*c.height,
-  z:Math.random()*2+1
+  x:Math.random()*canvas.width,
+  y:Math.random()*canvas.height,
+  s:Math.random()*2
 }));
 
-function anim(){
-  ctx.clearRect(0,0,c.width,c.height);
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.fillStyle="#fff";
-  stars.forEach(s=>{
-    ctx.fillRect(s.x,s.y,s.z,s.z);
-    s.y+=s.z;
-    if(s.y>c.height) s.y=0;
+
+  stars.forEach(star=>{
+    ctx.fillRect(star.x,star.y,star.s,star.s);
+    star.y += star.s;
+    if(star.y > canvas.height) star.y = 0;
   });
-  requestAnimationFrame(anim);
+
+  requestAnimationFrame(animate);
 }
-anim();
+animate();
 
 /* DATA */
-let data=[
-  {nama:"MID IPANZZ",phone:"60175970694",type:"midman"},
-  {nama:"SLRMYAPI",phone:"60104331830",type:"midman"},
-
-  {nama:"SHOP ABC",phone:"60122222222",type:"seller"},
-
-  {nama:"SCAMMER XYZ",phone:"60111111111",type:"scam"}
+let data = [
+  {nama:"MID IPANZZ", phone:"60175970694", type:"midman"},
+  {nama:"SLRMYAPI", phone:"60104331830", type:"midman"},
+  {nama:"SHOP ABC", phone:"60122222222", type:"seller"},
+  {nama:"SCAMMER XYZ", phone:"60111111111", type:"scam"}
 ];
 
-let currentTab="midman";
+let currentTab = "midman";
 
 /* RENDER */
 function render(){
   let html="";
   data.forEach(d=>{
-    if(d.type!==currentTab) return;
+    if(d.type !== currentTab) return;
 
-    html+=`
+    html += `
     <div class="card">
       <div class="name">${d.nama}</div>
       <p>${d.phone}</p>
-      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
+      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
+        WhatsApp
+      </a>
     </div>`;
   });
-  list.innerHTML=html;
+
+  list.innerHTML = html;
 }
 
-/* TAB */
-function setTab(tab){
-  currentTab=tab;
+/* TAB CLICK */
+btnMid.onclick = ()=>{
+  currentTab="midman";
+  setActive(btnMid);
+};
 
-  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+btnSeller.onclick = ()=>{
+  currentTab="seller";
+  setActive(btnSeller);
+};
 
-  if(tab==="midman") btnMid.classList.add("active");
-  if(tab==="seller") btnSeller.classList.add("active");
-  if(tab==="scam") btnScam.classList.add("active");
+btnScam.onclick = ()=>{
+  currentTab="scam";
+  setActive(btnScam);
+};
 
+function setActive(btn){
+  [btnMid,btnSeller,btnScam].forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
   render();
 }
 
-/* MUSIC */
+/* MUSIC FIX */
 let musicOn=false;
-function toggleMusic(){
-  let a=bgm;
+
+musicBtn.onclick = ()=>{
   if(!musicOn){
-    a.play().catch(()=>alert("Tekan lagi sekali"));
+    bgm.play().catch(()=>alert("Tekan lagi sekali"));
     musicOn=true;
   }else{
-    a.pause();
+    bgm.pause();
     musicOn=false;
   }
-}
+};
 
+/* START */
 render();
 
 </script>
