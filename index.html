@@ -3,107 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Trusted System</title>
 
-<style>
-body{margin:0;font-family:-apple-system;background:#000;color:#fff}
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
-/* RAINBOW */
-@keyframes rainbow{
-0%{background-position:0%}
-100%{background-position:300%}
+<style>
+body{
+  margin:0;
+  font-family:'Orbitron',sans-serif;
+  background:#000;
+  color:#fff;
 }
 
 /* INTRO */
 #splash{
-position:fixed;inset:0;background:#000;
-display:flex;justify-content:center;align-items:center;z-index:999;
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
-.logo{text-align:center;font-size:24px;line-height:1.6}
+
+.logo{
+  text-align:center;
+  font-size:24px;
+}
+
 .line{
-display:block;
-opacity:0;
-transform:translateY(15px);
-background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-background-size:300%;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+  display:block;
+  opacity:0;
+  transform:translateY(15px);
 }
+
 .line.show{
-animation:fadeUp 0.6s ease forwards, rainbow 10s linear infinite;
+  animation:fade 0.6s forwards;
 }
-@keyframes fadeUp{
-to{opacity:1;transform:translateY(0)}
+
+@keyframes fade{
+  to{opacity:1;transform:translateY(0)}
 }
 
 #app{display:none}
 
 /* HEADER */
 header{
-text-align:center;padding:25px;font-size:22px;
-background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-background-size:300%;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-animation:rainbow 12s linear infinite;
+  text-align:center;
+  padding:20px;
+  font-size:22px;
+  text-shadow:0 0 10px #f0f,0 0 20px #f0f;
 }
 
 /* TABS */
-.tabs{display:flex;margin:10px;background:#111;border-radius:14px;padding:5px}
-.tabs button{flex:1;padding:10px;border:none;background:transparent;color:#aaa}
-.active{color:#fff;background:#222}
-
-/* ADD */
-.add{
-margin:10px;padding:12px;border-radius:14px;border:1px solid #333;
-text-align:center;display:none;
+.tabs{
+  display:flex;
+  margin:10px;
+  background:#111;
+  border-radius:12px;
 }
+
+.tabs button{
+  flex:1;
+  padding:10px;
+  background:none;
+  border:none;
+  color:#aaa;
+}
+
+.active{color:#fff}
 
 /* CARD */
-.card{margin:10px;padding:15px;border-radius:16px;border:1px solid #222}
-.midman{background:#0f1f0f;border-color:#22c55e}
-.seller{background:#0f172a;border-color:#3b82f6}
-.scam{background:#1f0f0f;border-color:#ef4444}
+.card{
+  margin:10px;
+  padding:15px;
+  border-radius:15px;
+}
+
+/* COLORS + GLOW */
+.midman{border:1px solid #22c55e;box-shadow:0 0 10px #22c55e}
+.seller{border:1px solid #3b82f6;box-shadow:0 0 10px #3b82f6}
+.scam{border:1px solid #ef4444;box-shadow:0 0 10px #ef4444}
 
 /* PROFILE */
-.profile{display:flex;gap:10px;align-items:center}
-.avatar{
-width:45px;height:45px;border-radius:50%;
-object-fit:cover;border:2px solid #333;
+.profile{
+  display:flex;
+  gap:10px;
 }
+
+.avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+}
+
 .logoSmall{
-width:18px;height:18px;border-radius:50%;margin-left:5px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
 }
 
 /* NAME */
 .name{
-font-weight:600;
-background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-background-size:300%;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-animation:rainbow 10s linear infinite;
+  text-shadow:0 0 5px #fff,0 0 10px #0ff,0 0 20px #0ff;
 }
-.verify{color:#3b82f6;margin-left:5px}
 
 /* BUTTON */
 .btn{
-display:block;margin-top:12px;padding:12px;border-radius:12px;
-text-align:center;text-decoration:none;
-background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-background-size:300%;
-animation:rainbow 8s linear infinite;
-color:#000;
+  display:block;
+  margin-top:10px;
+  padding:10px;
+  text-align:center;
+  border-radius:10px;
+  color:#fff;
+  border:1px solid #0ff;
+  box-shadow:0 0 10px #0ff;
+  text-decoration:none;
 }
 
 /* DELETE */
-.delete{margin-top:8px;color:#ef4444;font-size:12px}
+.delete{
+  margin-top:8px;
+  color:red;
+  font-size:12px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div id="splash">
   <div class="logo">
     <span class="line">Welcome to</span>
@@ -118,55 +146,49 @@ color:#000;
 
 <div class="tabs">
 <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
-<button onclick="setTab('seller')" id="btnSeller">Seller Trusted</button>
-<button onclick="setTab('scam')" id="btnScam">Scammer</button>
+<button onclick="setTab('seller')" id="btnSeller">Seller</button>
+<button onclick="setTab('scam')" id="btnScam">Scam</button>
 </div>
 
-<div class="add" id="addBtn" onclick="addData()">+ Tambah</div>
+<div onclick="addData()" style="margin:10px;padding:10px;border:1px solid #333;border-radius:10px;text-align:center">
++ Tambah
+</div>
 
 <div id="list"></div>
 
 </div>
 
 <script>
-let currentTab="midman";
+let tab="midman";
+
 let data=[
 {
-  nama:"MID IPANZZ",
-  phone:"60175970694",
-  type:"midman",
-  verified:true,
-  avatar:"https://i.imgur.com/2DhmtJ4.png",
-  logo:""
+nama:"MID IPANZZ",
+phone:"60175970694",
+type:"midman",
+verified:true,
+avatar:"https://i.imgur.com/2DhmtJ4.png",
+logo:""
 }
 ];
 
-let isAdmin=false;
-
 /* INTRO */
 setTimeout(()=>{
-  document.querySelectorAll(".line").forEach((el,i)=>{
-    setTimeout(()=>el.classList.add("show"),i*600);
-  });
+document.querySelectorAll(".line").forEach((e,i)=>{
+setTimeout(()=>e.classList.add("show"),i*500);
+});
 
-  setTimeout(()=>{
-    document.getElementById("splash").style.display="none";
-    document.getElementById("app").style.display="block";
-
-    let pass=prompt("Admin password:");
-    if(pass==="ipanzz"){
-      isAdmin=true;
-      document.getElementById("addBtn").style.display="block";
-    }
-
-  },2500);
+setTimeout(()=>{
+splash.style.display="none";
+app.style.display="block";
+},2000);
 },300);
 
 /* RENDER */
 function render(){
 let html="";
 data.forEach((d,i)=>{
-if(d.type!==currentTab) return;
+if(d.type!==tab) return;
 
 html+=`
 <div class="card ${d.type}">
@@ -174,20 +196,20 @@ html+=`
 <img class="avatar" src="${d.avatar}">
 <div>
 <div class="name">
-${d.nama}
-${d.verified?'<span class="verify">✔️</span>':''}
+${d.nama} ${d.verified?'✔️':''}
 ${d.logo?`<img src="${d.logo}" class="logoSmall">`:''}
 </div>
-<div class="phone">${d.phone}</div>
+<div>${d.phone}</div>
 </div>
 </div>
 
 <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
 
-${isAdmin?`<div class="delete" onclick="del(${i})">Delete</div>`:""}
-</div>`;
+<div class="delete" onclick="del(${i})">Delete</div>
+</div>
+`;
 });
-document.getElementById("list").innerHTML=html;
+list.innerHTML=html;
 }
 
 /* ADD */
@@ -195,13 +217,11 @@ function addData(){
 let nama=prompt("Nama:");
 let phone=prompt("Phone:");
 let type=prompt("Type (midman/seller/scam):");
-
-let avatar=prompt("Link gambar profile:");
-let logo=prompt("Link logo:");
-
+let avatar=prompt("Link gambar:");
+let logo=prompt("Logo:");
 let verified=confirm("Verified?");
 
-data.push({nama,phone,type,verified,avatar,logo});
+data.push({nama,phone,type,avatar,logo,verified});
 render();
 }
 
@@ -212,12 +232,12 @@ render();
 }
 
 /* TAB */
-function setTab(tab){
-currentTab=tab;
+function setTab(t){
+tab=t;
 document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-if(tab==="midman") btnMid.classList.add("active");
-if(tab==="seller") btnSeller.classList.add("active");
-if(tab==="scam") btnScam.classList.add("active");
+if(t==="midman") btnMid.classList.add("active");
+if(t==="seller") btnSeller.classList.add("active");
+if(t==="scam") btnScam.classList.add("active");
 render();
 }
 
