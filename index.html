@@ -4,54 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Midman Trusted Malaysia</title>
+<title>Midman Game UI</title>
 
 <style>
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  font-family:Arial;
+  background:#000;
   color:#fff;
-  overflow-x:hidden;
+  overflow:hidden;
 }
 
-/* 🌌 GALAXY BACKGROUND */
-body::before{
-  content:"";
+/* 🌌 STAR BACKGROUND */
+canvas{
   position:fixed;
   inset:0;
-  background:
-    radial-gradient(circle at 20% 30%, #00ffcc22, transparent),
-    radial-gradient(circle at 80% 70%, #0066ff22, transparent),
-    radial-gradient(circle at 50% 50%, #ff00ff22, transparent),
-    #000;
-  animation:moveBg 10s linear infinite;
   z-index:-1;
 }
 
-@keyframes moveBg{
-  0%{background-position:0 0,0 0,0 0}
-  100%{background-position:200px 200px,-200px -200px,100px -100px}
+/* HEADER */
+header{
+  text-align:center;
+  padding:15px;
+  font-size:20px;
+  text-shadow:0 0 15px cyan;
 }
 
-/* 🔥 SPLASH */
-#splash{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
+/* CARD */
+.card{
+  background:#111;
+  margin:10px;
+  padding:15px;
+  border-radius:15px;
+  box-shadow:0 0 15px #00ffcc44;
+  transition:0.3s;
 }
 
-.logo{
-  font-size:26px;
+.card:hover{
+  transform:scale(1.05) rotateX(5deg);
+  box-shadow:0 0 25px #00ffcc;
+}
+
+/* NAME */
+.name{
   font-weight:bold;
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:rainbow 4s linear infinite, zoom 1.5s ease;
+  animation:rainbow 4s linear infinite;
 }
 
 @keyframes rainbow{
@@ -59,233 +59,143 @@ body::before{
   100%{background-position:400%}
 }
 
-@keyframes zoom{
-  from{transform:scale(0.7);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
-
-.hide{animation:fade 0.8s forwards}
-@keyframes fade{to{opacity:0;visibility:hidden}}
-
-/* HEADER */
-header{
-  text-align:center;
-  padding:20px;
-  font-size:20px;
-  font-weight:bold;
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:rainbow 5s linear infinite;
-}
-
-/* CONTAINER */
-.container{
-  max-width:500px;
-  margin:auto;
-  padding:15px;
-}
-
-/* SEARCH */
-input{
-  width:100%;
-  padding:12px;
-  border-radius:14px;
-  border:none;
-  background:#111;
-  color:#fff;
-  margin-bottom:15px;
-}
-
-/* TAB */
-.tabs{
-  display:flex;
-  background:#111;
-  border-radius:14px;
-  padding:4px;
-  margin-bottom:15px;
-}
-
-.tabs button{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:transparent;
-  color:#aaa;
-}
-
-.active{
-  background:#00ffcc;
-  color:#000;
-  box-shadow:0 0 10px #00ffcc;
-}
-
-/* CARD */
-.card{
-  background:#111;
-  border-radius:18px;
-  padding:15px;
-  margin-bottom:12px;
-  box-shadow:0 0 15px #00ffcc22;
-}
-
-/* NAME */
-.name{
-  font-weight:bold;
-  font-size:16px;
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:rainbow 5s linear infinite;
-}
-
-.top{
-  text-shadow:0 0 15px gold;
-}
-
-/* PHONE */
-.phone{
-  color:#aaa;
-  font-size:13px;
-}
-
-/* 🌈 BUTTON */
+/* BUTTON */
 .btn{
   display:block;
   margin-top:10px;
   padding:10px;
-  border-radius:12px;
   text-align:center;
+  border-radius:10px;
   text-decoration:none;
   font-weight:bold;
   color:#000;
 
-  background:linear-gradient(
-    90deg,
-    red,orange,yellow,lime,cyan,blue,violet,red
-  );
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
   background-size:400%;
-  animation:rainbow 4s linear infinite;
+  animation:rainbow 4s linear infinite, pulse 1s infinite;
 
   box-shadow:0 0 20px #00ffcc;
 }
 
-/* BOTTOM */
-.bottom{
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+}
+
+/* CLICK EFFECT */
+.spark{
   position:fixed;
-  bottom:0;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
-  background:rgba(0,0,0,0.8);
-  backdrop-filter:blur(10px);
-  padding:10px 0;
+  width:10px;
+  height:10px;
+  background:cyan;
+  border-radius:50%;
+  pointer-events:none;
+  animation:boom 0.5s forwards;
 }
 
-.bottom button{
-  background:none;
-  border:none;
-  color:#aaa;
+@keyframes boom{
+  to{
+    transform:scale(5);
+    opacity:0;
+  }
 }
 
-.bottom .active{
-  color:#00ffcc;
+/* MUSIC BTN */
+.music{
+  position:fixed;
+  top:10px;
+  right:10px;
+  background:#111;
+  border:1px solid cyan;
+  color:cyan;
+  padding:10px;
+  border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="logo">Midman Trusted Malaysia</div>
-</div>
+<canvas id="bg"></canvas>
 
-<div id="app" style="display:none;">
+<header>🎮 Midman Game UI</header>
 
-<header>Midman Trusted Malaysia</header>
-
-<div class="container">
-
-<input id="search" placeholder="Cari...">
-
-<div class="tabs">
-  <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
-  <button onclick="setTab('seller')" id="btnSeller">Seller</button>
-  <button onclick="setTab('scam')" id="btnScam">Scam</button>
-</div>
+<button class="music" onclick="toggleMusic()">🎵</button>
 
 <div id="list"></div>
 
-</div>
+<audio id="bgm" loop>
+  <source src="https://files.catbox.moe/3x0u8v.mp3">
+</audio>
 
-<div class="bottom">
-  <button onclick="setTab('midman')" id="bMid" class="active">⭐</button>
-  <button onclick="setTab('seller')" id="bSeller">🛒</button>
-  <button onclick="setTab('scam')" id="bScam">⚠️</button>
-</div>
-
-</div>
+<audio id="clickSound">
+  <source src="https://files.catbox.moe/9f4r3k.mp3">
+</audio>
 
 <script>
 
-setTimeout(()=>{
-  splash.classList.add("hide");
-  app.style.display="block";
-},2500);
+/* 🌌 STARFIELD */
+let c = bg, ctx = c.getContext("2d");
+c.width=innerWidth;
+c.height=innerHeight;
 
+let stars = Array.from({length:120},()=>({
+  x:Math.random()*c.width,
+  y:Math.random()*c.height,
+  z:Math.random()*2+1
+}));
+
+function anim(){
+  ctx.clearRect(0,0,c.width,c.height);
+  stars.forEach(s=>{
+    ctx.fillRect(s.x,s.y,s.z,s.z);
+    s.y+=s.z;
+    if(s.y>c.height) s.y=0;
+  });
+  requestAnimationFrame(anim);
+}
+anim();
+
+/* DATA */
 let data=[
-  {nama:"MID IPANZZ",phone:"60175970694",type:"midman",top:true},
-  {nama:"SLRMYAPI",phone:"60104331830",type:"midman"},
-  {nama:"SHOP ABC",phone:"60122222222",type:"seller"},
-  {nama:"SCAMMER XYZ",phone:"60111111111",type:"scam"}
+  {nama:"MID IPANZZ",phone:"60175970694"},
+  {nama:"SLRMYAPI",phone:"60104331830"}
 ];
 
-let currentTab="midman";
-
 function render(){
-  let html="";
+  list.innerHTML="";
   data.forEach(d=>{
-    if(d.type!==currentTab) return;
-
-    html+=`
+    list.innerHTML+=`
     <div class="card">
-      <div class="name ${d.top?'top':''}">
-        ${d.top?'🔥 ':''}${d.nama}
-      </div>
-      <div class="phone">${d.phone}</div>
-      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
-        WhatsApp
-      </a>
+      <div class="name">${d.nama}</div>
+      <p>${d.phone}</p>
+      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
     </div>`;
   });
-  list.innerHTML=html;
 }
-
-function setTab(tab){
-  currentTab=tab;
-
-  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-  document.querySelectorAll(".bottom button").forEach(b=>b.classList.remove("active"));
-
-  if(tab==="midman"){btnMid.classList.add("active");bMid.classList.add("active")}
-  if(tab==="seller"){btnSeller.classList.add("active");bSeller.classList.add("active")}
-  if(tab==="scam"){btnScam.classList.add("active");bScam.classList.add("active")}
-
-  render();
-}
-
-search.addEventListener("keyup",function(){
-  let v=this.value.toLowerCase();
-  document.querySelectorAll(".card").forEach(c=>{
-    c.style.display=c.innerText.toLowerCase().includes(v)?"":"none";
-  });
-});
-
 render();
+
+/* 🎵 MUSIC */
+let musicOn=false;
+function toggleMusic(){
+  let a=bgm;
+  if(!musicOn){a.play(); musicOn=true;}
+  else{a.pause(); musicOn=false;}
+}
+
+/* 🔊 CLICK SOUND + SPARK */
+document.addEventListener("click",e=>{
+  clickSound.currentTime=0;
+  clickSound.play();
+
+  let s=document.createElement("div");
+  s.className="spark";
+  s.style.left=e.clientX+"px";
+  s.style.top=e.clientY+"px";
+  document.body.appendChild(s);
+
+  setTimeout(()=>s.remove(),500);
+});
 
 </script>
 
