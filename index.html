@@ -12,7 +12,7 @@
 body{
   margin:0;
   font-family:'Inter',sans-serif;
-  background: radial-gradient(circle at top,#111,#000);
+  background: radial-gradient(circle at top,#0a0a0a,#000);
   color:#fff;
 }
 
@@ -20,11 +20,14 @@ body{
 header{
   text-align:center;
   padding:50px 20px 20px;
+  animation: fadeDown 0.8s ease;
 }
+
 header h1{
   font-size:28px;
   margin:0;
 }
+
 header p{
   color:#888;
 }
@@ -42,7 +45,6 @@ input{
   padding:15px;
   border-radius:14px;
   border:none;
-  outline:none;
   background:#111;
   color:#fff;
   margin-bottom:20px;
@@ -51,18 +53,20 @@ input{
 
 /* CARD */
 .midman{
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(12px);
   border-radius:16px;
   padding:18px;
   margin-bottom:15px;
-  transition:0.25s;
+  transition:0.3s;
+  animation: fadeUp 0.6s ease;
 }
 
 .midman:hover{
-  transform: translateY(-3px);
+  transform: translateY(-5px);
   border-color:#00ffc3;
+  box-shadow:0 0 15px rgba(0,255,195,0.2);
 }
 
 .midman h3{
@@ -86,6 +90,11 @@ input{
   color:#000;
   text-decoration:none;
   font-weight:600;
+  transition:0.2s;
+}
+
+.btn:hover{
+  transform:scale(1.05);
 }
 
 /* BADGE */
@@ -104,6 +113,29 @@ footer{
   color:#666;
   font-size:12px;
   padding:20px;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform: translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown{
+  from{
+    opacity:0;
+    transform: translateY(-20px);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
 }
 </style>
 </head>
