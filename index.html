@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Neon System</title>
+<title>List Midman</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -14,23 +14,6 @@ body{
   font-family:'Orbitron',sans-serif;
   background:#000;
   color:#fff;
-  overflow-x:hidden;
-}
-
-/* BACKGROUND CYBER */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(#0ff1 1px,transparent 1px),
-    linear-gradient(90deg,#0ff1 1px,transparent 1px);
-  background-size:40px 40px;
-  animation:gridMove 10s linear infinite;
-}
-@keyframes gridMove{
-  0%{transform:translateY(0)}
-  100%{transform:translateY(40px)}
 }
 
 /* INTRO */
@@ -43,37 +26,36 @@ body::before{
   background:#000;
   z-index:999;
 }
-.line{
-  opacity:0;
+.introText{
   display:block;
   text-align:center;
   font-size:22px;
+  opacity:0;
+  transform:translateY(20px);
+
+  background:linear-gradient(90deg,#f0f,#0ff,#0f0,#ff0);
+  background-size:300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:fadeUp .6s forwards, rgb 4s linear infinite;
 }
-.line.show{
-  animation:fade 0.6s forwards;
-}
-@keyframes fade{to{opacity:1}}
+.introText:nth-child(1){animation-delay:.3s}
+.introText:nth-child(2){animation-delay:.8s}
+.introText:nth-child(3){animation-delay:1.3s}
+
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes rgb{100%{background-position:300%}}
 
 #app{display:none}
 
-/* HEADER RGB */
+/* HEADER */
 header{
   text-align:center;
   padding:20px;
   font-size:18px;
   letter-spacing:2px;
-
-  background:linear-gradient(90deg,#f0f,#0ff,#0f0,#ff0,#f0f);
-  background-size:300%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  animation:rgbMove 5s linear infinite;
-
-  text-shadow:0 0 10px #fff,0 0 20px #0ff;
-}
-@keyframes rgbMove{
-  100%{background-position:300%}
+  text-shadow:0 0 10px #f0f,0 0 20px #0ff;
 }
 
 /* TABS */
@@ -100,18 +82,12 @@ header{
   margin:10px;
   padding:15px;
   border-radius:14px;
-  animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 10px}
-  50%{box-shadow:0 0 20px}
 }
 
 /* COLORS */
-.midman{border:1px solid #22c55e;color:#22c55e}
-.seller{border:1px solid #3b82f6;color:#3b82f6}
-.scam{border:1px solid #ef4444;color:#ef4444}
+.midman{border:1px solid #22c55e;box-shadow:0 0 10px #22c55e}
+.seller{border:1px solid #3b82f6;box-shadow:0 0 10px #3b82f6}
+.scam{border:1px solid #ef4444;box-shadow:0 0 10px #ef4444}
 
 /* PROFILE */
 .profile{
@@ -123,16 +99,15 @@ header{
   width:45px;
   height:45px;
   border-radius:50%;
-  box-shadow:0 0 10px #0ff;
 }
 
 /* NAME */
 .name{
   font-weight:700;
-  text-shadow:0 0 5px #fff,0 0 10px #0ff,0 0 20px #0ff;
+  text-shadow:0 0 5px #fff,0 0 10px #0ff;
 }
 
-/* VERIFY */
+/* VERIFY TELEGRAM STYLE */
 .verify{
   display:inline-block;
   margin-left:5px;
@@ -140,9 +115,9 @@ header{
   height:16px;
   background:#3b82f6;
   border-radius:50%;
+  font-size:11px;
   text-align:center;
   line-height:16px;
-  box-shadow:0 0 10px #3b82f6;
 }
 
 /* BUTTON */
@@ -163,9 +138,8 @@ header{
   margin:10px;
   padding:10px;
   text-align:center;
-  border:1px solid #0ff;
+  border:1px solid #333;
   border-radius:10px;
-  box-shadow:0 0 10px #0ff;
 }
 </style>
 </head>
@@ -174,46 +148,12 @@ header{
 
 <!-- INTRO -->
 <div id="splash">
-  <div class="introBox">
+  <div>
     <span class="introText">WELCOME</span>
-    <span class="introText">TO</span>
     <span class="introText">MIDMAN / SELLER TRUSTED</span>
     <span class="introText">LIST SCAMMER</span>
   </div>
 </div>
-
-/* INTRO PRO */
-.introBox{
-  text-align:center;
-}
-
-.introText{
-  display:block;
-  font-size:22px;
-  opacity:0;
-  transform:translateY(20px);
-
-  background:linear-gradient(90deg,#f0f,#0ff,#0f0,#ff0);
-  background-size:300%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  animation:fadeUp 0.6s forwards, rgbMove 4s linear infinite;
-}
-
-/* muncul satu-satu */
-.introText:nth-child(1){animation-delay:0.3s}
-.introText:nth-child(2){animation-delay:0.8s}
-.introText:nth-child(3){animation-delay:1.3s}
-.introText:nth-child(4){animation-delay:1.8s}
-
-@keyframes fadeUp{
-  to{opacity:1; transform:translateY(0)}
-}
-
-@keyframes rgbMove{
-  100%{background-position:300%}
-}
 
 <div id="app">
 
@@ -236,24 +176,19 @@ let tab="midman";
 
 let data=[
 {
-  nama:"MID IPANZZ",
-  phone:"60175970694",
-  type:"midman",
-  verified:true,
-  avatar:"https://i.imgur.com/2DhmtJ4.png"
+nama:"MID IPANZZ",
+phone:"60175970694",
+type:"midman",
+verified:true,
+avatar:"https://i.imgur.com/2DhmtJ4.png"
 }
 ];
 
 /* INTRO */
 setTimeout(()=>{
-document.querySelectorAll(".line").forEach((e,i)=>{
-setTimeout(()=>e.classList.add("show"),i*500);
-});
-setTimeout(()=>{
 splash.style.display="none";
 app.style.display="block";
-},2000);
-},300);
+},3000);
 
 /* COPY */
 function copyWa(num){
@@ -265,7 +200,7 @@ alert("Copied:\n"+link);
 /* RENDER */
 function render(){
 let html="";
-data.forEach((d)=>{
+data.forEach(d=>{
 if(d.type!==tab) return;
 
 html+=`
