@@ -4,200 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List Midman</title>
+<title>Trusted System</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-body{
-  margin:0;
-  font-family:'Orbitron',sans-serif;
-  background:#000;
-  color:#fff;
-  overflow-x:hidden;
-}
-
-/* BACKGROUND GRID */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(#0ff1 1px,transparent 1px),
-    linear-gradient(90deg,#0ff1 1px,transparent 1px);
-  background-size:40px 40px;
-}
+body{margin:0;font-family:'Orbitron';background:#000;color:#fff}
 
 /* INTRO */
 #splash{
-  position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#000;
-  z-index:999;
+position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#000;z-index:999
 }
-
-.introBox{text-align:center;}
-
 .introText{
-  display:block;
-  font-size:22px;
-  opacity:0;
-  transform:translateY(20px);
-
-  background:linear-gradient(90deg,#f0f,#0ff,#0f0,#ff0);
-  background-size:300%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  animation:fadeUp .6s forwards, rgbMove 4s linear infinite;
+display:block;text-align:center;font-size:22px;opacity:0;transform:translateY(20px);
+background:linear-gradient(90deg,#f0f,#0ff,#0f0,#ff0);
+background-size:300%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:fadeUp .6s forwards,rgb 4s linear infinite;
 }
-
 .introText:nth-child(1){animation-delay:.3s}
 .introText:nth-child(2){animation-delay:.8s}
 .introText:nth-child(3){animation-delay:1.3s}
-.introText:nth-child(4){animation-delay:1.8s}
 
-@keyframes fadeUp{
-  to{opacity:1; transform:translateY(0)}
-}
-
-@keyframes rgbMove{
-  100%{background-position:300%}
-}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes rgb{100%{background-position:300%}}
 
 #app{display:none}
 
 /* HEADER */
-header{
-  text-align:center;
-  padding:20px;
-  font-size:18px;
-  letter-spacing:2px;
-
-  text-shadow:
-    0 0 10px #fff,
-    0 0 20px #0ff,
-    0 0 30px #0ff;
-}
+header{text-align:center;padding:20px;text-shadow:0 0 10px #0ff}
 
 /* TABS */
-.tabs{
-  display:flex;
-  margin:10px;
-  background:#111;
-  border-radius:12px;
-}
-.tabs button{
-  flex:1;
-  padding:10px;
-  border:none;
-  background:none;
-  color:#888;
-}
-.active{
-  color:#fff;
-  text-shadow:0 0 10px #0ff;
-}
-
-/* ADD */
-.add{
-  margin:10px;
-  padding:12px;
-  text-align:center;
-  border-radius:12px;
-  border:1px solid #0ff;
-  box-shadow:0 0 10px #0ff;
-}
+.tabs{display:flex;margin:10px;background:#111;border-radius:10px}
+.tabs button{flex:1;padding:10px;border:none;background:none;color:#888}
+.active{color:#fff}
 
 /* CARD */
-.card{
-  margin:10px;
-  padding:15px;
-  border-radius:14px;
-}
-
-/* COLORS */
-.midman{
-  border:1px solid #22c55e;
-  box-shadow:0 0 15px #22c55e;
-}
-.seller{
-  border:1px solid #3b82f6;
-  box-shadow:0 0 15px #3b82f6;
-}
-.scam{
-  border:1px solid #ef4444;
-  box-shadow:0 0 15px #ef4444;
-}
+.card{margin:10px;padding:15px;border-radius:14px}
+.midman{border:1px solid #22c55e;box-shadow:0 0 10px #22c55e}
+.seller{border:1px solid #3b82f6;box-shadow:0 0 10px #3b82f6}
+.scam{border:1px solid #ef4444;box-shadow:0 0 10px #ef4444}
 
 /* PROFILE */
-.profile{
-  display:flex;
-  gap:10px;
-  cursor:pointer;
-}
+.profile{display:flex;gap:10px;cursor:pointer}
+.avatar{width:45px;height:45px;border-radius:50%}
 
-.avatar{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  box-shadow:0 0 10px #0ff;
-}
-
-/* NAME */
-.name{
-  font-weight:700;
-  text-shadow:
-    0 0 5px #fff,
-    0 0 10px #0ff;
-}
-
-/* VERIFY TELEGRAM */
+/* VERIFY */
 .verify{
-  display:inline-block;
-  margin-left:5px;
-  width:16px;
-  height:16px;
-  background:#3b82f6;
-  border-radius:50%;
-  font-size:11px;
-  text-align:center;
-  line-height:16px;
-  box-shadow:0 0 8px #3b82f6;
+display:inline-block;margin-left:5px;width:16px;height:16px;
+background:#3b82f6;border-radius:50%;text-align:center;line-height:16px;
 }
 
 /* BUTTON */
-.btn{
-  display:block;
-  margin-top:10px;
-  padding:10px;
-  text-align:center;
-  border-radius:10px;
-  text-decoration:none;
-  color:#fff;
+.btn{display:block;margin-top:10px;padding:10px;text-align:center;
+border:1px solid #0ff;border-radius:10px;color:#fff;text-decoration:none}
 
-  border:1px solid #0ff;
-  box-shadow:0 0 10px #0ff;
-}
+/* ADD */
+.add{margin:10px;padding:10px;text-align:center;border:1px solid #333;border-radius:10px}
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div id="splash">
-  <div class="introBox">
-    <span class="introText">WELCOME</span>
-    <span class="introText">TO</span>
-    <span class="introText">MIDMAN / SELLER TRUSTED</span>
-    <span class="introText">LIST SCAMMER</span>
-  </div>
+<div>
+<span class="introText">WELCOME</span>
+<span class="introText">MIDMAN / SELLER TRUSTED</span>
+<span class="introText">LIST SCAMMER</span>
+</div>
 </div>
 
-<!-- APP -->
 <div id="app">
 
 <header>LIST MIDMAN TRUSTED MALAYSIA</header>
@@ -214,81 +91,117 @@ header{
 
 </div>
 
-<script>
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* MASUKKAN CONFIG */
+const firebaseConfig = {
+apiKey:"ISI",
+authDomain:"ISI",
+projectId:"ISI"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 let tab="midman";
+let allData=[];
 
-let data=[
-{
-  nama:"MID IPANZZ",
-  phone:"60175970694",
-  type:"midman",
-  verified:true,
-  avatar:"https://i.imgur.com/2DhmtJ4.png"
+/* LOAD */
+async function loadData(){
+const snap = await getDocs(collection(db,"list"));
+allData=[];
+snap.forEach(d=>allData.push(d.data()));
+render();
 }
-];
-
-/* INTRO FIX */
-setTimeout(()=>{
-  document.getElementById("splash").style.display="none";
-  document.getElementById("app").style.display="block";
-},3000);
 
 /* COPY */
 function copyWa(num){
-  let link="https://wa.me/"+num;
-  navigator.clipboard.writeText(link);
-  alert("Copied:\n"+link);
+navigator.clipboard.writeText("https://wa.me/"+num);
+alert("Copied");
 }
 
 /* RENDER */
 function render(){
-  let html="";
-  data.forEach((d)=>{
-    if(d.type!==tab) return;
+let html="";
+allData.forEach(d=>{
+if(d.type!==tab) return;
 
-    html+=`
-    <div class="card ${d.type}">
-      <div class="profile" onclick="copyWa('${d.phone}')">
-        <img class="avatar" src="${d.avatar}">
-        <div>
-          <div class="name">
-            ${d.nama}
-            ${d.verified?'<span class="verify">✔</span>':''}
-          </div>
-          <div>${d.phone}</div>
-        </div>
-      </div>
+html+=`
+<div class="card ${d.type}">
+<div class="profile" onclick="copyWa('${d.phone}')">
+<img class="avatar" src="${d.avatar}">
+<div>
+<div>
+${d.nama}
+${d.verified?'<span class="verify">✔</span>':''}
+</div>
+<div>${d.phone}</div>
+</div>
+</div>
+<a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
+</div>`;
+});
+list.innerHTML=html;
+}
 
-      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
-    </div>`;
-  });
+/* UPLOAD */
+async function uploadImage(file){
+let form=new FormData();
+form.append("file",file);
+form.append("upload_preset","ISI_PRESET");
 
-  document.getElementById("list").innerHTML=html;
+let res=await fetch("https://api.cloudinary.com/v1_1/ISI_CLOUD/image/upload",{
+method:"POST",body:form
+});
+let data=await res.json();
+return data.secure_url;
 }
 
 /* ADD */
-function addData(){
-  let nama=prompt("Nama:");
-  let phone=prompt("Phone:");
-  let type=prompt("Type (midman/seller/scam):");
-  let avatar=prompt("Link gambar:");
-  let verified=confirm("Verified?");
+window.addData=async function(){
+let nama=prompt("Nama:");
+let phone=prompt("Phone:");
+let type=prompt("Type:");
+let verified=confirm("Verified?");
 
-  data.push({nama,phone,type,avatar,verified});
-  render();
+let input=document.createElement("input");
+input.type="file";
+
+input.onchange=async ()=>{
+let file=input.files[0];
+let avatar=await uploadImage(file);
+
+await addDoc(collection(db,"list"),{
+nama,phone,type,avatar,verified
+});
+
+loadData();
+};
+
+input.click();
 }
 
 /* TAB */
-function setTab(t){
-  tab=t;
-  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-  if(t==="midman") btnMid.classList.add("active");
-  if(t==="seller") btnSeller.classList.add("active");
-  if(t==="scam") btnScam.classList.add("active");
-  render();
+window.setTab=function(t){
+tab=t;
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+if(t==="midman") btnMid.classList.add("active");
+if(t==="seller") btnSeller.classList.add("active");
+if(t==="scam") btnScam.classList.add("active");
+render();
 }
 
-render();
+/* INTRO */
+setTimeout(()=>{
+splash.style.display="none";
+app.style.display="block";
+},2500);
+
+loadData();
 </script>
 
 </body>
