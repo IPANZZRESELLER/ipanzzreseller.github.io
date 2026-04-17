@@ -4,82 +4,172 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Trusted Midman List</title>
+<title>Midman Trusted Malaysia</title>
 
 <style>
 body{
   margin:0;
-  font-family:Arial;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
   background:#0b0b0b;
   color:#fff;
 }
 
+/* 🌈 RAINBOW */
+@keyframes rainbow{
+  0%{background-position:0%}
+  100%{background-position:400%}
+}
+
+/* 🧊 GLASS */
+.glass{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+/* 🎬 INTRO */
+#splash{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:600;
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  text-shadow:0 0 20px #ffffff33;
+
+  animation:rainbow 6s linear infinite, fade 1.5s ease;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:scale(0.9)}
+  to{opacity:1; transform:scale(1)}
+}
+
+#app{display:none}
+
+/* HEADER */
 header{
   text-align:center;
   padding:20px;
+  font-weight:600;
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:rainbow 10s linear infinite;
 }
 
-.container{
-  max-width:500px;
-  margin:auto;
-  padding:10px;
-}
-
+/* TABS */
 .tabs{
   display:flex;
-  background:#111;
-  border-radius:10px;
+  margin:10px;
+  border-radius:14px;
   padding:5px;
-  margin-bottom:10px;
 }
 
 .tabs button{
   flex:1;
   padding:10px;
   border:none;
-  background:none;
+  background:transparent;
   color:#aaa;
-  border-radius:8px;
+  border-radius:10px;
+  transition:0.2s;
 }
 
-.active{
-  background:#d946ef;
+.tabs button:hover{
   color:#fff;
 }
 
+.active{
+  background:linear-gradient(90deg,#d946ef,#3b82f6);
+  color:#fff;
+  box-shadow:0 0 10px #3b82f6aa;
+}
+
+/* CARD */
 .card{
-  background:#111;
-  border-radius:12px;
+  margin:10px;
   padding:15px;
-  margin-bottom:10px;
-  border:1px solid #222;
+  border-radius:16px;
+  animation:fadeUp 0.4s ease;
 }
 
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(10px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+.card:hover{
+  transform:translateY(-3px);
+}
+
+/* NAME */
 .name{
-  font-weight:bold;
+  font-weight:600;
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:rainbow 12s linear infinite;
 }
 
+/* PHONE */
 .phone{
   font-size:13px;
   color:#aaa;
 }
 
+/* BUTTON */
 .btn{
   display:block;
   margin-top:10px;
-  padding:10px;
-  border-radius:10px;
-  background:#d946ef;
+  padding:12px;
+  border-radius:12px;
   text-align:center;
-  color:#fff;
   text-decoration:none;
+  font-weight:600;
+
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  animation:rainbow 6s linear infinite;
+
+  color:#000;
 }
 
+/* ADMIN */
 .admin{
-  text-align:center;
+  margin:10px;
   padding:10px;
-  margin-bottom:10px;
+  border-radius:12px;
+  text-align:center;
+  cursor:pointer;
+}
+
+/* MUSIC */
+.music{
+  position:fixed;
+  top:12px;
+  right:12px;
+  background:#111;
   border:1px solid #333;
+  padding:8px;
   border-radius:10px;
 }
 </style>
@@ -87,28 +177,55 @@ header{
 
 <body>
 
-<header>
-<h2>Trusted Midman List</h2>
-</header>
-
-<div class="container">
-
-<div class="tabs">
-  <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
-  <button onclick="setTab('seller')" id="btnSeller">Seller</button>
-  <button onclick="setTab('scam')" id="btnScam">Scam</button>
+<!-- INTRO -->
+<div id="splash">
+  <div class="logo">Midman Trusted Malaysia</div>
 </div>
 
-<div class="admin" onclick="addData()">+ Tambah</div>
+<div id="app">
+
+<header>Midman Trusted Malaysia</header>
+
+<button class="music" id="musicBtn">🎵</button>
+
+<div class="tabs glass">
+  <button id="btnMid" class="active">Midman</button>
+  <button id="btnSeller">Seller</button>
+  <button id="btnScam">Scam</button>
+</div>
+
+<div class="admin glass" onclick="addData()">+ Tambah</div>
 
 <div id="list"></div>
 
 </div>
 
+<audio id="bgm" loop>
+  <source src="https://files.catbox.moe/3x0u8v.mp3">
+</audio>
+
 <script>
 
-/* LOAD DATA */
-let data = JSON.parse(localStorage.getItem("trustedData")) || [
+/* ELEMENT */
+const splash = document.getElementById("splash");
+const app = document.getElementById("app");
+const list = document.getElementById("list");
+
+const btnMid = document.getElementById("btnMid");
+const btnSeller = document.getElementById("btnSeller");
+const btnScam = document.getElementById("btnScam");
+
+const musicBtn = document.getElementById("musicBtn");
+const bgm = document.getElementById("bgm");
+
+/* INTRO */
+setTimeout(()=>{
+  splash.style.display="none";
+  app.style.display="block";
+},1800);
+
+/* DATA */
+let data = JSON.parse(localStorage.getItem("midmanData")) || [
   {nama:"MID IPANZZ", phone:"60175970694", type:"midman"}
 ];
 
@@ -116,18 +233,17 @@ let currentTab="midman";
 
 /* SAVE */
 function save(){
-  localStorage.setItem("trustedData", JSON.stringify(data));
+  localStorage.setItem("midmanData", JSON.stringify(data));
 }
 
 /* RENDER */
 function render(){
   let html="";
-
   data.forEach(d=>{
     if(d.type !== currentTab) return;
 
     html += `
-    <div class="card">
+    <div class="card glass">
       <div class="name">${d.nama}</div>
       <div class="phone">${d.phone}</div>
       <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
@@ -136,23 +252,21 @@ function render(){
     </div>`;
   });
 
-  document.getElementById("list").innerHTML = html;
+  list.innerHTML = html;
 }
 
 /* TAB */
-function setTab(tab){
-  currentTab = tab;
+btnMid.onclick=()=>{currentTab="midman";setActive(btnMid);}
+btnSeller.onclick=()=>{currentTab="seller";setActive(btnSeller);}
+btnScam.onclick=()=>{currentTab="scam";setActive(btnScam);}
 
-  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-
-  if(tab==="midman") btnMid.classList.add("active");
-  if(tab==="seller") btnSeller.classList.add("active");
-  if(tab==="scam") btnScam.classList.add("active");
-
+function setActive(btn){
+  [btnMid,btnSeller,btnScam].forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
   render();
 }
 
-/* ADD */
+/* ADD DATA */
 function addData(){
   let pass = prompt("Password:");
   if(pass !== "ipanzz") return alert("Salah");
@@ -165,6 +279,18 @@ function addData(){
   save();
   render();
 }
+
+/* MUSIC */
+let musicOn=false;
+musicBtn.onclick=()=>{
+  if(!musicOn){
+    bgm.play().catch(()=>alert("Tekan lagi sekali"));
+    musicOn=true;
+  }else{
+    bgm.pause();
+    musicOn=false;
+  }
+};
 
 /* START */
 render();
