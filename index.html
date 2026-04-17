@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Trusted System</title>
 
 <style>
@@ -21,18 +20,11 @@ position:fixed;inset:0;background:#000;
 display:flex;justify-content:center;align-items:center;z-index:999;
 }
 
-.logo{
-font-size:24px;
-font-weight:600;
-text-align:center;
-line-height:1.6;
-}
-
+.logo{text-align:center;font-size:24px;line-height:1.6}
 .line{
 display:block;
 opacity:0;
 transform:translateY(15px);
-
 background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
 background-size:300%;
 -webkit-background-clip:text;
@@ -44,7 +36,7 @@ animation:fadeUp 0.6s ease forwards, rainbow 10s linear infinite;
 }
 
 @keyframes fadeUp{
-to{opacity:1; transform:translateY(0)}
+to{opacity:1;transform:translateY(0)}
 }
 
 #app{display:none}
@@ -54,12 +46,10 @@ header{
 text-align:center;
 padding:25px;
 font-size:22px;
-
 background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
 background-size:300%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-
 animation:rainbow 12s linear infinite;
 }
 
@@ -82,6 +72,19 @@ text-align:center;display:none;
 .seller{background:#0f172a;border-color:#3b82f6}
 .scam{background:#1f0f0f;border-color:#ef4444}
 
+/* PROFILE */
+.profile{display:flex;gap:10px;align-items:center}
+
+.avatar{
+width:45px;height:45px;border-radius:50%;
+object-fit:cover;border:2px solid #333;
+}
+
+.logoSmall{
+width:18px;height:18px;border-radius:50%;
+margin-left:5px;
+}
+
 /* NAME */
 .name{
 font-weight:600;
@@ -92,32 +95,20 @@ background-size:300%;
 animation:rainbow 10s linear infinite;
 }
 
-/* VERIFIED */
 .verify{color:#3b82f6;margin-left:5px}
-
-/* DELETE */
-.delete{
-margin-top:8px;
-color:#ef4444;
-font-size:12px;
-display:none;
-}
 
 /* BUTTON */
 .btn{
-display:block;
-margin-top:12px;
-padding:12px;
-border-radius:12px;
-text-align:center;
-text-decoration:none;
-
+display:block;margin-top:12px;padding:12px;border-radius:12px;
+text-align:center;text-decoration:none;
 background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
 background-size:300%;
 animation:rainbow 8s linear infinite;
-
 color:#000;
 }
+
+/* DELETE */
+.delete{margin-top:8px;color:#ef4444;font-size:12px}
 </style>
 </head>
 
@@ -148,18 +139,45 @@ color:#000;
 
 </div>
 
+<!-- 🔥 CLOUDINARY UPLOAD -->
+<script>
+async function uploadImage(){
+  let input = document.createElement("input");
+  input.type="file";
+  input.accept="image/*";
+
+  return new Promise(resolve=>{
+    input.onchange=async ()=>{
+      let file=input.files[0];
+
+      let form=new FormData();
+      form.append("file",file);
+      form.append("upload_preset","ISI_PRESET_KAU");
+
+      let res=await fetch("https://api.cloudinary.com/v1_1/ISI_CLOUD_NAME/image/upload",{
+        method:"POST",
+        body:form
+      });
+
+      let data=await res.json();
+      resolve(data.secure_url);
+    };
+    input.click();
+  });
+}
+</script>
+
+<!-- 🔥 FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* CONFIG */
 const firebaseConfig = {
   apiKey:"ISI",
   authDomain:"ISI",
-  projectId:"ISI",
-  storageBucket:"ISI",
-  messagingSenderId:"ISI",
-  appId:"ISI"
+  projectId:"ISI"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -169,23 +187,21 @@ let currentTab="midman";
 let allData=[];
 let isAdmin=false;
 
-/* INTRO ANIMATION */
+/* INTRO */
 setTimeout(()=>{
 const lines=document.querySelectorAll(".line");
 lines.forEach((el,i)=>{
 setTimeout(()=> el.classList.add("show"), i*600);
 });
 
-/* masuk app */
 setTimeout(()=>{
-splash.style.display="none";
-app.style.display="block";
+document.getElementById("splash").style.display="none";
+document.getElementById("app").style.display="block";
 
-/* ADMIN LOGIN */
-let pass=prompt("Admin password (cancel kalau user):");
+let pass=prompt("Admin password:");
 if(pass==="ipanzz"){
 isAdmin=true;
-addBtn.style.display="block";
+document.getElementById("addBtn").style.display="block";
 }
 
 },2500);
@@ -208,18 +224,28 @@ if(d.type!==currentTab) return;
 
 html+=`
 <div class="card ${d.type}">
+
+<div class="profile">
+<img class="avatar" src="${d.avatar || 'https://i.imgur.com/2DhmtJ4.png'}">
+
+<div>
 <div class="name">
 ${d.nama}
 ${d.verified?'<span class="verify">✔️</span>':''}
+${d.logo?`<img src="${d.logo}" class="logoSmall">`:''}
 </div>
+
 <div class="phone">${d.phone}</div>
+</div>
+</div>
 
 <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
 
 ${isAdmin?`<div class="delete" onclick="del('${d.id}')">Delete</div>`:""}
+
 </div>`;
 });
-list.innerHTML=html;
+document.getElementById("list").innerHTML=html;
 }
 
 /* DELETE */
@@ -230,22 +256,37 @@ loadData();
 
 /* ADD */
 window.addData=async function(){
+
 let nama=prompt("Nama:");
 let phone=prompt("Phone:");
 let type=prompt("Type (midman/seller/scam):");
+
+alert("Upload gambar profile");
+let avatar=await uploadImage();
+
+let logo="";
+if(confirm("Nak upload logo?")){
+  logo=await uploadImage();
+}
+
 let verified=confirm("Verified?");
 
-await addDoc(collection(db,"data"),{nama,phone,type,verified});
+await addDoc(collection(db,"data"),{
+nama,phone,type,verified,avatar,logo
+});
+
 loadData();
 }
 
 /* TAB */
 window.setTab=function(tab){
 currentTab=tab;
+
 document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
 if(tab==="midman") btnMid.classList.add("active");
 if(tab==="seller") btnSeller.classList.add("active");
 if(tab==="scam") btnScam.classList.add("active");
+
 render();
 }
 
