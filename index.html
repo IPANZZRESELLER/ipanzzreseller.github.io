@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Trusted Midman List</title>
+<title>Trusted System</title>
 
 <style>
 body{
@@ -34,13 +34,11 @@ body{
 .logo{
   font-size:26px;
   font-weight:600;
-
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
   background-size:400%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-
-  animation:rainbow 6s linear infinite;
+  animation:rainbow 8s linear infinite;
 }
 
 #app{display:none}
@@ -50,30 +48,22 @@ header{
   text-align:center;
   padding:25px;
   font-size:22px;
-  font-weight:600;
 
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
   background-size:400%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 
-  animation:rainbow 10s linear infinite;
-}
-
-/* CONTAINER */
-.container{
-  max-width:500px;
-  margin:auto;
-  padding:10px;
+  animation:rainbow 12s linear infinite;
 }
 
 /* TABS */
 .tabs{
   display:flex;
+  margin:10px;
   background:#111;
   border-radius:14px;
   padding:5px;
-  margin-bottom:15px;
 }
 
 .tabs button{
@@ -87,28 +77,32 @@ header{
 
 .active{
   color:#fff;
+  background:#222;
 }
 
-/* ADD BUTTON */
+/* ADD */
 .add{
-  border:1px solid #333;
-  border-radius:14px;
+  margin:10px;
   padding:12px;
+  border-radius:14px;
+  border:1px solid #333;
   text-align:center;
-  margin-bottom:15px;
-  color:#ccc;
 }
 
-/* CARD */
+/* CARD BASE */
 .card{
-  background:#0f0f0f;
-  border:1px solid #222;
-  border-radius:16px;
+  margin:10px;
   padding:15px;
-  margin-bottom:15px;
+  border-radius:16px;
+  border:1px solid #222;
 }
 
-/* 🌈 NAME LED */
+/* COLORS BY TYPE */
+.midman{ background:#0f1f0f; border-color:#22c55e; }
+.seller{ background:#0f172a; border-color:#3b82f6; }
+.scam{ background:#1f0f0f; border-color:#ef4444; }
+
+/* NAME */
 .name{
   font-weight:600;
   font-size:16px;
@@ -118,28 +112,34 @@ header{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 
-  animation:rainbow 8s linear infinite;
+  animation:rainbow 10s linear infinite;
 }
 
+/* VERIFIED */
+.verify{
+  color:#3b82f6;
+  margin-left:5px;
+}
+
+/* PHONE */
 .phone{
-  font-size:13px;
   color:#aaa;
-  margin-top:3px;
+  font-size:13px;
 }
 
-/* 🌈 BUTTON LED */
+/* BUTTON */
 .btn{
   display:block;
   margin-top:12px;
   padding:12px;
-  text-align:center;
   border-radius:12px;
+  text-align:center;
   text-decoration:none;
-  font-weight:500;
+  font-weight:600;
 
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
   background-size:400%;
-  animation:rainbow 6s linear infinite;
+  animation:rainbow 8s linear infinite;
 
   color:#000;
 }
@@ -150,19 +150,17 @@ header{
 
 <!-- INTRO -->
 <div id="splash">
-  <div class="logo">Trusted Midman List</div>
+  <div class="logo">Trusted System</div>
 </div>
 
 <div id="app">
 
-<header>Trusted Midman List</header>
-
-<div class="container">
+<header>Trusted List</header>
 
 <div class="tabs">
   <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
-  <button onclick="setTab('seller')" id="btnSeller">Seller</button>
-  <button onclick="setTab('scam')" id="btnScam">Scam</button>
+  <button onclick="setTab('seller')" id="btnSeller">Seller Trusted</button>
+  <button onclick="setTab('scam')" id="btnScam">Scammer</button>
 </div>
 
 <div class="add" onclick="addData()">+ Tambah</div>
@@ -171,56 +169,81 @@ header{
 
 </div>
 
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<script>
+/* 🔥 PASTE CONFIG SINI */
+const firebaseConfig = {
+  apiKey: "ISI",
+  authDomain: "ISI",
+  projectId: "ISI",
+  storageBucket: "ISI",
+  messagingSenderId: "ISI",
+  appId: "ISI"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let currentTab="midman";
+let allData=[];
 
 /* INTRO */
 setTimeout(()=>{
-  document.getElementById("splash").style.display="none";
-  document.getElementById("app").style.display="block";
+  splash.style.display="none";
+  app.style.display="block";
 },1500);
 
-/* DATA */
-let data = JSON.parse(localStorage.getItem("listData")) || [
-  {nama:"MID IPANZZ", phone:"60175970694", type:"midman"}
-];
-
-let currentTab = "midman";
-
-/* SAVE */
-function save(){
-  localStorage.setItem("listData", JSON.stringify(data));
+/* LOAD */
+async function loadData(){
+  const snap = await getDocs(collection(db,"data"));
+  allData=[];
+  snap.forEach(doc=> allData.push(doc.data()));
+  render();
 }
 
 /* RENDER */
 function render(){
   let html="";
+  allData.forEach(d=>{
+    if(d.type!==currentTab) return;
 
-  data.forEach(d=>{
-    if(d.type !== currentTab) return;
-
-    html += `
-    <div class="card">
-      <div class="name">${d.nama}</div>
+    html+=`
+    <div class="card ${d.type}">
+      <div class="name">
+        ${d.nama}
+        ${d.verified ? '<span class="verify">✔️</span>' : ''}
+      </div>
       <div class="phone">${d.phone}</div>
-      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
-        WhatsApp
-      </a>
+      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
     </div>`;
   });
+  list.innerHTML=html;
+}
 
-  document.getElementById("list").innerHTML = html;
+/* ADD */
+window.addData = async function(){
+  let pass = prompt("Password:");
+  if(pass!=="ipanzz") return alert("Salah");
+
+  let nama = prompt("Nama:");
+  let phone = prompt("Phone:");
+  let type = prompt("Type (midman/seller/scam):");
+  let verified = confirm("Verified?");
+
+  await addDoc(collection(db,"data"),{
+    nama, phone, type, verified
+  });
+
+  loadData();
 }
 
 /* TAB */
-function setTab(tab){
-  currentTab = tab;
+window.setTab=function(tab){
+  currentTab=tab;
 
-  document.querySelectorAll(".tabs button").forEach(b=>{
-    b.classList.remove("active");
-  });
-
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
   if(tab==="midman") btnMid.classList.add("active");
   if(tab==="seller") btnSeller.classList.add("active");
   if(tab==="scam") btnScam.classList.add("active");
@@ -228,22 +251,8 @@ function setTab(tab){
   render();
 }
 
-/* ADD */
-function addData(){
-  let pass = prompt("Password:");
-  if(pass !== "ipanzz") return alert("Salah");
-
-  let nama = prompt("Nama:");
-  let phone = prompt("Phone:");
-  let type = prompt("Type (midman/seller/scam):");
-
-  data.push({nama,phone,type});
-  save();
-  render();
-}
-
 /* START */
-render();
+loadData();
 
 </script>
 
