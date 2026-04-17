@@ -6,173 +6,88 @@
 
 <title>Midman Trusted Malaysia</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-
 <style>
 body{
   margin:0;
-  font-family:'Inter',sans-serif;
-  background: radial-gradient(circle at top,#0a0a0a,#000);
+  font-family:Arial, sans-serif;
+  background:#0b0b0b;
   color:#fff;
 }
 
 /* HEADER */
 header{
   text-align:center;
-  padding:50px 20px 20px;
-  animation: fadeDown 0.8s ease;
+  padding:30px 10px;
 }
 
 header h1{
-  color:#00ffc3;
-  text-shadow: 0 0 10px #00ffc3, 0 0 20px #00ffc3;
-}
-  
-  @keyframes rainbowMove{
-  0%{ background-position:0% }
-  100%{ background-position:200% }
-}
-}
   margin:0;
+  font-size:22px;
 }
 
 header p{
-  color:#888;
+  color:#aaa;
+  font-size:13px;
 }
 
 /* CONTAINER */
 .container{
   max-width:500px;
   margin:auto;
-  padding:20px;
+  padding:15px;
 }
 
 /* SEARCH */
 input{
   width:100%;
-  padding:15px;
-  border-radius:14px;
+  padding:12px;
+  border-radius:10px;
   border:none;
   background:#111;
   color:#fff;
-  margin-bottom:20px;
-  font-size:14px;
+  margin-bottom:15px;
 }
 
 /* CARD */
 .midman{
-  position: relative;
-  background: #111;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:15px;
-  z-index:1;
-  overflow:hidden;
-}
-
-.midman::before{
-  background:#00ffc3;
-  filter: blur(10px);
-}
-
-.midman:hover{
-  box-shadow: 0 0 15px #00ffc3;
-}
-  
-  @keyframes rgbBorder{
-  0%{ background-position:0% }
-  100%{ background-position:300% }
-}
-}
-
-.midman::after{
-  content:"";
-  position:absolute;
-  top:2px;
-  left:2px;
-  right:2px;
-  bottom:2px;
   background:#111;
+  border:1px solid #222;
   border-radius:14px;
-  z-index:-1;
-}
-
-}
-
-.midman:hover{
-  transform: translateY(-5px);
-  border-color:#00ffc3;
-  box-shadow:0 0 15px rgba(0,255,195,0.2);
-  box-shadow: 0 0 15px red, 0 0 25px orange, 0 0 35px cyan;
+  padding:15px;
+  margin-bottom:15px;
 }
 
 .midman h3{
   margin:0;
-  font-size:16px;
+  font-size:15px;
 }
 
 .status{
   font-size:12px;
-  color:#00ffc3;
+  color:#00ff99;
 }
 
 /* BUTTON */
 .btn{
-  background: linear-gradient(90deg,#00ffc3,#00aaff);
-  color:#000;
-}
-  
-  @keyframes rainbowBtn{
-  0%{ background-position:0% 50% }
-  50%{ background-position:100% 50% }
-  100%{ background-position:0% 50% }
-}
-}
-}
-
-.btn:hover{
-  transform:scale(1.05);
+  display:block;
+  text-align:center;
+  margin-top:10px;
+  padding:12px;
+  border-radius:10px;
+  background: linear-gradient(90deg,#d946ef,#3b82f6);
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
 }
 
 /* BADGE */
 .badge{
-  background:#00ffc3;
+  background:#00ff99;
   color:#000;
   font-size:10px;
-  padding:3px 7px;
+  padding:3px 6px;
   border-radius:5px;
-  margin-left:6px;
-}
-
-/* FOOTER */
-footer{
-  text-align:center;
-  color:#666;
-  font-size:12px;
-  padding:20px;
-}
-
-/* ANIMATION */
-@keyframes fadeUp{
-  from{
-    opacity:0;
-    transform: translateY(20px);
-  }
-  to{
-    opacity:1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeDown{
-  from{
-    opacity:0;
-    transform: translateY(-20px);
-  }
-  to{
-    opacity:1;
-    transform: translateY(0);
-  }
+  margin-left:5px;
 }
 </style>
 </head>
@@ -188,76 +103,50 @@ footer{
 
 <input type="text" id="search" placeholder="Search midman...">
 
-<div class="midman">
-  <h3>MID IPANZZ <span class="badge">VERIFIED</span></h3>
-  <p>0175970694</p>
-  <p class="status">Trusted</p>
-  <a class="btn" href="https://wa.me/60175970694">WhatsApp</a>
-</div>
-
-<div class="midman">
-  <h3>SLRMYAPI</h3>
-  <p>0104331830</p>
-  <p class="status">Trusted</p>
-  <a class="btn" href="https://wa.me/60104331830">WhatsApp</a>
-</div>
+<div id="list"></div>
 
 </div>
-
-<footer>
-© 2026 Midman Malaysia
-</footer>
 
 <script>
+const data = [
+  {
+    nama: "MID IPANZZ",
+    phone: "60175970694",
+    verified: true
+  },
+  {
+    nama: "SLRMYAPI",
+    phone: "60104331830",
+    verified: false
+  }
+];
+
+const list = document.getElementById("list");
+
+data.forEach(item => {
+  list.innerHTML += `
+  <div class="midman">
+    <h3>${item.nama} ${item.verified ? '<span class="badge">VERIFIED</span>' : ''}</h3>
+    <p>${item.phone}</p>
+    <p class="status">Trusted</p>
+    <a class="btn" href="https://wa.me/${item.phone}">WhatsApp</a>
+  </div>
+  `;
+});
+
+/* DATE */
 document.getElementById("date").innerText =
 new Date().toLocaleDateString("ms-MY");
 
+/* SEARCH */
 document.getElementById("search").addEventListener("keyup", function(){
-let value = this.value.toLowerCase();
-document.querySelectorAll(".midman").forEach(function(card){
-card.style.display = card.innerText.toLowerCase().includes(value)
-? "" : "none";
-});
+  let value = this.value.toLowerCase();
+  document.querySelectorAll(".midman").forEach(function(card){
+    card.style.display = card.innerText.toLowerCase().includes(value)
+    ? "" : "none";
+  });
 });
 </script>
 
 </body>
 </html>
-
-<button onclick="adminLogin()" class="btn">+ Tambah Midman</button>
-<script>
-function adminLogin(){
-  let pass = prompt("Masukkan password admin:");
-
-  if(pass === "IPANZZ"){ // tukar password sini
-    let nama = prompt("Nama midman:");
-    let phone = prompt("No phone (contoh 60123456789):");
-
-    if(nama && phone){
-      let card = `
-      <div class="midman">
-        <h3>${nama} <span class="badge">NEW</span></h3>
-        <p>${phone}</p>
-        <a class="btn" href="https://wa.me/${phone}">WhatsApp</a>
-      </div>
-      `;
-      document.getElementById("list").innerHTML += card;
-    }
-
-  } else {
-    alert("Password salah!");
-  }
-}
-</script>
-<div id="list"></div>
-
-<button onclick="adminLogin()" class="admin-btn">+ Tambah</button>
-.admin-btn{
-  background: transparent;
-  border: 1px solid #00ffc3;
-  color: #00ffc3;
-  padding:10px;
-  border-radius:10px;
-  margin-bottom:15px;
-  width:100%;
-}
