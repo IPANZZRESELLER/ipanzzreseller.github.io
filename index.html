@@ -9,26 +9,18 @@
 <style>
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:#000; /* FULL HITAM */
+  font-family:Arial;
+  background:#000;
   color:#fff;
 }
 
 /* HEADER */
 header{
-  padding:25px 15px;
+  padding:20px;
 }
 
-h1{
-  margin:0;
-  font-size:22px;
-}
-
-.sub{
-  color:#888;
-  margin-top:5px;
-  font-size:13px;
-}
+h1{margin:0}
+.sub{color:#888;font-size:13px}
 
 /* CONTAINER */
 .container{
@@ -37,41 +29,45 @@ h1{
   padding:15px;
 }
 
-/* SEARCH (FIX NO WHITE) */
+/* SEARCH */
 input{
   width:100%;
   padding:12px;
   border-radius:10px;
   border:none;
-  outline:none;
-  background:#111; /* HITAM */
+  background:#111;
   color:#fff;
   margin-bottom:15px;
 }
 
-/* FILTER */
-.filter button{
+/* TAB BUTTON */
+.tabs{
+  display:flex;
+  gap:5px;
+  margin-bottom:15px;
+}
+
+.tabs button{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:8px;
   background:#111;
   color:#fff;
-  border:none;
-  padding:8px 10px;
-  border-radius:8px;
-  margin:3px;
+}
+
+.active{
+  background:#00ff99;
+  color:#000;
 }
 
 /* CARD */
 .card{
   background:#111;
-  border:1px solid #1f1f1f;
   border-radius:12px;
   padding:15px;
   margin-bottom:10px;
 }
-
-/* STATUS */
-.trusted{color:#00ff99;}
-.scam{color:red;}
-.warning{color:orange;}
 
 /* BUTTON */
 .btn{
@@ -87,19 +83,17 @@ input{
 
 .copy{
   background:#222;
-  color:#fff;
   border:none;
+  color:#fff;
+  padding:8px;
+  border-radius:8px;
+  margin-top:5px;
 }
 
-/* BADGE */
-.badge{
-  background:#00ff99;
-  color:#000;
-  font-size:10px;
-  padding:3px 6px;
-  border-radius:5px;
-  margin-left:5px;
-}
+/* TITLE COLOR */
+.seller{color:#00ffcc;}
+.midman{color:#00ff99;}
+.scam{color:red;}
 </style>
 </head>
 
@@ -108,17 +102,16 @@ input{
 <header>
 <h1>Midman Trusted Malaysia</h1>
 <p class="sub">Updated <span id="date"></span></p>
-<p class="sub" id="total"></p>
 </header>
 
 <div class="container">
 
-<input id="search" placeholder="Cari midman...">
+<input id="search" placeholder="Cari...">
 
-<div class="filter">
-  <button onclick="setFilter('all')">All</button>
-  <button onclick="setFilter('trusted')">Trusted</button>
-  <button onclick="setFilter('scam')">Scam</button>
+<div class="tabs">
+  <button onclick="setTab('seller')" id="btnSeller">Seller</button>
+  <button onclick="setTab('midman')" id="btnMidman" class="active">Midman</button>
+  <button onclick="setTab('scam')" id="btnScam">Scam</button>
 </div>
 
 <div id="list"></div>
@@ -129,33 +122,27 @@ input{
 
 /* DATA */
 let data = [
-  {nama:"MID IPANZZ", phone:"60175970694", rating:5, status:"trusted", verified:true},
-  {nama:"SLRMYAPI", phone:"60104331830", rating:5, status:"trusted"},
-  {nama:"MIDMAN AASHOP", phone:"60179981705", rating:5, status:"trusted"},
-  {nama:"SCAMMER XYZ", phone:"60111111111", rating:1, status:"scam"}
+  {nama:"MID IPANZZ", phone:"60175970694", type:"midman"},
+  {nama:"SLRMYAPI", phone:"60104331830", type:"midman"},
+
+  {nama:"SHOP ABC", phone:"60122222222", type:"seller"},
+
+  {nama:"SCAMMER XYZ", phone:"60111111111", type:"scam"}
 ];
 
-let filter = "all";
+let currentTab = "midman";
 
 /* RENDER */
 function render(){
-  let html = "";
+  let html="";
 
-  let filtered = data.filter(d=>{
-    if(filter==="all") return true;
-    return d.status === filter;
-  });
+  data.forEach(d=>{
+    if(d.type !== currentTab) return;
 
-  document.getElementById("total").innerText =
-    "Total: " + filtered.length;
-
-  filtered.forEach(d=>{
     html += `
     <div class="card">
-      <b>${d.nama} ${d.verified ? '<span class="badge">VERIFIED</span>' : ''}</b>
+      <b class="${d.type}">${d.nama}</b>
       <p>${d.phone}</p>
-      <p>${"⭐".repeat(d.rating)}</p>
-      <p class="${d.status}">Status: ${d.status}</p>
 
       <button class="copy" onclick="copy('${d.phone}')">Copy</button>
       <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
@@ -166,9 +153,16 @@ function render(){
   document.getElementById("list").innerHTML = html;
 }
 
-/* FILTER */
-function setFilter(f){
-  filter = f;
+/* TAB SWITCH */
+function setTab(tab){
+  currentTab = tab;
+
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+  
+  if(tab==="seller") document.getElementById("btnSeller").classList.add("active");
+  if(tab==="midman") document.getElementById("btnMidman").classList.add("active");
+  if(tab==="scam") document.getElementById("btnScam").classList.add("active");
+
   render();
 }
 
