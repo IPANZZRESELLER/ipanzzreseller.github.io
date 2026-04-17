@@ -4,24 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List Midman Trusted Malaysia</title>
+<title>Midman Trusted Malaysia</title>
 
 <style>
 body{
   margin:0;
-  font-family:Arial;
-  background:#0f0f0f;
+  font-family:Arial, sans-serif;
+  background:#000; /* FULL HITAM */
   color:#fff;
 }
 
 /* HEADER */
 header{
-  text-align:center;
-  padding:25px 10px;
+  padding:25px 15px;
 }
 
-header p{
+h1{
+  margin:0;
+  font-size:22px;
+}
+
+.sub{
   color:#888;
+  margin-top:5px;
   font-size:13px;
 }
 
@@ -32,29 +37,33 @@ header p{
   padding:15px;
 }
 
-/* SEARCH */
+/* SEARCH (FIX NO WHITE) */
 input{
   width:100%;
   padding:12px;
-  border-radius:8px;
+  border-radius:10px;
   border:none;
-  background:#1a1a1a;
+  outline:none;
+  background:#111; /* HITAM */
   color:#fff;
-  margin-bottom:10px;
+  margin-bottom:15px;
 }
 
 /* FILTER */
 .filter button{
-  margin:3px;
-  padding:8px 10px;
+  background:#111;
+  color:#fff;
   border:none;
-  border-radius:6px;
+  padding:8px 10px;
+  border-radius:8px;
+  margin:3px;
 }
 
 /* CARD */
 .card{
-  background:#1a1a1a;
-  border-radius:10px;
+  background:#111;
+  border:1px solid #1f1f1f;
+  border-radius:12px;
   padding:15px;
   margin-bottom:10px;
 }
@@ -77,8 +86,9 @@ input{
 }
 
 .copy{
-  background:#333;
+  background:#222;
   color:#fff;
+  border:none;
 }
 
 /* BADGE */
@@ -96,9 +106,9 @@ input{
 <body>
 
 <header>
-<h2>List Midman Trusted Malaysia</h2>
-<p>Updated <span id="date"></span></p>
-<p id="total"></p>
+<h1>Midman Trusted Malaysia</h1>
+<p class="sub">Updated <span id="date"></span></p>
+<p class="sub" id="total"></p>
 </header>
 
 <div class="container">
