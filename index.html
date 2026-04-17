@@ -3,115 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>MIDMAN TRUSTED MALAYSIA</title>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
 <style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#0b0b0b;
-  color:#fff;
-}
-
-header{
-  text-align:center;
-  padding:30px 10px;
-}
-
-.profile{
-  width:100px;
-  height:100px;
-  border-radius:50%;
-  background:#fff;
-  padding:5px;
-  box-shadow:0 0 25px #00ffc3;
-}
-
-.container{
-  max-width:500px;
-  margin:auto;
-  padding:15px;
-}
+body{margin:0;font-family:Arial;background:#0b0b0b;color:#fff}
+header{text-align:center;padding:25px}
+.profile{width:90px;border-radius:50%;box-shadow:0 0 20px #00ffc3}
+.container{max-width:500px;margin:auto;padding:15px}
 
 input{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  background:#111;
-  color:#fff;
-  margin-bottom:10px;
+  width:100%;padding:12px;border-radius:10px;
+  border:none;background:#111;color:#fff;margin-bottom:10px;
 }
 
 button{
-  width:100%;
-  padding:10px;
-  margin-bottom:10px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
+  width:100%;padding:10px;border-radius:10px;
+  margin-bottom:10px;border:none;cursor:pointer;
 }
 
-.login-btn{background:#111;border:1px solid #00ffc3;color:#00ffc3;}
-.admin-btn{background:#111;border:1px solid #d946ef;color:#d946ef;}
-.logout-btn{background:#111;border:1px solid red;color:red;}
+.login{border:1px solid #00ffc3;background:#111;color:#00ffc3}
+.admin{border:1px solid #d946ef;background:#111;color:#d946ef}
+.logout{border:1px solid red;background:#111;color:red}
 
 .midman{
-  background:#111;
-  border:1px solid #222;
-  border-radius:14px;
-  padding:15px;
-  margin-bottom:15px;
-}
-
-.midman img{
-  width:45px;
-  height:45px;
-  border-radius:50%;
+  background:#111;padding:15px;
+  border-radius:12px;margin-bottom:10px;
 }
 
 .btn{
-  display:block;
-  margin-top:10px;
-  padding:10px;
-  text-align:center;
-  border-radius:10px;
+  display:block;margin-top:10px;
+  padding:10px;text-align:center;
   background:linear-gradient(90deg,#d946ef,#3b82f6);
-  color:#fff;
-  text-decoration:none;
+  border-radius:10px;color:#fff;text-decoration:none;
 }
-
-.actions button{
-  width:auto;
-  padding:5px 10px;
-}
-
-.edit{background:#3b82f6;color:#fff;}
-.delete{background:red;color:#fff;}
 
 .badge{
-  background:#00ff99;
-  color:#000;
-  font-size:10px;
-  padding:3px 6px;
-  border-radius:5px;
-}
-
-.modal{
-  display:none;
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.8);
-  justify-content:center;
-  align-items:center;
-}
-
-.modal-box{
-  background:#111;
-  padding:20px;
-  border-radius:10px;
+  background:#00ff99;color:#000;
+  font-size:10px;padding:3px 6px;border-radius:5px;
 }
 </style>
 </head>
@@ -126,169 +59,134 @@ button{
 
 <div class="container">
 
-<input type="text" id="search" placeholder="Search midman...">
+<input id="search" placeholder="Cari midman...">
 
 <div id="topUI"></div>
 <div id="list"></div>
 
 </div>
 
-<!-- LOGIN -->
-<div class="modal" id="loginModal">
-  <div class="modal-box">
-    <h3>Admin Login</h3>
-    <input type="password" id="pass">
-    <button onclick="login()">Login</button>
-  </div>
-</div>
-
 <script>
 
-/* ADMIN STATE */
-let isAdmin = localStorage.getItem("isAdmin") === "true";
+/* 🔥 CONFIG (PASTE DARI FIREBASE) */
+const firebaseConfig = {
+  apiKey: "PASTE",
+  authDomain: "PASTE",
+  projectId: "PASTE",
+};
 
-/* DATA */
-let data = JSON.parse(localStorage.getItem("midmanData")) || [];
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+/* 🔐 ADMIN EMAIL (LETak EMAIL KAU) */
+const ADMIN_EMAIL = "kau@email.com";
+
+let isAdmin = false;
+
+/* 🔄 CHECK LOGIN */
+auth.onAuthStateChanged(user=>{
+  if(user && user.email === ADMIN_EMAIL){
+    isAdmin = true;
+  } else {
+    isAdmin = false;
+  }
+  renderUI();
+});
 
 /* UI */
-function updateUI(){
-  let ui = "";
+function renderUI(){
+  let html = "";
 
   if(!isAdmin){
-    ui += '<button class="login-btn" onclick="openLogin()">🔐 Login Admin</button>';
+    html += `<button class="login" onclick="login()">🔐 Login Admin</button>`;
   } else {
-    ui += `
-      <button class="admin-btn" onclick="addMidman()">+ Tambah</button>
-      <button class="admin-btn" onclick="exportData()">📤 Export</button>
-      <button class="admin-btn" onclick="importData()">📥 Import</button>
-      <button class="logout-btn" onclick="logout()">Logout</button>
+    html += `
+      <button class="admin" onclick="addMidman()">+ Tambah</button>
+      <button class="logout" onclick="logout()">Logout</button>
     `;
   }
 
-  document.getElementById("topUI").innerHTML = ui;
+  document.getElementById("topUI").innerHTML = html;
 }
 
-/* RENDER */
-function render(){
-  updateUI();
-  let list = document.getElementById("list");
-  list.innerHTML = "";
+/* LOGIN */
+function login(){
+  let email = prompt("Email:");
+  let pass = prompt("Password:");
 
-  data.forEach((item,index)=>{
-    let img = item.img || "https://via.placeholder.com/40";
+  auth.signInWithEmailAndPassword(email, pass)
+  .catch(()=>alert("Login gagal"));
+}
 
-    list.innerHTML += `
+function logout(){
+  auth.signOut();
+}
+
+/* REALTIME LOAD */
+db.collection("midman").onSnapshot(snapshot=>{
+  let html = "";
+
+  snapshot.forEach(doc=>{
+    let d = doc.data();
+
+    html += `
     <div class="midman">
-      <img src="${img}">
-      <h3>${item.nama} ${item.verified ? '<span class="badge">VERIFIED</span>' : ''}</h3>
-      <p>${item.phone}</p>
-      <p>⭐ ${item.rating}/5</p>
-      <a class="btn" href="https://wa.me/${item.phone}">WhatsApp</a>
+      <h3>${d.nama} <span class="badge">VERIFIED</span></h3>
+      <p>${d.phone}</p>
+      <p>⭐ ${d.rating || 5}</p>
+      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
 
       ${isAdmin ? `
-      <div class="actions">
-        <button class="edit" onclick="editMidman(${index})">Edit</button>
-        <button class="delete" onclick="deleteMidman(${index})">Delete</button>
-      </div>` : ""}
+        <button onclick="editMidman('${doc.id}','${d.nama}','${d.phone}','${d.rating}')">Edit</button>
+        <button onclick="deleteMidman('${doc.id}')">Delete</button>
+      ` : ""}
     </div>
     `;
   });
 
-  localStorage.setItem("midmanData", JSON.stringify(data));
-}
-
-render();
-
-/* LOGIN */
-function openLogin(){
-  document.getElementById("loginModal").style.display="flex";
-}
-
-function login(){
-  let pass = document.getElementById("pass").value;
-
-  if(pass === "ipanzz"){
-    isAdmin = true;
-    localStorage.setItem("isAdmin","true");
-    document.getElementById("loginModal").style.display="none";
-    render();
-  } else {
-    alert("Salah password");
-  }
-}
-
-function logout(){
-  isAdmin = false;
-  localStorage.removeItem("isAdmin");
-  render();
-}
+  document.getElementById("list").innerHTML = html;
+});
 
 /* ADD */
 function addMidman(){
   let nama = prompt("Nama:");
   let phone = prompt("Phone:");
   let rating = prompt("Rating:");
-  let img = prompt("Link gambar:");
 
-  data.push({nama, phone, rating, img, verified:true});
-  render();
+  db.collection("midman").add({
+    nama,
+    phone,
+    rating
+  });
 }
 
 /* DELETE */
-function deleteMidman(i){
+function deleteMidman(id){
   if(confirm("Padam?")){
-    data.splice(i,1);
-    render();
+    db.collection("midman").doc(id).delete();
   }
 }
 
 /* EDIT */
-function editMidman(i){
-  let item = data[i];
+function editMidman(id,nama,phone,rating){
+  let n = prompt("Nama:",nama);
+  let p = prompt("Phone:",phone);
+  let r = prompt("Rating:",rating);
 
-  let nama = prompt("Nama:", item.nama);
-  let phone = prompt("Phone:", item.phone);
-  let rating = prompt("Rating:", item.rating);
-  let img = prompt("Link gambar:", item.img);
-
-  data[i] = {nama, phone, rating, img, verified:true};
-  render();
-}
-
-/* EXPORT */
-function exportData(){
-  let blob = new Blob([JSON.stringify(data)], {type:"application/json"});
-  let a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "midman.json";
-  a.click();
-}
-
-/* IMPORT */
-function importData(){
-  let input = document.createElement("input");
-  input.type = "file";
-
-  input.onchange = e=>{
-    let file = e.target.files[0];
-    let reader = new FileReader();
-
-    reader.onload = ()=>{
-      data = JSON.parse(reader.result);
-      render();
-    };
-
-    reader.readAsText(file);
-  };
-
-  input.click();
+  db.collection("midman").doc(id).update({
+    nama:n,
+    phone:p,
+    rating:r
+  });
 }
 
 /* SEARCH */
 document.getElementById("search").addEventListener("keyup", function(){
   let val = this.value.toLowerCase();
   document.querySelectorAll(".midman").forEach(card=>{
-    card.style.display = card.innerText.toLowerCase().includes(val) ? "" : "none";
+    card.style.display =
+    card.innerText.toLowerCase().includes(val) ? "" : "none";
   });
 });
 
