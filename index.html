@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List Trusted</title>
+<title>Neon System</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -14,6 +14,23 @@ body{
   font-family:'Orbitron',sans-serif;
   background:#000;
   color:#fff;
+  overflow-x:hidden;
+}
+
+/* BACKGROUND CYBER */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(#0ff1 1px,transparent 1px),
+    linear-gradient(90deg,#0ff1 1px,transparent 1px);
+  background-size:40px 40px;
+  animation:gridMove 10s linear infinite;
+}
+@keyframes gridMove{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(40px)}
 }
 
 /* INTRO */
@@ -24,33 +41,39 @@ body{
   justify-content:center;
   align-items:center;
   background:#000;
+  z-index:999;
 }
 .line{
   opacity:0;
   display:block;
   text-align:center;
-  font-size:20px;
+  font-size:22px;
 }
 .line.show{
   animation:fade 0.6s forwards;
 }
-@keyframes fade{
-  to{opacity:1}
-}
+@keyframes fade{to{opacity:1}}
 
 #app{display:none}
 
-/* HEADER NEON */
+/* HEADER RGB */
 header{
   text-align:center;
   padding:20px;
   font-size:18px;
-  letter-spacing:1px;
+  letter-spacing:2px;
 
-  text-shadow:
-    0 0 5px #fff,
-    0 0 10px #f0f,
-    0 0 20px #f0f;
+  background:linear-gradient(90deg,#f0f,#0ff,#0f0,#ff0,#f0f);
+  background-size:300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:rgbMove 5s linear infinite;
+
+  text-shadow:0 0 10px #fff,0 0 20px #0ff;
+}
+@keyframes rgbMove{
+  100%{background-position:300%}
 }
 
 /* TABS */
@@ -66,11 +89,10 @@ header{
   border:none;
   background:none;
   color:#888;
-  font-family:'Orbitron';
 }
 .active{
   color:#fff;
-  text-shadow:0 0 8px #0ff;
+  text-shadow:0 0 10px #0ff;
 }
 
 /* CARD */
@@ -78,21 +100,18 @@ header{
   margin:10px;
   padding:15px;
   border-radius:14px;
+  animation:pulse 2s infinite;
 }
 
-/* COLORS + GLOW */
-.midman{
-  border:1px solid #22c55e;
-  box-shadow:0 0 10px #22c55e;
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 10px}
+  50%{box-shadow:0 0 20px}
 }
-.seller{
-  border:1px solid #3b82f6;
-  box-shadow:0 0 10px #3b82f6;
-}
-.scam{
-  border:1px solid #ef4444;
-  box-shadow:0 0 10px #ef4444;
-}
+
+/* COLORS */
+.midman{border:1px solid #22c55e;color:#22c55e}
+.seller{border:1px solid #3b82f6;color:#3b82f6}
+.scam{border:1px solid #ef4444;color:#ef4444}
 
 /* PROFILE */
 .profile{
@@ -100,37 +119,30 @@ header{
   gap:10px;
   cursor:pointer;
 }
-
 .avatar{
   width:45px;
   height:45px;
   border-radius:50%;
-  border:2px solid #222;
+  box-shadow:0 0 10px #0ff;
 }
 
-/* NAME NEON */
+/* NAME */
 .name{
   font-weight:700;
-  text-shadow:
-    0 0 5px #fff,
-    0 0 10px #0ff,
-    0 0 20px #0ff;
+  text-shadow:0 0 5px #fff,0 0 10px #0ff,0 0 20px #0ff;
 }
 
-/* TELEGRAM VERIFY */
+/* VERIFY */
 .verify{
   display:inline-block;
-  margin-left:6px;
+  margin-left:5px;
   width:16px;
   height:16px;
   background:#3b82f6;
   border-radius:50%;
-  color:#fff;
-  font-size:11px;
   text-align:center;
   line-height:16px;
-
-  box-shadow:0 0 8px #3b82f6;
+  box-shadow:0 0 10px #3b82f6;
 }
 
 /* BUTTON */
@@ -140,11 +152,10 @@ header{
   padding:10px;
   text-align:center;
   border-radius:10px;
-  text-decoration:none;
-  color:#fff;
-
   border:1px solid #0ff;
   box-shadow:0 0 10px #0ff;
+  color:#fff;
+  text-decoration:none;
 }
 
 /* ADD */
@@ -152,9 +163,9 @@ header{
   margin:10px;
   padding:10px;
   text-align:center;
-  border:1px solid #333;
+  border:1px solid #0ff;
   border-radius:10px;
-  box-shadow:0 0 8px #333;
+  box-shadow:0 0 10px #0ff;
 }
 </style>
 </head>
@@ -214,7 +225,7 @@ app.style.display="block";
 function copyWa(num){
 let link="https://wa.me/"+num;
 navigator.clipboard.writeText(link);
-alert("Copy:\n"+link);
+alert("Copied:\n"+link);
 }
 
 /* RENDER */
