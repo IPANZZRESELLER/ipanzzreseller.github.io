@@ -19,7 +19,22 @@ header{
   padding:20px;
 }
 
-.sub{color:#888;font-size:13px}
+/* 🌈 TITLE ULTRA */
+.title{
+  font-size:22px;
+  font-weight:bold;
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet,red);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:rainbowMove 5s linear infinite;
+  text-shadow:0 0 10px #fff,0 0 20px #0ff,0 0 40px #0ff;
+}
+
+@keyframes rainbowMove{
+  0%{background-position:0%}
+  100%{background-position:400%}
+}
 
 /* CONTAINER */
 .container{
@@ -53,39 +68,64 @@ input{
   border-radius:8px;
   background:#111;
   color:#fff;
+  transition:0.3s;
+}
+
+.tabs button:hover{
+  box-shadow:0 0 10px #00ffcc;
 }
 
 .active{
   background:#00ff99;
   color:#000;
+  box-shadow:0 0 15px #00ff99;
 }
 
-/* CARD */
+/* 🌈 CARD NEON */
 .card{
   background:#111;
   border-radius:12px;
   padding:15px;
-  margin-bottom:10px;
+  margin-bottom:12px;
+  position:relative;
+  overflow:hidden;
 }
 
-/* 🔥 HIGHLIGHT TEXT */
-.glow{
-  color:#00ff99;
-  text-shadow:0 0 5px #00ff99,
-              0 0 10px #00ff99,
-              0 0 20px #00ff99;
+/* RAINBOW BORDER */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  padding:2px;
+  border-radius:12px;
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  background-size:400%;
+  animation:rainbowMove 6s linear infinite;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
 }
 
-.glow-blue{
-  color:#00ccff;
-  text-shadow:0 0 5px #00ccff,
-              0 0 10px #00ccff;
+/* HOVER EFFECT */
+.card:hover{
+  transform:scale(1.03);
+  box-shadow:0 0 15px #00ffcc;
 }
 
-.glow-red{
-  color:#ff3b3b;
-  text-shadow:0 0 5px #ff3b3b,
-              0 0 10px #ff3b3b;
+/* NAME GLOW */
+.name{
+  font-weight:bold;
+  font-size:16px;
+  color:#00ffcc;
+  text-shadow:0 0 5px #00ffcc,0 0 15px #00ffcc;
+}
+
+/* TOP TRUSTED */
+.top{
+  color:#fff;
+  text-shadow:0 0 10px gold,0 0 20px gold,0 0 40px gold;
 }
 
 /* BUTTON */
@@ -98,6 +138,11 @@ input{
   text-decoration:none;
   background:#25D366;
   color:#fff;
+  transition:0.3s;
+}
+
+.btn:hover{
+  box-shadow:0 0 10px #25D366;
 }
 </style>
 </head>
@@ -105,8 +150,7 @@ input{
 <body>
 
 <header>
-<h2 class="glow">Midman Trusted Malaysia</h2>
-<p class="sub">Updated <span id="date"></span></p>
+<div class="title">Midman Trusted Malaysia</div>
 </header>
 
 <div class="container">
@@ -126,8 +170,11 @@ input{
 <script>
 
 let data = [
-  {nama:"MID IPANZZ", phone:"60175970694", type:"midman"},
+  {nama:"MID IPANZZ", phone:"60175970694", type:"midman", top:true},
+  {nama:"SLRMYAPI", phone:"60104331830", type:"midman"},
+
   {nama:"SHOP ABC", phone:"60122222222", type:"seller"},
+
   {nama:"SCAMMER XYZ", phone:"60111111111", type:"scam"}
 ];
 
@@ -140,13 +187,12 @@ function render(){
   data.forEach(d=>{
     if(d.type !== currentTab) return;
 
-    let colorClass = d.type==="midman" ? "glow" :
-                     d.type==="seller" ? "glow-blue" :
-                     "glow-red";
-
     html += `
     <div class="card">
-      <b class="${colorClass}">${d.nama}</b>
+      <div class="name ${d.top ? 'top':''}">
+        ${d.top ? '🔥 ' : ''}${d.nama}
+      </div>
+
       <p>${d.phone}</p>
 
       <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
@@ -178,10 +224,6 @@ document.getElementById("search").addEventListener("keyup", function(){
     card.innerText.toLowerCase().includes(val) ? "" : "none";
   });
 });
-
-/* DATE */
-document.getElementById("date").innerText =
-new Date().toLocaleDateString("ms-MY");
 
 /* START */
 render();
