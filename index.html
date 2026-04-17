@@ -10,136 +10,115 @@
 
 <style>
 body{
-  margin:0;
-  font-family:'Orbitron',sans-serif;
-  background:#000;
-  color:#fff;
+margin:0;
+font-family:'Orbitron',sans-serif;
+background:#000;
+color:#fff;
 }
 
 /* INTRO */
 #splash{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+position:fixed;inset:0;
+display:flex;justify-content:center;align-items:center;
+background:#000;
+z-index:999;
+}
+.line{opacity:0;display:block}
+.line.show{animation:fade .6s forwards}
+@keyframes fade{to{opacity:1}}
+
+#login{
+display:none;
+position:fixed;inset:0;
+background:#000;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+gap:15px;
 }
 
-.logo{
-  text-align:center;
-  font-size:24px;
+/* BUTTON */
+.btnLogin{
+padding:12px 20px;
+border:1px solid #0ff;
+border-radius:10px;
+background:#111;
+color:#fff;
+box-shadow:0 0 10px #0ff;
 }
 
-.line{
-  display:block;
-  opacity:0;
-  transform:translateY(15px);
+input{
+padding:10px;
+border-radius:10px;
+border:none;
 }
 
-.line.show{
-  animation:fade 0.6s forwards;
-}
-
-@keyframes fade{
-  to{opacity:1;transform:translateY(0)}
-}
-
+/* APP */
 #app{display:none}
 
 /* HEADER */
 header{
-  text-align:center;
-  padding:20px;
-  font-size:22px;
-  text-shadow:0 0 10px #f0f,0 0 20px #f0f;
+text-align:center;
+padding:20px;
+text-shadow:0 0 10px #f0f;
 }
 
 /* TABS */
-.tabs{
-  display:flex;
-  margin:10px;
-  background:#111;
-  border-radius:12px;
-}
-
-.tabs button{
-  flex:1;
-  padding:10px;
-  background:none;
-  border:none;
-  color:#aaa;
-}
-
+.tabs{display:flex;margin:10px;background:#111;border-radius:10px}
+.tabs button{flex:1;padding:10px;background:none;border:none;color:#aaa}
 .active{color:#fff}
 
 /* CARD */
-.card{
-  margin:10px;
-  padding:15px;
-  border-radius:15px;
-}
-
-/* COLORS + GLOW */
-.midman{border:1px solid #22c55e;box-shadow:0 0 10px #22c55e}
-.seller{border:1px solid #3b82f6;box-shadow:0 0 10px #3b82f6}
-.scam{border:1px solid #ef4444;box-shadow:0 0 10px #ef4444}
+.card{margin:10px;padding:15px;border-radius:15px}
+.midman{box-shadow:0 0 10px #22c55e}
+.seller{box-shadow:0 0 10px #3b82f6}
+.scam{box-shadow:0 0 10px #ef4444}
 
 /* PROFILE */
-.profile{
-  display:flex;
-  gap:10px;
-}
-
-.avatar{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-}
-
-.logoSmall{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-}
+.profile{display:flex;gap:10px;cursor:pointer}
+.avatar{width:45px;height:45px;border-radius:50%}
+.logoSmall{width:18px;height:18px;border-radius:50%}
 
 /* NAME */
 .name{
-  text-shadow:0 0 5px #fff,0 0 10px #0ff,0 0 20px #0ff;
+font-weight:700;
+text-shadow:0 0 5px #fff,0 0 10px #0ff;
 }
+.verifyStar{color:gold}
 
 /* BUTTON */
 .btn{
-  display:block;
-  margin-top:10px;
-  padding:10px;
-  text-align:center;
-  border-radius:10px;
-  color:#fff;
-  border:1px solid #0ff;
-  box-shadow:0 0 10px #0ff;
-  text-decoration:none;
+display:block;margin-top:10px;padding:10px;text-align:center;
+border:1px solid #0ff;
+border-radius:10px;
+box-shadow:0 0 10px #0ff;
+color:#fff;text-decoration:none;
 }
 
-/* DELETE */
-.delete{
-  margin-top:8px;
-  color:red;
-  font-size:12px;
-}
+.delete{color:red;font-size:12px}
 </style>
 </head>
 
 <body>
 
+<!-- INTRO -->
 <div id="splash">
-  <div class="logo">
-    <span class="line">Welcome to</span>
-    <span class="line">Midman / Seller Trusted</span>
-    <span class="line">& List Scammer</span>
-  </div>
+<div>
+<span class="line">Welcome to</span>
+<span class="line">Midman / Seller Trusted</span>
+<span class="line">& List Scammer</span>
+</div>
 </div>
 
+<!-- LOGIN -->
+<div id="login">
+<button class="btnLogin" onclick="userMode()">Masuk sebagai User</button>
+
+<input type="password" id="pass" placeholder="Admin password">
+<button class="btnLogin" onclick="adminLogin()">Login Admin</button>
+</div>
+
+<!-- APP -->
 <div id="app">
 
 <header>Trusted System</header>
@@ -150,7 +129,7 @@ header{
 <button onclick="setTab('scam')" id="btnScam">Scam</button>
 </div>
 
-<div onclick="addData()" style="margin:10px;padding:10px;border:1px solid #333;border-radius:10px;text-align:center">
+<div id="addBox" onclick="addData()" style="display:none;margin:10px;padding:10px;border:1px solid #333;border-radius:10px;text-align:center">
 + Tambah
 </div>
 
@@ -160,6 +139,7 @@ header{
 
 <script>
 let tab="midman";
+let isAdmin=false;
 
 let data=[
 {
@@ -177,12 +157,38 @@ setTimeout(()=>{
 document.querySelectorAll(".line").forEach((e,i)=>{
 setTimeout(()=>e.classList.add("show"),i*500);
 });
-
 setTimeout(()=>{
 splash.style.display="none";
-app.style.display="block";
+login.style.display="flex";
 },2000);
 },300);
+
+/* LOGIN */
+function userMode(){
+login.style.display="none";
+app.style.display="block";
+render();
+}
+
+function adminLogin(){
+let p=document.getElementById("pass").value;
+if(p==="ipanzz"){
+isAdmin=true;
+login.style.display="none";
+app.style.display="block";
+document.getElementById("addBox").style.display="block";
+render();
+}else{
+alert("Password salah");
+}
+}
+
+/* COPY */
+function copyWa(num){
+let link="https://wa.me/"+num;
+navigator.clipboard.writeText(link);
+alert("Copied:\n"+link);
+}
 
 /* RENDER */
 function render(){
@@ -192,11 +198,13 @@ if(d.type!==tab) return;
 
 html+=`
 <div class="card ${d.type}">
-<div class="profile">
+
+<div class="profile" onclick="copyWa('${d.phone}')">
 <img class="avatar" src="${d.avatar}">
 <div>
 <div class="name">
-${d.nama} ${d.verified?'✔️':''}
+${d.nama}
+${d.verified?'<span class="verifyStar">★</span>':''}
 ${d.logo?`<img src="${d.logo}" class="logoSmall">`:''}
 </div>
 <div>${d.phone}</div>
@@ -205,7 +213,8 @@ ${d.logo?`<img src="${d.logo}" class="logoSmall">`:''}
 
 <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
 
-<div class="delete" onclick="del(${i})">Delete</div>
+${isAdmin?`<div class="delete" onclick="del(${i})">Delete</div>`:""}
+
 </div>
 `;
 });
@@ -240,8 +249,6 @@ if(t==="seller") btnSeller.classList.add("active");
 if(t==="scam") btnScam.classList.add("active");
 render();
 }
-
-render();
 </script>
 
 </body>
