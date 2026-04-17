@@ -15,20 +15,21 @@ body{margin:0;font-family:'Orbitron';background:#000;color:#fff}
 #splash{
 position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#000;z-index:999
 }
-.logo{width:80px;border-radius:50%;box-shadow:0 0 20px #0ff}
-.typing{text-align:center;margin-top:20px;font-size:20px}
+.logo{
+width:80px;border-radius:50%;box-shadow:0 0 20px #0ff
+}
+.typing{
+text-align:center;margin-top:20px;font-size:20px;
+background:linear-gradient(90deg,#f0f,#0ff,#0f0,#ff0);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+animation:rgb 4s linear infinite
+}
+@keyframes rgb{100%{background-position:300%}}
 
 /* LOGIN */
 #login{
-display:none;
-position:fixed;
-inset:0;
-background:#000;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-gap:10px;
+display:none;position:fixed;inset:0;background:#000;
+display:flex;justify-content:center;align-items:center;flex-direction:column;gap:10px
 }
 input{padding:10px;border-radius:10px;border:none}
 button{padding:10px;border:none;border-radius:10px}
@@ -36,7 +37,6 @@ button{padding:10px;border:none;border-radius:10px}
 /* APP */
 #app{display:none}
 
-/* HEADER */
 header{text-align:center;padding:20px;text-shadow:0 0 10px #0ff}
 
 /* SEARCH */
@@ -45,23 +45,36 @@ header{text-align:center;padding:20px;text-shadow:0 0 10px #0ff}
 /* TABS */
 .tabs{display:flex;margin:10px;background:#111;border-radius:10px}
 .tabs button{flex:1;padding:10px;background:none;border:none;color:#888}
-.active{color:#fff}
+.active{color:#fff;text-shadow:0 0 10px #0ff}
+
+/* ADD */
+#addBtn{
+margin:10px;padding:10px;text-align:center;
+border:1px solid #0ff;border-radius:10px;display:none
+}
 
 /* CARD */
 .card{margin:10px;padding:15px;border-radius:14px}
-.midman{border:1px solid #22c55e}
-.seller{border:1px solid #3b82f6}
-.scam{border:1px solid #ef4444}
+.midman{border:1px solid #22c55e;box-shadow:0 0 10px #22c55e}
+.seller{border:1px solid #3b82f6;box-shadow:0 0 10px #3b82f6}
+.scam{border:1px solid #ef4444;box-shadow:0 0 10px #ef4444}
 
 /* PROFILE */
-.profile{display:flex;gap:10px}
+.profile{display:flex;gap:10px;cursor:pointer}
 .avatar{width:45px;height:45px;border-radius:50%}
 
 /* VERIFY */
-.verify{background:#3b82f6;border-radius:50%;padding:2px 5px;margin-left:5px}
+.verify{
+display:inline-block;margin-left:5px;width:16px;height:16px;
+background:#3b82f6;border-radius:50%;text-align:center;line-height:16px;
+box-shadow:0 0 8px #3b82f6
+}
 
 /* BTN */
-.btn{display:block;margin-top:10px;padding:10px;text-align:center;border:1px solid #0ff;border-radius:10px;color:#fff;text-decoration:none}
+.btn{
+display:block;margin-top:10px;padding:10px;text-align:center;
+border:1px solid #0ff;border-radius:10px;color:#fff;text-decoration:none
+}
 
 /* DELETE */
 .delete{color:red;font-size:12px;margin-top:5px}
@@ -95,10 +108,10 @@ header{text-align:center;padding:20px;text-shadow:0 0 10px #0ff}
 <div class="tabs">
 <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
 <button onclick="setTab('seller')" id="btnSeller">Seller</button>
-<button onclick="setTab('scam')" id="btnScam">Scam</button>
+<button onclick="setTab('scam')" id="btnScam">Scammer</button>
 </div>
 
-<div id="addBtn" onclick="addData()" style="display:none">+ Tambah</div>
+<div id="addBtn" onclick="addData()">+ Tambah</div>
 
 <div id="list"></div>
 
@@ -109,30 +122,35 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* CONFIG */
-const firebaseConfig={apiKey:"ISI",authDomain:"ISI",projectId:"ISI"};
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+apiKey:"ISI",
+authDomain:"ISI",
+projectId:"ISI"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 let tab="midman";
 let allData=[];
 let filtered=[];
 let isAdmin=false;
 
-/* INTRO + LOGIN */
+/* INTRO -> LOGIN */
 setTimeout(()=>{
 splash.style.display="none";
 login.style.display="flex";
 },3000);
 
 /* TYPING */
-const text=["Welcome","Trusted System","Midman Seller Scammer"];
-let ti=0,tj=0,del=false;
+const text=["Welcome To","Trusted Midman System","Seller & Scammer List"];
+let i=0,j=0,del=false;
 function type(){
-let t=text[ti];
-typing.innerHTML=t.substring(0,tj);
-if(!del){tj++;if(tj>t.length){del=true;setTimeout(type,1000);return}}
-else{tj--;if(tj==0){del=false;ti=(ti+1)%text.length}}
+let t=text[i];
+typing.innerHTML=t.substring(0,j);
+if(!del){j++;if(j>t.length){del=true;setTimeout(type,1000);return}}
+else{j--;if(j==0){del=false;i=(i+1)%text.length}}
 setTimeout(type,60);
 }
 type();
@@ -141,16 +159,16 @@ type();
 window.login=function(){
 if(pass.value==="ipanzz"){
 isAdmin=true;
-startApp();
+start();
 addBtn.style.display="block";
-}else alert("Wrong");
+}else alert("Wrong password");
 }
 
 window.enterUser=function(){
-startApp();
+start();
 }
 
-function startApp(){
+function start(){
 login.style.display="none";
 app.style.display="block";
 loadData();
@@ -171,6 +189,12 @@ filtered=allData.filter(d=>d.nama.toLowerCase().includes(q.toLowerCase()));
 render();
 }
 
+/* COPY */
+function copyWa(num){
+navigator.clipboard.writeText("https://wa.me/"+num);
+alert("Copied");
+}
+
 /* RENDER */
 function render(){
 let html="";
@@ -179,10 +203,13 @@ if(d.type!==tab) return;
 
 html+=`
 <div class="card ${d.type}">
-<div class="profile">
+<div class="profile" onclick="copyWa('${d.phone}')">
 <img class="avatar" src="${d.avatar}">
 <div>
-<div>${d.nama} ${d.verified?'<span class="verify">✔</span>':''}</div>
+<div>
+${d.nama}
+${d.verified?'<span class="verify">✔</span>':''}
+</div>
 <div>${d.phone}</div>
 </div>
 </div>
@@ -201,18 +228,41 @@ await deleteDoc(doc(db,"list",id));
 loadData();
 }
 
+/* UPLOAD IMAGE */
+async function uploadImage(file){
+let form=new FormData();
+form.append("file",file);
+form.append("upload_preset","ISI_PRESET");
+
+let res=await fetch("https://api.cloudinary.com/v1_1/ISI_CLOUD/image/upload",{
+method:"POST",body:form
+});
+let data=await res.json();
+return data.secure_url;
+}
+
 /* ADD */
 window.addData=async function(){
 let nama=prompt("Nama:");
 let phone=prompt("Phone:");
-let type=prompt("Type:");
+let type=prompt("Type (midman/seller/scam):");
 let verified=confirm("Verified?");
 
+let input=document.createElement("input");
+input.type="file";
+
+input.onchange=async ()=>{
+let file=input.files[0];
+let avatar=await uploadImage(file);
+
 await addDoc(collection(db,"list"),{
-nama,phone,type,verified,
-avatar:"https://i.imgur.com/2DhmtJ4.png"
+nama,phone,type,avatar,verified
 });
+
 loadData();
+};
+
+input.click();
 }
 
 /* TAB */
