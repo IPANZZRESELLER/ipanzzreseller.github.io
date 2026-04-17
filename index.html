@@ -15,12 +15,40 @@ body{
   overflow:hidden;
 }
 
-/* 🌌 STAR BACKGROUND */
+/* 🌌 BACKGROUND */
 canvas{
   position:fixed;
   inset:0;
   z-index:-1;
 }
+
+/* 🎬 SPLASH */
+#splash{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#000;
+  z-index:9999;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:rainbow 4s linear infinite;
+}
+
+@keyframes rainbow{
+  0%{background-position:0%}
+  100%{background-position:400%}
+}
+
+/* APP */
+#app{display:none}
 
 /* HEADER */
 header{
@@ -28,6 +56,27 @@ header{
   padding:15px;
   font-size:20px;
   text-shadow:0 0 15px cyan;
+}
+
+/* TAB */
+.tabs{
+  display:flex;
+  justify-content:center;
+  gap:5px;
+  padding:10px;
+}
+
+.tabs button{
+  padding:8px 15px;
+  border:none;
+  border-radius:10px;
+  background:#111;
+  color:#aaa;
+}
+
+.active{
+  background:#00ffcc;
+  color:#000;
 }
 
 /* CARD */
@@ -54,18 +103,13 @@ header{
   animation:rainbow 4s linear infinite;
 }
 
-@keyframes rainbow{
-  0%{background-position:0%}
-  100%{background-position:400%}
-}
-
 /* BUTTON */
 .btn{
   display:block;
   margin-top:10px;
   padding:10px;
-  text-align:center;
   border-radius:10px;
+  text-align:center;
   text-decoration:none;
   font-weight:bold;
   color:#000;
@@ -73,31 +117,11 @@ header{
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
   background-size:400%;
   animation:rainbow 4s linear infinite, pulse 1s infinite;
-
-  box-shadow:0 0 20px #00ffcc;
 }
 
 @keyframes pulse{
   0%,100%{transform:scale(1)}
   50%{transform:scale(1.08)}
-}
-
-/* CLICK EFFECT */
-.spark{
-  position:fixed;
-  width:10px;
-  height:10px;
-  background:cyan;
-  border-radius:50%;
-  pointer-events:none;
-  animation:boom 0.5s forwards;
-}
-
-@keyframes boom{
-  to{
-    transform:scale(5);
-    opacity:0;
-  }
 }
 
 /* MUSIC BTN */
@@ -118,32 +142,47 @@ header{
 
 <canvas id="bg"></canvas>
 
-<header>🎮 Midman Game UI</header>
+<!-- SPLASH -->
+<div id="splash">
+  <div class="logo">Midman Trusted</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+<header>🎮 Midman Trusted Malaysia</header>
 
 <button class="music" onclick="toggleMusic()">🎵</button>
 
+<div class="tabs">
+  <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
+  <button onclick="setTab('seller')" id="btnSeller">Seller</button>
+  <button onclick="setTab('scam')" id="btnScam">Scam</button>
+</div>
+
 <div id="list"></div>
 
-<!-- 🎵 MUSIC -->
-<audio id="bgm" loop>
-  <source src="https://files.catbox.moe/3x0u8v.mp3" type="audio/mpeg">
-</audio>
+</div>
 
-<!-- 🔊 CLICK SOUND -->
-<audio id="clickSound">
-  <source src="https://files.catbox.moe/9f4r3k.mp3" type="audio/mpeg">
+<!-- AUDIO -->
+<audio id="bgm" loop>
+  <source src="https://files.catbox.moe/3x0u8v.mp3">
 </audio>
 
 <script>
 
-/* 🌌 STARFIELD */
-let c = document.getElementById("bg");
-let ctx = c.getContext("2d");
+/* SPLASH */
+setTimeout(()=>{
+  splash.style.display="none";
+  app.style.display="block";
+},2000);
 
-c.width = innerWidth;
-c.height = innerHeight;
+/* STAR */
+let c = bg, ctx = c.getContext("2d");
+c.width=innerWidth;
+c.height=innerHeight;
 
-let stars = Array.from({length:120},()=>({
+let stars = Array.from({length:100},()=>({
   x:Math.random()*c.width,
   y:Math.random()*c.height,
   z:Math.random()*2+1
@@ -154,8 +193,8 @@ function anim(){
   ctx.fillStyle="#fff";
   stars.forEach(s=>{
     ctx.fillRect(s.x,s.y,s.z,s.z);
-    s.y += s.z;
-    if(s.y > c.height) s.y = 0;
+    s.y+=s.z;
+    if(s.y>c.height) s.y=0;
   });
   requestAnimationFrame(anim);
 }
@@ -163,56 +202,59 @@ anim();
 
 /* DATA */
 let data=[
-  {nama:"MID IPANZZ",phone:"60175970694"},
-  {nama:"SLRMYAPI",phone:"60104331830"}
+  {nama:"MID IPANZZ",phone:"60175970694",type:"midman"},
+  {nama:"SLRMYAPI",phone:"60104331830",type:"midman"},
+
+  {nama:"SHOP ABC",phone:"60122222222",type:"seller"},
+
+  {nama:"SCAMMER XYZ",phone:"60111111111",type:"scam"}
 ];
 
+let currentTab="midman";
+
+/* RENDER */
 function render(){
   let html="";
   data.forEach(d=>{
-    html += `
+    if(d.type!==currentTab) return;
+
+    html+=`
     <div class="card">
       <div class="name">${d.nama}</div>
       <p>${d.phone}</p>
       <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
     </div>`;
   });
-  document.getElementById("list").innerHTML = html;
+  list.innerHTML=html;
 }
-render();
 
-/* 🎵 MUSIC FIX */
+/* TAB */
+function setTab(tab){
+  currentTab=tab;
+
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+
+  if(tab==="midman") btnMid.classList.add("active");
+  if(tab==="seller") btnSeller.classList.add("active");
+  if(tab==="scam") btnScam.classList.add("active");
+
+  render();
+}
+
+/* MUSIC */
 let musicOn=false;
-
 function toggleMusic(){
-  let audio = document.getElementById("bgm");
-
+  let a=bgm;
   if(!musicOn){
-    audio.play().then(()=>{
-      musicOn = true;
-    }).catch(()=>{
-      alert("Tekan sekali lagi untuk aktifkan sound");
-    });
+    a.play().catch(()=>alert("Tekan lagi sekali"));
+    musicOn=true;
   }else{
-    audio.pause();
-    musicOn = false;
+    a.pause();
+    musicOn=false;
   }
 }
 
-/* 🔊 CLICK SOUND + SPARK */
-document.addEventListener("click", e=>{
-  let sfx = document.getElementById("clickSound");
-  sfx.currentTime = 0;
-  sfx.play().catch(()=>{});
-
-  let s = document.createElement("div");
-  s.className="spark";
-  s.style.left = e.clientX+"px";
-  s.style.top = e.clientY+"px";
-  document.body.appendChild(s);
-
-  setTimeout(()=>s.remove(),500);
-});
+render();
 
 </script>
 
