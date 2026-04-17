@@ -4,25 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Midman Trusted</title>
+<title>Midman Trusted Malaysia</title>
 
 <style>
 body{
   margin:0;
-  font-family:Arial;
-  background:#000;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  background:#0b0b0b;
   color:#fff;
-  overflow:hidden;
 }
 
-/* 🌌 BACKGROUND */
-canvas{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-}
-
-/* 🔥 INTRO FIRST STYLE */
+/* 🎬 INTRO (SMOOTH) */
 #splash{
   position:fixed;
   inset:0;
@@ -30,78 +22,55 @@ canvas{
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index:9999;
+  z-index:999;
 }
 
 .logo{
-  font-size:30px;
-  font-weight:bold;
-
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet,red);
-  background-size:400%;
+  font-size:28px;
+  font-weight:600;
+  background:linear-gradient(90deg,#d946ef,#3b82f6);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-
-  text-shadow:0 0 20px #fff,0 0 40px #00ffcc;
-
-  animation:rainbowMove 4s linear infinite, zoomIn 1.5s ease;
+  animation:fadeIn 1.5s ease;
 }
 
-@keyframes rainbowMove{
-  0%{background-position:0%}
-  100%{background-position:400%}
-}
-
-@keyframes zoomIn{
-  0%{transform:scale(0.5);opacity:0}
-  100%{transform:scale(1);opacity:1}
-}
-
-/* FADE OUT */
-.hide{
-  animation:fadeOut 0.8s forwards;
-}
-
-@keyframes fadeOut{
-  to{opacity:0;visibility:hidden}
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px)}
+  to{opacity:1; transform:translateY(0)}
 }
 
 /* APP */
-#app{
-  display:none;
-}
+#app{display:none}
 
 /* HEADER */
 header{
   text-align:center;
-  padding:15px;
-  font-size:20px;
-
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:rainbowMove 5s linear infinite;
+  padding:20px;
+  font-size:18px;
+  font-weight:600;
 }
 
 /* TABS */
 .tabs{
   display:flex;
-  justify-content:center;
-  gap:5px;
+  margin:10px;
+  background:#111;
+  border-radius:12px;
+  padding:5px;
 }
 
 .tabs button{
-  padding:8px 12px;
+  flex:1;
+  padding:10px;
   border:none;
-  border-radius:10px;
-  background:#111;
+  background:transparent;
   color:#aaa;
+  border-radius:10px;
 }
 
 .active{
-  background:#00ffcc;
-  color:#000;
+  background:#d946ef;
+  color:#fff;
 }
 
 /* CARD */
@@ -109,37 +78,30 @@ header{
   background:#111;
   margin:10px;
   padding:15px;
-  border-radius:12px;
-  box-shadow:0 0 10px #00ffcc33;
+  border-radius:14px;
+  border:1px solid #222;
 }
 
 .name{
-  font-weight:bold;
-  font-size:16px;
+  font-weight:600;
+  margin-bottom:5px;
+}
 
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:rainbowMove 5s linear infinite;
+.phone{
+  font-size:13px;
+  color:#aaa;
 }
 
 /* BUTTON */
 .btn{
   display:block;
   margin-top:10px;
-  padding:10px;
-  border-radius:10px;
+  padding:12px;
   text-align:center;
+  border-radius:10px;
+  background:linear-gradient(90deg,#d946ef,#3b82f6);
+  color:#fff;
   text-decoration:none;
-  font-weight:bold;
-  color:#000;
-
-  background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
-  background-size:400%;
-  animation:rainbowMove 4s linear infinite;
-
-  box-shadow:0 0 15px #00ffcc;
 }
 
 /* MUSIC */
@@ -148,8 +110,8 @@ header{
   top:10px;
   right:10px;
   background:#111;
-  border:1px solid cyan;
-  color:cyan;
+  border:1px solid #333;
+  color:#fff;
   padding:8px;
   border-radius:10px;
 }
@@ -158,9 +120,7 @@ header{
 
 <body>
 
-<canvas id="bg"></canvas>
-
-<!-- 🔥 INTRO -->
+<!-- INTRO -->
 <div id="splash">
   <div class="logo">Midman Trusted Malaysia</div>
 </div>
@@ -200,43 +160,11 @@ const btnScam = document.getElementById("btnScam");
 const musicBtn = document.getElementById("musicBtn");
 const bgm = document.getElementById("bgm");
 
-/* INTRO CONTROL */
+/* INTRO */
 setTimeout(()=>{
-  splash.classList.add("hide");
-
-  setTimeout(()=>{
-    splash.style.display="none";
-    app.style.display="block";
-  },800);
-
-},2000);
-
-/* BACKGROUND */
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let stars = Array.from({length:100},()=>({
-  x:Math.random()*canvas.width,
-  y:Math.random()*canvas.height,
-  s:Math.random()*2
-}));
-
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#fff";
-
-  stars.forEach(star=>{
-    ctx.fillRect(star.x,star.y,star.s,star.s);
-    star.y += star.s;
-    if(star.y > canvas.height) star.y = 0;
-  });
-
-  requestAnimationFrame(animate);
-}
-animate();
+  splash.style.display="none";
+  app.style.display="block";
+},1500);
 
 /* DATA */
 let data = [
@@ -246,7 +174,7 @@ let data = [
   {nama:"SCAMMER XYZ", phone:"60111111111", type:"scam"}
 ];
 
-let currentTab = "midman";
+let currentTab="midman";
 
 /* RENDER */
 function render(){
@@ -257,7 +185,7 @@ function render(){
     html += `
     <div class="card">
       <div class="name">${d.nama}</div>
-      <p>${d.phone}</p>
+      <div class="phone">${d.phone}</div>
       <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
         WhatsApp
       </a>
@@ -268,9 +196,9 @@ function render(){
 }
 
 /* TAB */
-btnMid.onclick = ()=>{currentTab="midman";setActive(btnMid);}
-btnSeller.onclick = ()=>{currentTab="seller";setActive(btnSeller);}
-btnScam.onclick = ()=>{currentTab="scam";setActive(btnScam);}
+btnMid.onclick=()=>{currentTab="midman";setActive(btnMid);}
+btnSeller.onclick=()=>{currentTab="seller";setActive(btnSeller);}
+btnScam.onclick=()=>{currentTab="scam";setActive(btnScam);}
 
 function setActive(btn){
   [btnMid,btnSeller,btnScam].forEach(b=>b.classList.remove("active"));
@@ -280,7 +208,7 @@ function setActive(btn){
 
 /* MUSIC */
 let musicOn=false;
-musicBtn.onclick = ()=>{
+musicBtn.onclick=()=>{
   if(!musicOn){
     bgm.play().catch(()=>alert("Tekan lagi sekali"));
     musicOn=true;
