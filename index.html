@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Midman Trusted Malaysia</title>
+<title>Trusted Midman List</title>
 
 <style>
 body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-  background:#0b0b0b;
+  background:#000;
   color:#fff;
 }
 
@@ -18,13 +18,6 @@ body{
 @keyframes rainbow{
   0%{background-position:0%}
   100%{background-position:400%}
-}
-
-/* 🧊 GLASS */
-.glass{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.08);
 }
 
 /* 🎬 INTRO */
@@ -39,7 +32,7 @@ body{
 }
 
 .logo{
-  font-size:28px;
+  font-size:26px;
   font-weight:600;
 
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
@@ -47,14 +40,7 @@ body{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 
-  text-shadow:0 0 20px #ffffff33;
-
-  animation:rainbow 6s linear infinite, fade 1.5s ease;
-}
-
-@keyframes fade{
-  from{opacity:0; transform:scale(0.9)}
-  to{opacity:1; transform:scale(1)}
+  animation:rainbow 6s linear infinite;
 }
 
 #app{display:none}
@@ -62,7 +48,8 @@ body{
 /* HEADER */
 header{
   text-align:center;
-  padding:20px;
+  padding:25px;
+  font-size:22px;
   font-weight:600;
 
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
@@ -73,12 +60,20 @@ header{
   animation:rainbow 10s linear infinite;
 }
 
+/* CONTAINER */
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:10px;
+}
+
 /* TABS */
 .tabs{
   display:flex;
-  margin:10px;
+  background:#111;
   border-radius:14px;
   padding:5px;
+  margin-bottom:15px;
 }
 
 .tabs button{
@@ -88,89 +83,65 @@ header{
   background:transparent;
   color:#aaa;
   border-radius:10px;
-  transition:0.2s;
-}
-
-.tabs button:hover{
-  color:#fff;
 }
 
 .active{
-  background:linear-gradient(90deg,#d946ef,#3b82f6);
   color:#fff;
-  box-shadow:0 0 10px #3b82f6aa;
+}
+
+/* ADD BUTTON */
+.add{
+  border:1px solid #333;
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+  margin-bottom:15px;
+  color:#ccc;
 }
 
 /* CARD */
 .card{
-  margin:10px;
-  padding:15px;
+  background:#0f0f0f;
+  border:1px solid #222;
   border-radius:16px;
-  animation:fadeUp 0.4s ease;
+  padding:15px;
+  margin-bottom:15px;
 }
 
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(10px)}
-  to{opacity:1; transform:translateY(0)}
-}
-
-.card:hover{
-  transform:translateY(-3px);
-}
-
-/* NAME */
+/* 🌈 NAME LED */
 .name{
   font-weight:600;
+  font-size:16px;
 
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
   background-size:400%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 
-  animation:rainbow 12s linear infinite;
+  animation:rainbow 8s linear infinite;
 }
 
-/* PHONE */
 .phone{
   font-size:13px;
   color:#aaa;
+  margin-top:3px;
 }
 
-/* BUTTON */
+/* 🌈 BUTTON LED */
 .btn{
   display:block;
-  margin-top:10px;
+  margin-top:12px;
   padding:12px;
-  border-radius:12px;
   text-align:center;
+  border-radius:12px;
   text-decoration:none;
-  font-weight:600;
+  font-weight:500;
 
   background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
   background-size:400%;
   animation:rainbow 6s linear infinite;
 
   color:#000;
-}
-
-/* ADMIN */
-.admin{
-  margin:10px;
-  padding:10px;
-  border-radius:12px;
-  text-align:center;
-  cursor:pointer;
-}
-
-/* MUSIC */
-.music{
-  position:fixed;
-  top:12px;
-  right:12px;
-  background:#111;
-  border:1px solid #333;
-  padding:8px;
-  border-radius:10px;
 }
 </style>
 </head>
@@ -179,71 +150,58 @@ header{
 
 <!-- INTRO -->
 <div id="splash">
-  <div class="logo">Midman Trusted Malaysia</div>
+  <div class="logo">Trusted Midman List</div>
 </div>
 
 <div id="app">
 
-<header>Midman Trusted Malaysia</header>
+<header>Trusted Midman List</header>
 
-<button class="music" id="musicBtn">🎵</button>
+<div class="container">
 
-<div class="tabs glass">
-  <button id="btnMid" class="active">Midman</button>
-  <button id="btnSeller">Seller</button>
-  <button id="btnScam">Scam</button>
+<div class="tabs">
+  <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
+  <button onclick="setTab('seller')" id="btnSeller">Seller</button>
+  <button onclick="setTab('scam')" id="btnScam">Scam</button>
 </div>
 
-<div class="admin glass" onclick="addData()">+ Tambah</div>
+<div class="add" onclick="addData()">+ Tambah</div>
 
 <div id="list"></div>
 
 </div>
 
-<audio id="bgm" loop>
-  <source src="https://files.catbox.moe/3x0u8v.mp3">
-</audio>
+</div>
 
 <script>
 
-/* ELEMENT */
-const splash = document.getElementById("splash");
-const app = document.getElementById("app");
-const list = document.getElementById("list");
-
-const btnMid = document.getElementById("btnMid");
-const btnSeller = document.getElementById("btnSeller");
-const btnScam = document.getElementById("btnScam");
-
-const musicBtn = document.getElementById("musicBtn");
-const bgm = document.getElementById("bgm");
-
 /* INTRO */
 setTimeout(()=>{
-  splash.style.display="none";
-  app.style.display="block";
-},1800);
+  document.getElementById("splash").style.display="none";
+  document.getElementById("app").style.display="block";
+},1500);
 
 /* DATA */
-let data = JSON.parse(localStorage.getItem("midmanData")) || [
+let data = JSON.parse(localStorage.getItem("listData")) || [
   {nama:"MID IPANZZ", phone:"60175970694", type:"midman"}
 ];
 
-let currentTab="midman";
+let currentTab = "midman";
 
 /* SAVE */
 function save(){
-  localStorage.setItem("midmanData", JSON.stringify(data));
+  localStorage.setItem("listData", JSON.stringify(data));
 }
 
 /* RENDER */
 function render(){
   let html="";
+
   data.forEach(d=>{
     if(d.type !== currentTab) return;
 
     html += `
-    <div class="card glass">
+    <div class="card">
       <div class="name">${d.nama}</div>
       <div class="phone">${d.phone}</div>
       <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
@@ -252,21 +210,25 @@ function render(){
     </div>`;
   });
 
-  list.innerHTML = html;
+  document.getElementById("list").innerHTML = html;
 }
 
 /* TAB */
-btnMid.onclick=()=>{currentTab="midman";setActive(btnMid);}
-btnSeller.onclick=()=>{currentTab="seller";setActive(btnSeller);}
-btnScam.onclick=()=>{currentTab="scam";setActive(btnScam);}
+function setTab(tab){
+  currentTab = tab;
 
-function setActive(btn){
-  [btnMid,btnSeller,btnScam].forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
+  document.querySelectorAll(".tabs button").forEach(b=>{
+    b.classList.remove("active");
+  });
+
+  if(tab==="midman") btnMid.classList.add("active");
+  if(tab==="seller") btnSeller.classList.add("active");
+  if(tab==="scam") btnScam.classList.add("active");
+
   render();
 }
 
-/* ADD DATA */
+/* ADD */
 function addData(){
   let pass = prompt("Password:");
   if(pass !== "ipanzz") return alert("Salah");
@@ -279,18 +241,6 @@ function addData(){
   save();
   render();
 }
-
-/* MUSIC */
-let musicOn=false;
-musicBtn.onclick=()=>{
-  if(!musicOn){
-    bgm.play().catch(()=>alert("Tekan lagi sekali"));
-    musicOn=true;
-  }else{
-    bgm.pause();
-    musicOn=false;
-  }
-};
 
 /* START */
 render();
