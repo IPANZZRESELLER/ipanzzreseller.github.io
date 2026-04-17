@@ -6,7 +6,7 @@
 
 <title>Trusted System</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -20,10 +20,9 @@ color:#fff;
 #splash{
 position:fixed;inset:0;
 display:flex;justify-content:center;align-items:center;
-background:#000;
-z-index:999;
+background:#000;z-index:999;
 }
-.line{opacity:0;display:block}
+.line{opacity:0;display:block;font-size:22px}
 .line.show{animation:fade .6s forwards}
 @keyframes fade{to{opacity:1}}
 
@@ -31,22 +30,24 @@ z-index:999;
 display:none;
 position:fixed;inset:0;
 background:#000;
+display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-flex-direction:column;
 gap:15px;
 }
 
-/* BUTTON */
+/* LOGIN BUTTON */
 .btnLogin{
 padding:12px 20px;
+border-radius:12px;
 border:1px solid #0ff;
-border-radius:10px;
 background:#111;
 color:#fff;
 box-shadow:0 0 10px #0ff;
 }
 
+/* INPUT */
 input{
 padding:10px;
 border-radius:10px;
@@ -60,42 +61,100 @@ border:none;
 header{
 text-align:center;
 padding:20px;
-text-shadow:0 0 10px #f0f;
+font-size:22px;
+text-shadow:0 0 10px #f0f,0 0 20px #f0f;
 }
 
 /* TABS */
-.tabs{display:flex;margin:10px;background:#111;border-radius:10px}
-.tabs button{flex:1;padding:10px;background:none;border:none;color:#aaa}
+.tabs{
+display:flex;
+margin:10px;
+background:#111;
+border-radius:12px;
+}
+.tabs button{
+flex:1;
+padding:10px;
+border:none;
+background:none;
+color:#aaa;
+}
 .active{color:#fff}
 
+/* ADD */
+#addBox{
+display:none;
+margin:10px;
+padding:10px;
+border:1px solid #333;
+border-radius:10px;
+text-align:center;
+}
+
 /* CARD */
-.card{margin:10px;padding:15px;border-radius:15px}
-.midman{box-shadow:0 0 10px #22c55e}
-.seller{box-shadow:0 0 10px #3b82f6}
-.scam{box-shadow:0 0 10px #ef4444}
+.card{
+margin:10px;
+padding:15px;
+border-radius:15px;
+}
+
+/* COLOR GLOW */
+.midman{border:1px solid #22c55e;box-shadow:0 0 10px #22c55e}
+.seller{border:1px solid #3b82f6;box-shadow:0 0 10px #3b82f6}
+.scam{border:1px solid #ef4444;box-shadow:0 0 10px #ef4444}
 
 /* PROFILE */
-.profile{display:flex;gap:10px;cursor:pointer}
-.avatar{width:45px;height:45px;border-radius:50%}
-.logoSmall{width:18px;height:18px;border-radius:50%}
+.profile{
+display:flex;
+gap:10px;
+cursor:pointer;
+}
+.avatar{
+width:45px;
+height:45px;
+border-radius:50%;
+object-fit:cover;
+}
+.logoSmall{
+width:18px;
+height:18px;
+border-radius:50%;
+margin-left:5px;
+}
 
 /* NAME */
 .name{
 font-weight:700;
-text-shadow:0 0 5px #fff,0 0 10px #0ff;
+letter-spacing:0.5px;
+text-shadow:0 0 5px #fff,0 0 10px #0ff,0 0 20px #0ff;
 }
-.verifyStar{color:gold}
+
+/* VERIFIED */
+.verifyStar{
+color:#ffd700;
+margin-left:5px;
+text-shadow:0 0 5px #ffd700,0 0 10px #ffd700;
+}
 
 /* BUTTON */
 .btn{
-display:block;margin-top:10px;padding:10px;text-align:center;
-border:1px solid #0ff;
+display:block;
+margin-top:10px;
+padding:10px;
+text-align:center;
 border-radius:10px;
+color:#fff;
+border:1px solid #0ff;
 box-shadow:0 0 10px #0ff;
-color:#fff;text-decoration:none;
+text-decoration:none;
 }
 
-.delete{color:red;font-size:12px}
+/* DELETE */
+.delete{
+margin-top:8px;
+color:red;
+font-size:12px;
+}
 </style>
 </head>
 
@@ -113,7 +172,6 @@ color:#fff;text-decoration:none;
 <!-- LOGIN -->
 <div id="login">
 <button class="btnLogin" onclick="userMode()">Masuk sebagai User</button>
-
 <input type="password" id="pass" placeholder="Admin password">
 <button class="btnLogin" onclick="adminLogin()">Login Admin</button>
 </div>
@@ -129,9 +187,7 @@ color:#fff;text-decoration:none;
 <button onclick="setTab('scam')" id="btnScam">Scam</button>
 </div>
 
-<div id="addBox" onclick="addData()" style="display:none;margin:10px;padding:10px;border:1px solid #333;border-radius:10px;text-align:center">
-+ Tambah
-</div>
+<div id="addBox" onclick="addData()">+ Tambah</div>
 
 <div id="list"></div>
 
@@ -176,18 +232,18 @@ if(p==="ipanzz"){
 isAdmin=true;
 login.style.display="none";
 app.style.display="block";
-document.getElementById("addBox").style.display="block";
+addBox.style.display="block";
 render();
 }else{
 alert("Password salah");
 }
 }
 
-/* COPY */
+/* COPY WA */
 function copyWa(num){
 let link="https://wa.me/"+num;
 navigator.clipboard.writeText(link);
-alert("Copied:\n"+link);
+alert("Link disalin:\n"+link);
 }
 
 /* RENDER */
@@ -198,7 +254,6 @@ if(d.type!==tab) return;
 
 html+=`
 <div class="card ${d.type}">
-
 <div class="profile" onclick="copyWa('${d.phone}')">
 <img class="avatar" src="${d.avatar}">
 <div>
@@ -214,7 +269,6 @@ ${d.logo?`<img src="${d.logo}" class="logoSmall">`:''}
 <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
 
 ${isAdmin?`<div class="delete" onclick="del(${i})">Delete</div>`:""}
-
 </div>
 `;
 });
