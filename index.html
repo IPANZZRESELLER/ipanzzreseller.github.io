@@ -4,14 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Trusted Midman List</title>
+<title>LIST MIDMAN TRUSTED</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  font-family:'Orbitron',sans-serif;
   background:#000;
   color:#fff;
+  overflow-x:hidden;
 }
 
 /* INTRO */
@@ -25,89 +28,140 @@ body{
   z-index:999;
   text-align:center;
 }
+
 .introText{
   display:block;
+  font-size:26px;
+  font-weight:800;
   opacity:0;
-  font-size:20px;
+  transform:translateY(20px);
+
+  background:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
+  background-size:400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  animation:fadeUp .6s forwards, rgbMove 3s linear infinite;
 }
-.introText.show{
-  animation:fade .5s forwards;
+
+.introText:nth-child(1){animation-delay:.3s}
+.introText:nth-child(2){animation-delay:.8s}
+.introText:nth-child(3){animation-delay:1.3s}
+
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0)}
 }
-@keyframes fade{to{opacity:1}}
+
+@keyframes rgbMove{
+  100%{background-position:400%}
+}
 
 #app{display:none}
 
 /* HEADER */
 header{
   text-align:center;
-  padding:20px;
-  font-size:18px;
-  font-weight:600;
+  padding:25px;
+  font-size:20px;
+  font-weight:800;
+
+  background:linear-gradient(90deg,#0ff,#f0f,#0ff);
+  background-size:300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:rgbMove 4s linear infinite;
+}
+
+/* CONTAINER */
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:10px;
 }
 
 /* TABS */
 .tabs{
   display:flex;
-  margin:10px;
   background:#111;
-  border-radius:12px;
+  border-radius:14px;
+  padding:5px;
+  margin-bottom:15px;
 }
+
 .tabs button{
   flex:1;
   padding:10px;
   border:none;
-  background:none;
-  color:#888;
+  background:transparent;
+  color:#666;
+  border-radius:10px;
+  font-weight:700;
 }
-.active{color:#fff}
 
-/* CARD */
+/* ACTIVE */
+#btnMid.active{color:#22c55e;text-shadow:0 0 10px #22c55e}
+#btnSeller.active{color:#3b82f6;text-shadow:0 0 10px #3b82f6}
+#btnScam.active{color:#ef4444;text-shadow:0 0 10px #ef4444}
+
+/* CARD NEON BORDER */
 .card{
-  margin:10px;
-  padding:15px;
-  border-radius:14px;
+  position:relative;
+  padding:2px;
+  border-radius:18px;
+  margin-bottom:15px;
+  background:linear-gradient(270deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
+  background-size:600%;
+  animation:rgbMove 5s linear infinite;
+}
+
+.card-inner{
   background:#0f0f0f;
+  border-radius:16px;
+  padding:15px;
 }
 
-/* COLORS */
-.midman{border-left:4px solid #22c55e}
-.seller{border-left:4px solid #3b82f6}
-.scam{border-left:4px solid #ef4444}
-
-/* PROFILE */
-.profile{
-  display:flex;
-  gap:10px;
-  cursor:pointer;
-}
-.avatar{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-}
-
-/* NAME */
+/* TEXT */
 .name{
-  font-weight:600;
+  font-size:16px;
+  font-weight:800;
+}
+
+.phone{
+  font-size:13px;
+  color:#aaa;
+  margin-top:3px;
 }
 
 /* VERIFY */
 .verify{
-  margin-left:5px;
-  font-size:12px;
-  color:#3b82f6;
+  display:inline-block;
+  margin-left:6px;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:#25D366;
+  color:#fff;
+  font-size:11px;
+  text-align:center;
+  line-height:16px;
+  box-shadow:0 0 8px #25D366;
 }
 
-/* BUTTON */
+/* BUTTON NEON */
 .btn{
   display:block;
-  margin-top:10px;
-  padding:10px;
+  margin-top:12px;
+  padding:12px;
   text-align:center;
-  border-radius:10px;
-  background:#222;
-  color:#fff;
+  border-radius:12px;
   text-decoration:none;
+  color:#fff;
+  font-weight:700;
+
+  background:linear-gradient(90deg,#ff00ff,#00ffff,#ff00ff);
+  background-size:300%;
+  animation:rgbMove 3s linear infinite;
+  box-shadow:0 0 10px #0ff;
 }
 </style>
 </head>
@@ -127,106 +181,76 @@ header{
 
 <header>LIST MIDMAN TRUSTED MALAYSIA</header>
 
+<div class="container">
+
 <div class="tabs">
-<button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
-<button onclick="setTab('seller')" id="btnSeller">Seller</button>
-<button onclick="setTab('scam')" id="btnScam">Scammer</button>
+  <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
+  <button onclick="setTab('seller')" id="btnSeller">Seller</button>
+  <button onclick="setTab('scam')" id="btnScam">Scammer</button>
 </div>
 
 <div id="list"></div>
 
 </div>
+</div>
 
 <script>
 
-/* ANTI HITAM INTRO */
+/* ANTI BUG INTRO */
 function startApp(){
   document.getElementById("splash").style.display="none";
   document.getElementById("app").style.display="block";
 }
-
-/* Intro animation + fallback */
-setTimeout(()=>{
-  document.querySelectorAll(".introText").forEach((e,i)=>{
-    setTimeout(()=>e.classList.add("show"),i*500);
-  });
-
-  setTimeout(startApp,2000);
-},200);
-
-/* BACKUP kalau animation gagal */
+setTimeout(startApp,2500);
 setTimeout(startApp,4000);
 
-/* DATA (EDIT SINI JE) */
+/* DATA (EDIT SINI) */
 let data = [
-{
-nama:"MID IPANZZ",
-phone:"60175970694",
-type:"midman",
-verified:true,
-avatar:"https://i.imgur.com/2DhmtJ4.png"
-},
-
-{
-nama:"SELLER ALI",
-phone:"60123456789",
-type:"seller",
-verified:true,
-avatar:"https://i.imgur.com/2DhmtJ4.png"
-},
-
-{
-nama:"SCAMMER XYZ",
-phone:"60111111111",
-type:"scam",
-verified:false,
-avatar:"https://i.imgur.com/2DhmtJ4.png"
-}
-
+{nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true},
+{nama:"SELLER ALI",phone:"60123456789",type:"seller",verified:true},
+{nama:"SCAMMER XYZ",phone:"60111111111",type:"scam",verified:false}
 ];
 
 let tab="midman";
 
-/* COPY */
-function copyWa(num){
-  navigator.clipboard.writeText("https://wa.me/"+num);
-  alert("Copied");
-}
-
 /* RENDER */
 function render(){
-  let html="";
-  data.forEach(d=>{
-    if(d.type!==tab) return;
+let html="";
+data.forEach(d=>{
+if(d.type!==tab) return;
 
-    html+=`
-    <div class="card ${d.type}">
-      <div class="profile" onclick="copyWa('${d.phone}')">
-        <img src="${d.avatar}" class="avatar">
-        <div>
-          <div class="name">
-            ${d.nama}
-            ${d.verified?'<span class="verify">✔</span>':''}
-          </div>
-          <div>${d.phone}</div>
-        </div>
-      </div>
+html+=`
+<div class="card">
+  <div class="card-inner">
 
-      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
-    </div>`;
-  });
+    <div class="name">
+      ${d.nama}
+      ${d.verified?'<span class="verify">✔</span>':''}
+    </div>
 
-  document.getElementById("list").innerHTML=html;
+    <div class="phone">${d.phone}</div>
+
+    <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
+      WhatsApp
+    </a>
+
+  </div>
+</div>`;
+});
+document.getElementById("list").innerHTML=html;
 }
 
 /* TAB */
 function setTab(t){
-  tab=t;
-  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-  if(t==="midman") btnMid.classList.add("active");
-  if(t==="seller") btnSeller.classList.add("active");
-  if(t==="scam") btnScam.classList.add("active");
-  render();
+tab=t;
+
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+
+if(t==="midman") btnMid.classList.add("active");
+if(t==="seller") btnSeller.classList.add("active");
+if(t==="scam") btnScam.classList.add("active");
+
+render();
 }
 
 /* START */
