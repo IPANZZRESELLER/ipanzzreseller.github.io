@@ -9,43 +9,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-body{
-margin:0;
-font-family:'Orbitron',sans-serif;
-background:#000;
-color:#fff;
-}
+body{margin:0;font-family:'Orbitron',sans-serif;background:#000;color:#fff}
 
 /* INTRO */
-#splash{
-position:fixed;inset:0;
-display:flex;justify-content:center;align-items:center;
-background:#000;z-index:999;
-}
-
+#splash{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#000;z-index:999}
 .typing{
-font-size:26px;
-font-weight:800;
+font-size:26px;font-weight:800;
 background:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
 background-size:400%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 animation:rgb 3s linear infinite;
 }
-
 @keyframes rgb{100%{background-position:400%}}
 
 #app{display:none}
 
 /* HEADER */
 header{
-text-align:center;
-padding:25px;
-font-size:20px;
-font-weight:800;
+text-align:center;padding:25px;font-size:20px;font-weight:800;
 background:linear-gradient(90deg,#0ff,#f0f,#0ff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
 animation:rgb 4s linear infinite;
 }
 
@@ -53,22 +37,8 @@ animation:rgb 4s linear infinite;
 .container{max-width:500px;margin:auto;padding:10px}
 
 /* TABS */
-.tabs{
-display:flex;
-background:#111;
-border-radius:14px;
-padding:5px;
-margin-bottom:15px;
-}
-
-.tabs button{
-flex:1;
-padding:10px;
-border:none;
-background:none;
-color:#666;
-font-weight:700;
-}
+.tabs{display:flex;background:#111;border-radius:14px;padding:5px;margin-bottom:15px}
+.tabs button{flex:1;padding:10px;border:none;background:none;color:#666;font-weight:700}
 
 /* ACTIVE */
 #btnMid.active{color:#22c55e;text-shadow:0 0 10px #22c55e}
@@ -77,57 +47,29 @@ font-weight:700;
 
 /* CARD */
 .card{
-padding:2px;
-border-radius:18px;
-margin-bottom:15px;
+padding:2px;border-radius:18px;margin-bottom:15px;
 background:linear-gradient(270deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
 background-size:600%;
 animation:rgb 5s linear infinite;
 }
-
-.inner{
-background:#0f0f0f;
-border-radius:16px;
-padding:15px;
-}
+.inner{background:#0f0f0f;border-radius:16px;padding:15px}
 
 /* TEXT */
-.name{
-font-size:16px;
-font-weight:800;
-cursor:pointer;
-}
-
-.phone{
-font-size:13px;
-color:#aaa;
-margin-top:3px;
-}
+.name{font-size:16px;font-weight:800;cursor:pointer}
+.phone{font-size:13px;color:#aaa;margin-top:3px}
 
 /* VERIFY */
 .verify{
-display:inline-block;
-margin-left:6px;
-width:16px;height:16px;
-border-radius:50%;
-background:#25D366;
-color:#fff;
-font-size:11px;
-text-align:center;
-line-height:16px;
+display:inline-block;margin-left:6px;width:16px;height:16px;
+border-radius:50%;background:#25D366;color:#fff;
+font-size:11px;text-align:center;line-height:16px;
 box-shadow:0 0 8px #25D366;
 }
 
 /* BUTTON */
 .btn{
-display:block;
-margin-top:12px;
-padding:12px;
-text-align:center;
-border-radius:12px;
-text-decoration:none;
-color:#fff;
-font-weight:700;
+display:block;margin-top:12px;padding:12px;text-align:center;
+border-radius:12px;text-decoration:none;color:#fff;font-weight:700;
 background:linear-gradient(90deg,#ff00ff,#00ffff,#ff00ff);
 background-size:300%;
 animation:rgb 3s linear infinite;
@@ -186,11 +128,11 @@ app.style.display="block";
 }
 setTimeout(startApp,4000);
 
-/* DATA (SEMUA MIDMAN KAU) */
+/* DATA */
 let data=[
 
+/* MIDMAN */
 {nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true},
-
 {nama:"MIDMAN KERIZ",phone:"60162531397",type:"midman",verified:true},
 {nama:"MIDMAN DAMZZ",phone:"601133169293",type:"midman",verified:true},
 {nama:"MIDMAN KRYZEN",phone:"60136734585",type:"midman",verified:true},
@@ -209,7 +151,10 @@ let data=[
 {nama:"SLRMY",phone:"601136871190",type:"midman",verified:true},
 {nama:"MIDMAN YURI",phone:"601123706841",type:"midman",verified:true},
 {nama:"MIDMAN ACAI",phone:"601160603580",type:"midman",verified:true},
-{nama:"MIDMAN KUSA",phone:"601170130314",type:"midman",verified:true}
+{nama:"MIDMAN KUSA",phone:"601170130314",type:"midman",verified:true},
+
+/* SELLER */
+{nama:"ZANN RESELLER",phone:"60198393679",type:"seller",verified:true}
 
 ];
 
