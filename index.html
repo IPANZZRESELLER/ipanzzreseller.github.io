@@ -33,9 +33,7 @@ background-size:400%;
 animation:rgb 3s linear infinite;
 }
 
-@keyframes rgb{
-100%{background-position:400%}
-}
+@keyframes rgb{100%{background-position:400%}}
 
 #app{display:none}
 
@@ -77,7 +75,7 @@ font-weight:700;
 #btnSeller.active{color:#3b82f6;text-shadow:0 0 10px #3b82f6}
 #btnScam.active{color:#ef4444;text-shadow:0 0 10px #ef4444}
 
-/* CARD NEON */
+/* CARD */
 .card{
 padding:2px;
 border-radius:18px;
@@ -181,20 +179,38 @@ setTimeout(type,70);
 }
 type();
 
-/* ANTI BUG */
+/* ANTI HITAM */
 function startApp(){
 splash.style.display="none";
 app.style.display="block";
 }
 setTimeout(startApp,4000);
 
-/* DATA (EDIT SINI) */
+/* DATA (SEMUA MIDMAN KAU) */
 let data=[
+
 {nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true},
-{nama:"SELLER ALI",phone:"60123456789",type:"seller",verified:true},
-{nama:"SCAMMER XYZ",phone:"60111111111",type:"scam",verified:false}
-{nama:"DAMZZ",phone:"601133169293",type:"midman",verified:true},
-{nama:"B",phone:"6013",type:"seller",verified:true}
+
+{nama:"MIDMAN KERIZ",phone:"60162531397",type:"midman",verified:true},
+{nama:"MIDMAN DAMZZ",phone:"601133169293",type:"midman",verified:true},
+{nama:"MIDMAN KRYZEN",phone:"60136734585",type:"midman",verified:true},
+{nama:"MIDMAN MANN",phone:"60142815551",type:"midman",verified:true},
+{nama:"MIDMAN SKYY",phone:"60169357363",type:"midman",verified:true},
+{nama:"MIDMAN YANZZ",phone:"601133468572",type:"midman",verified:true},
+{nama:"MIDMAN AMIRA",phone:"601173807270",type:"midman",verified:true},
+{nama:"MIDMAN LEX",phone:"60166105139",type:"midman",verified:true},
+{nama:"EPOL BACKUP",phone:"60105491599",type:"midman",verified:true},
+{nama:"MIDMAN MILO",phone:"60163025510",type:"midman",verified:true},
+{nama:"MILO MALAM",phone:"60187905510",type:"midman",verified:true},
+{nama:"MIDMAN AASHOP",phone:"60179981705",type:"midman",verified:true},
+{nama:"MIDMAN ANOS",phone:"601161324347",type:"midman",verified:true},
+{nama:"MIDMAN BUNGA",phone:"601116677812",type:"midman",verified:true},
+{nama:"MIDMAN BELLA",phone:"60106677912",type:"midman",verified:true},
+{nama:"SLRMY",phone:"601136871190",type:"midman",verified:true},
+{nama:"MIDMAN YURI",phone:"601123706841",type:"midman",verified:true},
+{nama:"MIDMAN ACAI",phone:"601160603580",type:"midman",verified:true},
+{nama:"MIDMAN KUSA",phone:"601170130314",type:"midman",verified:true}
+
 ];
 
 let tab="midman";
@@ -235,7 +251,6 @@ list.innerHTML=html;
 /* TAB */
 function setTab(t){
 tab=t;
-
 document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
 
 if(t==="midman") btnMid.classList.add("active");
