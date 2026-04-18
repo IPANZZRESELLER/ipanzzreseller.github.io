@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>LIST MIDMAN TRUSTED</title>
+<title>LIST MIDMAN TRUSTED MALAYSIA</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
@@ -14,88 +14,65 @@ body{
   font-family:'Orbitron',sans-serif;
   background:#000;
   color:#fff;
-  overflow-x:hidden;
 }
 
 /* INTRO */
 #splash{
-  position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#000;
-  z-index:999;
-  text-align:center;
+position:fixed;inset:0;
+display:flex;justify-content:center;align-items:center;
+background:#000;z-index:999;text-align:center;
 }
 
-.introText{
-  display:block;
-  font-size:26px;
-  font-weight:800;
-  opacity:0;
-  transform:translateY(20px);
-
-  background:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  animation:fadeUp .6s forwards, rgbMove 3s linear infinite;
+.typing{
+font-size:26px;
+font-weight:800;
+background:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
+background-size:400%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:rgbMove 3s linear infinite;
 }
 
-.introText:nth-child(1){animation-delay:.3s}
-.introText:nth-child(2){animation-delay:.8s}
-.introText:nth-child(3){animation-delay:1.3s}
-
-@keyframes fadeUp{
-  to{opacity:1;transform:translateY(0)}
-}
-
+/* RGB ANIMATION */
 @keyframes rgbMove{
-  100%{background-position:400%}
+100%{background-position:400%}
 }
 
 #app{display:none}
 
 /* HEADER */
 header{
-  text-align:center;
-  padding:25px;
-  font-size:20px;
-  font-weight:800;
+text-align:center;
+padding:25px;
+font-size:20px;
+font-weight:800;
 
-  background:linear-gradient(90deg,#0ff,#f0f,#0ff);
-  background-size:300%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:rgbMove 4s linear infinite;
+background:linear-gradient(90deg,#0ff,#f0f,#0ff);
+background-size:300%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:rgbMove 4s linear infinite;
 }
 
 /* CONTAINER */
-.container{
-  max-width:500px;
-  margin:auto;
-  padding:10px;
-}
+.container{max-width:500px;margin:auto;padding:10px}
 
 /* TABS */
 .tabs{
-  display:flex;
-  background:#111;
-  border-radius:14px;
-  padding:5px;
-  margin-bottom:15px;
+display:flex;
+background:#111;
+border-radius:14px;
+padding:5px;
+margin-bottom:15px;
 }
 
 .tabs button{
-  flex:1;
-  padding:10px;
-  border:none;
-  background:transparent;
-  color:#666;
-  border-radius:10px;
-  font-weight:700;
+flex:1;
+padding:10px;
+border:none;
+background:transparent;
+color:#666;
+font-weight:700;
 }
 
 /* ACTIVE */
@@ -103,65 +80,65 @@ header{
 #btnSeller.active{color:#3b82f6;text-shadow:0 0 10px #3b82f6}
 #btnScam.active{color:#ef4444;text-shadow:0 0 10px #ef4444}
 
-/* CARD NEON BORDER */
+/* CARD NEON */
 .card{
-  position:relative;
-  padding:2px;
-  border-radius:18px;
-  margin-bottom:15px;
-  background:linear-gradient(270deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
-  background-size:600%;
-  animation:rgbMove 5s linear infinite;
+position:relative;
+padding:2px;
+border-radius:18px;
+margin-bottom:15px;
+background:linear-gradient(270deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
+background-size:600%;
+animation:rgbMove 5s linear infinite;
 }
 
 .card-inner{
-  background:#0f0f0f;
-  border-radius:16px;
-  padding:15px;
+background:#0f0f0f;
+border-radius:16px;
+padding:15px;
 }
 
 /* TEXT */
 .name{
-  font-size:16px;
-  font-weight:800;
+font-size:16px;
+font-weight:800;
+cursor:pointer;
 }
 
 .phone{
-  font-size:13px;
-  color:#aaa;
-  margin-top:3px;
+font-size:13px;
+color:#aaa;
+margin-top:3px;
 }
 
 /* VERIFY */
 .verify{
-  display:inline-block;
-  margin-left:6px;
-  width:16px;
-  height:16px;
-  border-radius:50%;
-  background:#25D366;
-  color:#fff;
-  font-size:11px;
-  text-align:center;
-  line-height:16px;
-  box-shadow:0 0 8px #25D366;
+display:inline-block;
+margin-left:6px;
+width:16px;height:16px;
+border-radius:50%;
+background:#25D366;
+color:#fff;
+font-size:11px;
+text-align:center;
+line-height:16px;
+box-shadow:0 0 8px #25D366;
 }
 
-/* BUTTON NEON */
+/* BUTTON */
 .btn{
-  display:block;
-  margin-top:12px;
-  padding:12px;
-  text-align:center;
-  border-radius:12px;
-  text-decoration:none;
-  color:#fff;
-  font-weight:700;
+display:block;
+margin-top:12px;
+padding:12px;
+text-align:center;
+border-radius:12px;
+text-decoration:none;
+color:#fff;
+font-weight:700;
 
-  background:linear-gradient(90deg,#ff00ff,#00ffff,#ff00ff);
-  background-size:300%;
-  animation:rgbMove 3s linear infinite;
-  box-shadow:0 0 10px #0ff;
+background:linear-gradient(90deg,#ff00ff,#00ffff,#ff00ff);
+background-size:300%;
+animation:rgbMove 3s linear infinite;
+box-shadow:0 0 10px #0ff;
 }
 </style>
 </head>
@@ -170,11 +147,7 @@ header{
 
 <!-- INTRO -->
 <div id="splash">
-  <div>
-    <span class="introText">WELCOME</span>
-    <span class="introText">LIST MIDMAN TRUSTED</span>
-    <span class="introText">MALAYSIA</span>
-  </div>
+  <div class="typing" id="typing"></div>
 </div>
 
 <div id="app">
@@ -184,9 +157,9 @@ header{
 <div class="container">
 
 <div class="tabs">
-  <button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
-  <button onclick="setTab('seller')" id="btnSeller">Seller</button>
-  <button onclick="setTab('scam')" id="btnScam">Scammer</button>
+<button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
+<button onclick="setTab('seller')" id="btnSeller">Seller</button>
+<button onclick="setTab('scam')" id="btnScam">Scammer</button>
 </div>
 
 <div id="list"></div>
@@ -196,22 +169,50 @@ header{
 
 <script>
 
-/* ANTI BUG INTRO */
-function startApp(){
-  document.getElementById("splash").style.display="none";
-  document.getElementById("app").style.display="block";
+/* INTRO TYPING */
+const texts=[
+"WELCOME",
+"LIST MIDMAN TRUSTED",
+"MALAYSIA"
+];
+
+let i=0,j=0;
+
+function type(){
+typing.innerHTML=texts[i].substring(0,j++);
+if(j>texts[i].length){
+j=0;
+i++;
+if(i>=texts.length){
+setTimeout(startApp,800);
+return;
 }
-setTimeout(startApp,2500);
+}
+setTimeout(type,70);
+}
+type();
+
+/* ANTI BUG */
+function startApp(){
+document.getElementById("splash").style.display="none";
+document.getElementById("app").style.display="block";
+}
 setTimeout(startApp,4000);
 
 /* DATA (EDIT SINI) */
-let data = [
+let data=[
 {nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true},
 {nama:"SELLER ALI",phone:"60123456789",type:"seller",verified:true},
 {nama:"SCAMMER XYZ",phone:"60111111111",type:"scam",verified:false}
 ];
 
 let tab="midman";
+
+/* COPY WHATSAPP */
+function copyWa(num){
+navigator.clipboard.writeText("https://wa.me/"+num);
+alert("Link WhatsApp copied");
+}
 
 /* RENDER */
 function render(){
@@ -221,20 +222,20 @@ if(d.type!==tab) return;
 
 html+=`
 <div class="card">
-  <div class="card-inner">
+<div class="card-inner">
 
-    <div class="name">
-      ${d.nama}
-      ${d.verified?'<span class="verify">✔</span>':''}
-    </div>
+<div class="name" onclick="copyWa('${d.phone}')">
+${d.nama}
+${d.verified?'<span class="verify">✔</span>':''}
+</div>
 
-    <div class="phone">${d.phone}</div>
+<div class="phone">${d.phone}</div>
 
-    <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
-      WhatsApp
-    </a>
+<a class="btn" href="https://wa.me/${d.phone}" target="_blank">
+WhatsApp
+</a>
 
-  </div>
+</div>
 </div>`;
 });
 document.getElementById("list").innerHTML=html;
