@@ -4,15 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Trusted List</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+<title>Trusted Midman List</title>
 
 <style>
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
-  background:#0a0a0a;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  background:#000;
   color:#fff;
 }
 
@@ -23,29 +21,28 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
   background:#000;
   z-index:999;
+  text-align:center;
 }
-.logo{
-  width:70px;
-  border-radius:50%;
-  margin-bottom:15px;
+.introText{
+  display:block;
+  opacity:0;
+  font-size:20px;
 }
-.typing{
-  font-size:16px;
-  color:#0ff;
+.introText.show{
+  animation:fade .5s forwards;
 }
+@keyframes fade{to{opacity:1}}
 
-/* APP */
 #app{display:none}
 
 /* HEADER */
 header{
   text-align:center;
-  padding:18px;
+  padding:20px;
+  font-size:18px;
   font-weight:600;
-  font-size:16px;
 }
 
 /* TABS */
@@ -62,26 +59,14 @@ header{
   background:none;
   color:#888;
 }
-.active{
-  color:#fff;
-  font-weight:600;
-}
-
-/* ADD */
-.add{
-  margin:10px;
-  padding:12px;
-  text-align:center;
-  border-radius:12px;
-  background:#111;
-}
+.active{color:#fff}
 
 /* CARD */
 .card{
-  background:#111;
   margin:10px;
   padding:15px;
   border-radius:14px;
+  background:#0f0f0f;
 }
 
 /* COLORS */
@@ -93,11 +78,11 @@ header{
 .profile{
   display:flex;
   gap:10px;
-  align-items:center;
+  cursor:pointer;
 }
 .avatar{
-  width:40px;
-  height:40px;
+  width:45px;
+  height:45px;
   border-radius:50%;
 }
 
@@ -120,10 +105,9 @@ header{
   padding:10px;
   text-align:center;
   border-radius:10px;
-  background:#0ff;
-  color:#000;
+  background:#222;
+  color:#fff;
   text-decoration:none;
-  font-weight:500;
 }
 </style>
 </head>
@@ -132,8 +116,11 @@ header{
 
 <!-- INTRO -->
 <div id="splash">
-<img src="https://i.imgur.com/2DhmtJ4.png" class="logo">
-<div class="typing" id="typing"></div>
+  <div>
+    <span class="introText">WELCOME</span>
+    <span class="introText">LIST MIDMAN TRUSTED</span>
+    <span class="introText">MALAYSIA</span>
+  </div>
 </div>
 
 <div id="app">
@@ -146,80 +133,105 @@ header{
 <button onclick="setTab('scam')" id="btnScam">Scammer</button>
 </div>
 
-<div class="add" onclick="addData()">+ Tambah</div>
-
 <div id="list"></div>
 
 </div>
 
 <script>
-/* INTRO */
-const texts=["Welcome","Trusted Midman","Seller & Scammer List"];
-let i=0,j=0;
 
-function type(){
-typing.innerHTML=texts[i].substring(0,j++);
-if(j>texts[i].length){
-j=0;i=(i+1)%texts.length;
+/* ANTI HITAM INTRO */
+function startApp(){
+  document.getElementById("splash").style.display="none";
+  document.getElementById("app").style.display="block";
 }
-setTimeout(type,80);
-}
-type();
 
+/* Intro animation + fallback */
 setTimeout(()=>{
-splash.style.display="none";
-app.style.display="block";
-},2500);
+  document.querySelectorAll(".introText").forEach((e,i)=>{
+    setTimeout(()=>e.classList.add("show"),i*500);
+  });
 
-/* DATA LOCAL (simple dulu) */
-let data=[
-{nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true,avatar:"https://i.imgur.com/2DhmtJ4.png"}
+  setTimeout(startApp,2000);
+},200);
+
+/* BACKUP kalau animation gagal */
+setTimeout(startApp,4000);
+
+/* DATA (EDIT SINI JE) */
+let data = [
+{
+nama:"MID IPANZZ",
+phone:"60175970694",
+type:"midman",
+verified:true,
+avatar:"https://i.imgur.com/2DhmtJ4.png"
+},
+
+{
+nama:"SELLER ALI",
+phone:"60123456789",
+type:"seller",
+verified:true,
+avatar:"https://i.imgur.com/2DhmtJ4.png"
+},
+
+{
+nama:"SCAMMER XYZ",
+phone:"60111111111",
+type:"scam",
+verified:false,
+avatar:"https://i.imgur.com/2DhmtJ4.png"
+}
+
 ];
 
 let tab="midman";
 
+/* COPY */
+function copyWa(num){
+  navigator.clipboard.writeText("https://wa.me/"+num);
+  alert("Copied");
+}
+
 /* RENDER */
 function render(){
-let html="";
-data.forEach(d=>{
-if(d.type!==tab) return;
+  let html="";
+  data.forEach(d=>{
+    if(d.type!==tab) return;
 
-html+=`
-<div class="card ${d.type}">
-<div class="profile">
-<img src="${d.avatar}" class="avatar">
-<div>
-<div class="name">${d.nama}${d.verified?'<span class="verify">✔</span>':''}</div>
-<div>${d.phone}</div>
-</div>
-</div>
-<a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
-</div>`;
-});
-list.innerHTML=html;
+    html+=`
+    <div class="card ${d.type}">
+      <div class="profile" onclick="copyWa('${d.phone}')">
+        <img src="${d.avatar}" class="avatar">
+        <div>
+          <div class="name">
+            ${d.nama}
+            ${d.verified?'<span class="verify">✔</span>':''}
+          </div>
+          <div>${d.phone}</div>
+        </div>
+      </div>
+
+      <a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
+    </div>`;
+  });
+
+  document.getElementById("list").innerHTML=html;
 }
 
 /* TAB */
 function setTab(t){
-tab=t;
-document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-if(t==="midman") btnMid.classList.add("active");
-if(t==="seller") btnSeller.classList.add("active");
-if(t==="scam") btnScam.classList.add("active");
-render();
+  tab=t;
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+  if(t==="midman") btnMid.classList.add("active");
+  if(t==="seller") btnSeller.classList.add("active");
+  if(t==="scam") btnScam.classList.add("active");
+  render();
 }
 
-/* ADD */
-function addData(){
-let nama=prompt("Nama:");
-let phone=prompt("Phone:");
-let type=prompt("Type (midman/seller/scam):");
-
-data.push({nama,phone,type,verified:true,avatar:"https://i.imgur.com/2DhmtJ4.png"});
+/* START */
 render();
-}
 
-render();
 </script>
 
 </body>
