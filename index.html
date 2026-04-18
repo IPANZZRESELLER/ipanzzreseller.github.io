@@ -33,7 +33,6 @@ background-size:400%;
 animation:rgb 3s linear infinite;
 }
 
-/* RGB */
 @keyframes rgb{
 100%{background-position:400%}
 }
@@ -61,7 +60,7 @@ display:flex;
 background:#111;
 border-radius:14px;
 padding:5px;
-margin-bottom:10px;
+margin-bottom:15px;
 }
 
 .tabs button{
@@ -78,17 +77,7 @@ font-weight:700;
 #btnSeller.active{color:#3b82f6;text-shadow:0 0 10px #3b82f6}
 #btnScam.active{color:#ef4444;text-shadow:0 0 10px #ef4444}
 
-/* ADD */
-.add{
-margin:10px;
-padding:12px;
-text-align:center;
-border-radius:12px;
-background:#111;
-cursor:pointer;
-}
-
-/* CARD */
+/* CARD NEON */
 .card{
 padding:2px;
 border-radius:18px;
@@ -168,8 +157,6 @@ box-shadow:0 0 10px #0ff;
 <button onclick="setTab('scam')" id="btnScam">Scammer</button>
 </div>
 
-<div class="add" onclick="addData()">+ Tambah</div>
-
 <div id="list"></div>
 
 </div>
@@ -194,22 +181,19 @@ setTimeout(type,70);
 }
 type();
 
-/* START */
+/* ANTI BUG */
 function startApp(){
 splash.style.display="none";
 app.style.display="block";
 }
 setTimeout(startApp,4000);
 
-/* DATA */
-let data = JSON.parse(localStorage.getItem("dataList")) || [
-{nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true}
+/* DATA (EDIT SINI) */
+let data=[
+{nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true},
+{nama:"SELLER ALI",phone:"60123456789",type:"seller",verified:true},
+{nama:"SCAMMER XYZ",phone:"60111111111",type:"scam",verified:false}
 ];
-
-/* SAVE */
-function save(){
-localStorage.setItem("dataList",JSON.stringify(data));
-}
 
 let tab="midman";
 
@@ -236,7 +220,9 @@ ${d.verified?'<span class="verify">✔</span>':''}
 
 <div class="phone">${d.phone}</div>
 
-<a class="btn" href="https://wa.me/${d.phone}" target="_blank">WhatsApp</a>
+<a class="btn" href="https://wa.me/${d.phone}" target="_blank">
+WhatsApp
+</a>
 
 </div>
 </div>`;
@@ -247,28 +233,13 @@ list.innerHTML=html;
 /* TAB */
 function setTab(t){
 tab=t;
+
 document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
 
 if(t==="midman") btnMid.classList.add("active");
 if(t==="seller") btnSeller.classList.add("active");
 if(t==="scam") btnScam.classList.add("active");
 
-render();
-}
-
-/* ADD */
-function addData(){
-let pass=prompt("Kalau bukan owner tekan batal\nPassword:");
-if(pass===null) return;
-if(pass!=="ipanzz") return alert("Salah");
-
-let nama=prompt("Nama:");
-let phone=prompt("Phone:");
-let type=prompt("Type (midman/seller/scam):");
-let verified=confirm("Verified?");
-
-data.push({nama,phone,type,verified});
-save();
 render();
 }
 
