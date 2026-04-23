@@ -10,8 +10,6 @@
 
 <style>
 body{margin:0;font-family:'Orbitron',sans-serif;background:#000;color:#fff}
-
-/* INTRO */
 #splash{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#000;z-index:999}
 .typing{
 font-size:26px;font-weight:800;
@@ -22,30 +20,19 @@ background-size:400%;
 animation:rgb 3s linear infinite;
 }
 @keyframes rgb{100%{background-position:400%}}
-
 #app{display:none}
-
-/* HEADER */
 header{
 text-align:center;padding:25px;font-size:20px;font-weight:800;
 background:linear-gradient(90deg,#0ff,#f0f,#0ff);
 -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 animation:rgb 4s linear infinite;
 }
-
-/* CONTAINER */
 .container{max-width:500px;margin:auto;padding:10px}
-
-/* TABS */
 .tabs{display:flex;background:#111;border-radius:14px;padding:5px;margin-bottom:15px}
 .tabs button{flex:1;padding:10px;border:none;background:none;color:#666;font-weight:700}
-
-/* ACTIVE */
 #btnMid.active{color:#22c55e;text-shadow:0 0 10px #22c55e}
 #btnSeller.active{color:#3b82f6;text-shadow:0 0 10px #3b82f6}
 #btnScam.active{color:#ef4444;text-shadow:0 0 10px #ef4444}
-
-/* CARD */
 .card{
 padding:2px;border-radius:18px;margin-bottom:15px;
 background:linear-gradient(270deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
@@ -53,20 +40,14 @@ background-size:600%;
 animation:rgb 5s linear infinite;
 }
 .inner{background:#0f0f0f;border-radius:16px;padding:15px}
-
-/* TEXT */
 .name{font-size:16px;font-weight:800;cursor:pointer}
 .phone{font-size:13px;color:#aaa;margin-top:3px}
-
-/* VERIFY */
 .verify{
 display:inline-block;margin-left:6px;width:16px;height:16px;
 border-radius:50%;background:#25D366;color:#fff;
 font-size:11px;text-align:center;line-height:16px;
 box-shadow:0 0 8px #25D366;
 }
-
-/* BUTTON */
 .btn{
 display:block;margin-top:12px;padding:12px;text-align:center;
 border-radius:12px;text-decoration:none;color:#fff;font-weight:700;
@@ -102,8 +83,6 @@ box-shadow:0 0 10px #0ff;
 </div>
 
 <script>
-
-/* INTRO */
 const texts=["WELCOME","LIST MIDMAN TRUSTED","MALAYSIA"];
 let i=0,j=0;
 
@@ -120,14 +99,12 @@ setTimeout(type,70);
 }
 type();
 
-/* ANTI HITAM */
 function startApp(){
 splash.style.display="none";
 app.style.display="block";
 }
 setTimeout(startApp,4000);
 
-/* DATA */
 let data=[
 
 /* MIDMAN */
@@ -161,19 +138,18 @@ let data=[
 {nama:"RAZZ STORE",phone:"60149372700",type:"seller",verified:true},
 {nama:"APIS STORE",phone:"60195655818",type:"seller",verified:true},
 {nama:"LUFFY STORE",phone:"60166263378",type:"seller",verified:true},
-{nama:"ZUL STORE",phone:"601111871355",type:"seller",verified:true}
+{nama:"ZUL STORE",phone:"601111871355",type:"seller",verified:true},
+{nama:"FAYY STORE",phone:"601139934138",type:"seller",verified:true}
 
 ];
 
 let tab="midman";
 
-/* COPY */
 function copyWa(num){
 navigator.clipboard.writeText("https://wa.me/"+num);
 alert("Copied");
 }
 
-/* RENDER */
 function render(){
 let html="";
 data.forEach(d=>{
@@ -200,7 +176,6 @@ WhatsApp
 list.innerHTML=html;
 }
 
-/* TAB */
 function setTab(t){
 tab=t;
 document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
@@ -212,9 +187,7 @@ if(t==="scam") btnScam.classList.add("active");
 render();
 }
 
-/* START */
 render();
-
 </script>
 
 </body>
