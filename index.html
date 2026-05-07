@@ -9,69 +9,210 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-body{margin:0;font-family:'Orbitron',sans-serif;background:#000;color:#fff}
-#splash{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#000;z-index:999}
+body{
+margin:0;
+font-family:'Orbitron',sans-serif;
+background:#000;
+color:#fff;
+overflow-x:hidden;
+}
+
+/* INTRO */
+#splash{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#000;
+z-index:999;
+}
+
 .typing{
-font-size:26px;font-weight:800;
-background:linear-gradient(90deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
+font-size:28px;
+font-weight:800;
+text-align:center;
+background:linear-gradient(
+90deg,
+#ff00ff,
+#00ffff,
+#00ff00,
+#ffff00,
+#ff0000,
+#ff00ff
+);
 background-size:400%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 animation:rgb 3s linear infinite;
+text-shadow:
+0 0 10px #ff00ff,
+0 0 20px #00ffff,
+0 0 30px #00ff00;
 }
-@keyframes rgb{100%{background-position:400%}}
-#app{display:none}
 
+@keyframes rgb{
+100%{background-position:400%}
+}
+
+#app{
+display:none;
+}
+
+/* HEADER */
 header{
-text-align:center;padding:25px;font-size:20px;font-weight:800;
-background:linear-gradient(90deg,#0ff,#f0f,#0ff);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;
-animation:rgb 4s linear infinite;
+text-align:center;
+padding:25px;
+font-size:22px;
+font-weight:800;
+
+background:linear-gradient(90deg,#0ff,#f0f,#0f0,#ff0,#f00);
+background-size:400%;
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+animation:rgb 5s linear infinite;
+
+text-shadow:
+0 0 10px #0ff,
+0 0 20px #f0f,
+0 0 30px #0f0;
 }
 
-.container{max-width:500px;margin:auto;padding:10px}
+/* CONTAINER */
+.container{
+max-width:500px;
+margin:auto;
+padding:10px;
+}
 
-.tabs{display:flex;background:#111;border-radius:14px;padding:5px;margin-bottom:15px}
-.tabs button{flex:1;padding:10px;border:none;background:none;color:#666;font-weight:700}
-#btnMid.active{color:#22c55e;text-shadow:0 0 10px #22c55e}
-#btnSeller.active{color:#3b82f6;text-shadow:0 0 10px #3b82f6}
-#btnScam.active{color:#ef4444;text-shadow:0 0 10px #ef4444}
+/* TABS */
+.tabs{
+display:flex;
+background:#111;
+border-radius:14px;
+padding:5px;
+margin-bottom:15px;
+border:1px solid #222;
+}
 
+.tabs button{
+flex:1;
+padding:12px;
+border:none;
+background:none;
+color:#666;
+font-weight:700;
+font-family:'Orbitron',sans-serif;
+font-size:14px;
+cursor:pointer;
+transition:.3s;
+}
+
+#btnMid.active{
+color:#22c55e;
+text-shadow:0 0 10px #22c55e;
+}
+
+#btnSeller.active{
+color:#3b82f6;
+text-shadow:0 0 10px #3b82f6;
+}
+
+#btnScam.active{
+color:#ef4444;
+text-shadow:0 0 10px #ef4444;
+}
+
+/* CARD */
 .card{
-padding:2px;border-radius:18px;margin-bottom:15px;
-background:linear-gradient(270deg,#ff00ff,#00ffff,#00ff00,#ffff00,#ff0000,#ff00ff);
+padding:2px;
+border-radius:18px;
+margin-bottom:15px;
+
+background:linear-gradient(
+270deg,
+#ff00ff,
+#00ffff,
+#00ff00,
+#ffff00,
+#ff0000,
+#ff00ff
+);
+
 background-size:600%;
 animation:rgb 5s linear infinite;
 }
-.inner{background:#0f0f0f;border-radius:16px;padding:15px}
 
-.name{font-size:16px;font-weight:800;cursor:pointer}
-.phone{font-size:13px;color:#aaa;margin-top:3px}
-
-.verify{
-display:inline-block;margin-left:6px;width:16px;height:16px;
-border-radius:50%;background:#25D366;color:#fff;
-font-size:11px;text-align:center;line-height:16px;
-box-shadow:0 0 8px #25D366;
+.inner{
+background:#0b0b0b;
+border-radius:16px;
+padding:15px;
 }
 
+/* TEXT */
+.name{
+font-size:16px;
+font-weight:800;
+cursor:pointer;
+word-break:break-word;
+}
+
+.phone{
+font-size:13px;
+color:#aaa;
+margin-top:5px;
+}
+
+/* VERIFY */
+.verify{
+display:inline-block;
+margin-left:6px;
+width:17px;
+height:17px;
+border-radius:50%;
+background:#25D366;
+color:#fff;
+font-size:11px;
+text-align:center;
+line-height:17px;
+box-shadow:
+0 0 8px #25D366,
+0 0 16px #25D366;
+}
+
+/* BUTTON */
 .btn{
-display:block;margin-top:12px;padding:12px;text-align:center;
-border-radius:12px;text-decoration:none;color:#fff;font-weight:700;
+display:block;
+margin-top:12px;
+padding:12px;
+text-align:center;
+border-radius:12px;
+text-decoration:none;
+color:#fff;
+font-weight:700;
+
 background:linear-gradient(90deg,#ff00ff,#00ffff,#ff00ff);
 background-size:300%;
+
 animation:rgb 3s linear infinite;
-box-shadow:0 0 10px #0ff;
+
+box-shadow:
+0 0 10px #0ff,
+0 0 20px #f0f;
 }
 </style>
 </head>
 
 <body>
 
+<!-- INTRO -->
 <div id="splash">
 <div class="typing" id="typing"></div>
 </div>
 
+<!-- APP -->
 <div id="app">
 
 <header>LIST MIDMAN TRUSTED MALAYSIA</header>
@@ -79,9 +220,17 @@ box-shadow:0 0 10px #0ff;
 <div class="container">
 
 <div class="tabs">
-<button onclick="setTab('midman')" id="btnMid" class="active">Midman</button>
-<button onclick="setTab('seller')" id="btnSeller">Seller</button>
-<button onclick="setTab('scam')" id="btnScam">Scammer</button>
+<button onclick="setTab('midman')" id="btnMid" class="active">
+Midman
+</button>
+
+<button onclick="setTab('seller')" id="btnSeller">
+Seller
+</button>
+
+<button onclick="setTab('scam')" id="btnScam">
+Scammer
+</button>
 </div>
 
 <div id="list"></div>
@@ -90,32 +239,46 @@ box-shadow:0 0 10px #0ff;
 </div>
 
 <script>
-const texts=["WELCOME","LIST MIDMAN TRUSTED","MALAYSIA"];
-let i=0,j=0;
+
+/* INTRO TYPING */
+const texts=[
+"WELCOME",
+"LIST MIDMAN TRUSTED",
+"MALAYSIA"
+];
+
+let i=0;
+let j=0;
 
 function type(){
 typing.innerHTML=texts[i].substring(0,j++);
+
 if(j>texts[i].length){
-j=0;i++;
+j=0;
+i++;
+
 if(i>=texts.length){
 setTimeout(startApp,800);
 return;
 }
 }
+
 setTimeout(type,70);
 }
+
 type();
 
 function startApp(){
 splash.style.display="none";
 app.style.display="block";
 }
+
 setTimeout(startApp,4000);
 
+/* DATA */
 let data=[
 
 /* MIDMAN */
-{nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true},
 {nama:"MIDMAN KERIZ",phone:"60162531397",type:"midman",verified:true},
 {nama:"MIDMAN DAMZZ",phone:"601133169293",type:"midman",verified:true},
 {nama:"MIDMAN KRYZEN",phone:"60136734585",type:"midman",verified:true},
@@ -159,36 +322,52 @@ let data=[
 
 let tab="midman";
 
+/* COPY */
 function copyWa(num){
 navigator.clipboard.writeText("https://wa.me/"+num);
 alert("Copied");
 }
 
+/* RENDER */
 function render(){
+
 let html="";
+
 data.forEach(d=>{
+
 if(d.type!==tab) return;
 
 html+=`
 <div class="card">
 <div class="inner">
+
 <div class="name" onclick="copyWa('${d.phone}')">
 ${d.nama}
-${d.verified?'<span class="verify">✔</span>':''}
+${d.verified ? '<span class="verify">✔</span>' : ''}
 </div>
+
 <div class="phone">${d.phone}</div>
+
 <a class="btn" href="https://wa.me/${d.phone}" target="_blank">
 WhatsApp
 </a>
+
 </div>
-</div>`;
+</div>
+`;
+
 });
+
 list.innerHTML=html;
 }
 
+/* TAB */
 function setTab(t){
+
 tab=t;
-document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+
+document.querySelectorAll(".tabs button")
+.forEach(b=>b.classList.remove("active"));
 
 if(t==="midman") btnMid.classList.add("active");
 if(t==="seller") btnSeller.classList.add("active");
@@ -198,6 +377,7 @@ render();
 }
 
 render();
+
 </script>
 
 </body>
