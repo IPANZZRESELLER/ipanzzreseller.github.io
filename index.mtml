@@ -3,67 +3,387 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mid Ipanzz</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+<title>LIST MIDMAN TRUSTED MALAYSIA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #0d0d0d;
-  color: white;
-  text-align: center;
+body{
+margin:0;
+font-family:'Orbitron',sans-serif;
+background:#000;
+color:#fff;
+overflow-x:hidden;
 }
 
-.container {
-  margin-top: 80px;
+/* INTRO */
+#splash{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#000;
+z-index:999;
 }
 
-img {
-  width: 110px;
-  border-radius: 50%;
-  border: 2px solid white;
+.typing{
+font-size:28px;
+font-weight:800;
+text-align:center;
+background:linear-gradient(
+90deg,
+#ff00ff,
+#00ffff,
+#00ff00,
+#ffff00,
+#ff0000,
+#ff00ff
+);
+background-size:400%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:rgb 3s linear infinite;
+text-shadow:
+0 0 10px #ff00ff,
+0 0 20px #00ffff,
+0 0 30px #00ff00;
 }
 
-h1 {
-  margin: 15px 0 5px;
+@keyframes rgb{
+100%{background-position:400%}
 }
 
-p {
-  color: #aaa;
+#app{
+display:none;
 }
 
-.link {
-  display: block;
-  margin: 12px auto;
-  padding: 14px;
-  width: 260px;
-  background: #1a1a1a;
-  border-radius: 12px;
-  text-decoration: none;
-  color: white;
-  transition: 0.3s;
+/* HEADER */
+header{
+text-align:center;
+padding:25px;
+font-size:22px;
+font-weight:800;
+
+background:linear-gradient(90deg,#0ff,#f0f,#0f0,#ff0,#f00);
+background-size:400%;
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+animation:rgb 5s linear infinite;
+
+text-shadow:
+0 0 10px #0ff,
+0 0 20px #f0f,
+0 0 30px #0f0;
 }
 
-.link:hover {
-  background: white;
-  color: black;
+/* CONTAINER */
+.container{
+max-width:500px;
+margin:auto;
+padding:10px;
+}
+
+/* TABS */
+.tabs{
+display:flex;
+background:#111;
+border-radius:14px;
+padding:5px;
+margin-bottom:15px;
+border:1px solid #222;
+}
+
+.tabs button{
+flex:1;
+padding:12px;
+border:none;
+background:none;
+color:#666;
+font-weight:700;
+font-family:'Orbitron',sans-serif;
+font-size:14px;
+cursor:pointer;
+transition:.3s;
+}
+
+#btnMid.active{
+color:#22c55e;
+text-shadow:0 0 10px #22c55e;
+}
+
+#btnSeller.active{
+color:#3b82f6;
+text-shadow:0 0 10px #3b82f6;
+}
+
+#btnScam.active{
+color:#ef4444;
+text-shadow:0 0 10px #ef4444;
+}
+
+/* CARD */
+.card{
+padding:2px;
+border-radius:18px;
+margin-bottom:15px;
+
+background:linear-gradient(
+270deg,
+#ff00ff,
+#00ffff,
+#00ff00,
+#ffff00,
+#ff0000,
+#ff00ff
+);
+
+background-size:600%;
+animation:rgb 5s linear infinite;
+}
+
+.inner{
+background:#0b0b0b;
+border-radius:16px;
+padding:15px;
+}
+
+/* TEXT */
+.name{
+font-size:16px;
+font-weight:800;
+cursor:pointer;
+word-break:break-word;
+}
+
+.phone{
+font-size:13px;
+color:#aaa;
+margin-top:5px;
+}
+
+/* VERIFY */
+.verify{
+display:inline-block;
+margin-left:6px;
+width:17px;
+height:17px;
+border-radius:50%;
+background:#25D366;
+color:#fff;
+font-size:11px;
+text-align:center;
+line-height:17px;
+box-shadow:
+0 0 8px #25D366,
+0 0 16px #25D366;
+}
+
+/* BUTTON */
+.btn{
+display:block;
+margin-top:12px;
+padding:12px;
+text-align:center;
+border-radius:12px;
+text-decoration:none;
+color:#fff;
+font-weight:700;
+
+background:linear-gradient(90deg,#ff00ff,#00ffff,#ff00ff);
+background-size:300%;
+
+animation:rgb 3s linear infinite;
+
+box-shadow:
+0 0 10px #0ff,
+0 0 20px #f0f;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <img src="https://via.placeholder.com/100" alt="profile">
-  <h1>Mid Ipanzz</h1>
-  <p>Official Links</p>
-
-  <a class="link" href="#">Instagram</a>
-  <a class="link" href="#">TikTok</a>
-  <a class="link" href="#">Shopee</a>
+<!-- INTRO -->
+<div id="splash">
+<div class="typing" id="typing"></div>
 </div>
+
+<!-- APP -->
+<div id="app">
+
+<header>LIST MIDMAN TRUSTED MALAYSIA</header>
+
+<div class="container">
+
+<div class="tabs">
+<button onclick="setTab('midman')" id="btnMid" class="active">
+Midman
+</button>
+
+<button onclick="setTab('seller')" id="btnSeller">
+Seller
+</button>
+
+<button onclick="setTab('scam')" id="btnScam">
+Scammer
+</button>
+</div>
+
+<div id="list"></div>
+
+</div>
+</div>
+
+<script>
+
+/* INTRO TYPING */
+const texts=[
+"WELCOME",
+"LIST MIDMAN TRUSTED",
+"MALAYSIA"
+];
+
+let i=0;
+let j=0;
+
+function type(){
+typing.innerHTML=texts[i].substring(0,j++);
+
+if(j>texts[i].length){
+j=0;
+i++;
+
+if(i>=texts.length){
+setTimeout(startApp,800);
+return;
+}
+}
+
+setTimeout(type,70);
+}
+
+type();
+
+function startApp(){
+splash.style.display="none";
+app.style.display="block";
+}
+
+setTimeout(startApp,4000);
+
+/* DATA */
+let data=[
+
+/* MIDMAN */
+{nama:"MID KALZ (OWNER)",phone:"60193499867",type:"midman",verified:true},
+{nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true},
+{nama:"MID SYAH",phone:"60169229210",type:"midman",verified:true},
+{nama:"MIDMAN KERIZ",phone:"60162531397",type:"midman",verified:true},
+{nama:"MIDMAN DAMZZ",phone:"601133169293",type:"midman",verified:true},
+{nama:"MIDMAN KRYZEN",phone:"60136734585",type:"midman",verified:true},
+{nama:"MIDMAN MANN",phone:"60142815551",type:"midman",verified:true},
+{nama:"MIDMAN SKYY",phone:"601165130657",type:"midman",verified:true},
+{nama:"MIDMAN YANZZ",phone:"601133468572",type:"midman",verified:true},
+{nama:"MIDMAN AMIRA",phone:"601173807270",type:"midman",verified:true},
+{nama:"MIDMAN LEX",phone:"60166105139",type:"midman",verified:true},
+{nama:"EPOL BACKUP",phone:"60105491599",type:"midman",verified:true},
+{nama:"MIDMAN MILO",phone:"60163025510",type:"midman",verified:true},
+{nama:"MILO MALAM",phone:"60187905510",type:"midman",verified:true},
+{nama:"MIDMAN AASHOP",phone:"60179981705",type:"midman",verified:true},
+{nama:"MIDMAN ANOS",phone:"601161324347",type:"midman",verified:true},
+{nama:"MIDMAN BUNGA",phone:"601116677812",type:"midman",verified:true},
+{nama:"MIDMAN BELLA",phone:"60106677912",type:"midman",verified:true},
+{nama:"SLRMY",phone:"601136871190",type:"midman",verified:true},
+{nama:"MIDMAN YURI",phone:"601123706841",type:"midman",verified:true},
+{nama:"MIDMAN ACAI",phone:"601160603580",type:"midman",verified:true},
+{nama:"MIDMAN KUSA",phone:"601170130314",type:"midman",verified:true},
+
+/* SELLER */
+{nama:"AEMANSHOPP",phone:"60169719916",type:"seller",verified:true},
+{nama:"IMIY STORE",phone:"60146007120",type:"seller",verified:true},
+{nama:"ZANN RESELLER",phone:"60198393679",type:"seller",verified:true},
+{nama:"DEKWANZ OFFICIAL",phone:"60196278757",type:"seller",verified:true},
+{nama:"DANZ STORE",phone:"601112052429",type:"seller",verified:true},
+{nama:"IPANX OFFICIAL",phone:"60109629672",type:"seller",verified:true},
+{nama:"YANZARY STORE",phone:"601137650485",type:"seller",verified:true},
+{nama:"RAZZ STORE",phone:"60149372700",type:"seller",verified:true},
+{nama:"APIS STORE",phone:"60195655818",type:"seller",verified:true},
+{nama:"LUFFY STORE",phone:"60166263378",type:"seller",verified:true},
+{nama:"ZUL STORE",phone:"601111871355",type:"seller",verified:true},
+{nama:"FAYY STORE",phone:"601139934138",type:"seller",verified:true},
+{nama:"SAZZX STORE",phone:"601139369702",type:"seller",verified:true},
+{nama:"PROBE STORE",phone:"60102802305",type:"seller",verified:true},
+{nama:"YUXO OFFICIAL",phone:"601167450056",type:"seller",verified:true},
+
+/* SCAMMER */
+{nama:"MID KIMZ",phone:"60198511351",type:"scam",verified:false},
+{nama:"KANG HB ACC (MID IPANZZ)",phone:"60163560906",type:"scam",verified:false}
+
+];
+
+let tab="midman";
+
+/* COPY */
+function copyWa(num){
+navigator.clipboard.writeText("https://wa.me/"+num);
+alert("Copied");
+}
+
+/* RENDER */
+function render(){
+
+let html="";
+
+data.forEach(d=>{
+
+if(d.type!==tab) return;
+
+html+=`
+<div class="card">
+<div class="inner">
+
+<div class="name" onclick="copyWa('${d.phone}')">
+${d.nama}
+${d.verified ? '<span class="verify">✔</span>' : ''}
+</div>
+
+<div class="phone">${d.phone}</div>
+
+<a class="btn" href="https://wa.me/${d.phone}" target="_blank">
+WhatsApp
+</a>
+
+</div>
+</div>
+`;
+
+});
+
+list.innerHTML=html;
+}
+
+/* TAB */
+function setTab(t){
+
+tab=t;
+
+document.querySelectorAll(".tabs button")
+.forEach(b=>b.classList.remove("active"));
+
+if(t==="midman") btnMid.classList.add("active");
+if(t==="seller") btnSeller.classList.add("active");
+if(t==="scam") btnScam.classList.add("active");
+
+render();
+}
+
+render();
+
+</script>
 
 </body>
 </html>
