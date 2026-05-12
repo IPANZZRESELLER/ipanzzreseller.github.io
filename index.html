@@ -1,389 +1,278 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midman Trusted Malaysia | Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #001EFF;
+            --accent: #00d4ff;
+            --bg: #000000;
+            --glow: 0 0 20px rgba(0, 30, 255, 0.6);
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
 
-<title>LIST MIDMAN TRUSTED MALAYSIA</title>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+        body {
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 50% 0%, #001EFF44 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, #001EFF22 0%, transparent 30%),
+                radial-gradient(circle at 0% 50%, #001EFF11 0%, transparent 30%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-<style>
-body{
-margin:0;
-font-family:'Orbitron',sans-serif;
-background:#000;
-color:#fff;
-overflow-x:hidden;
-}
+        /* --- Animations --- */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
 
-/* INTRO */
-#splash{
-position:fixed;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#000;
-z-index:999;
-}
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 15px rgba(0, 30, 255, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(0, 30, 255, 0.6); }
+            100% { box-shadow: 0 0 15px rgba(0, 30, 255, 0.3); }
+        }
 
-.typing{
-font-size:28px;
-font-weight:800;
-text-align:center;
-background:linear-gradient(
-90deg,
-#ff00ff,
-#00ffff,
-#00ff00,
-#ffff00,
-#ff0000,
-#ff00ff
-);
-background-size:400%;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-animation:rgb 3s linear infinite;
-text-shadow:
-0 0 10px #ff00ff,
-0 0 20px #00ffff,
-0 0 30px #00ff00;
-}
+        @keyframes scan {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
 
-@keyframes rgb{
-100%{background-position:400%}
-}
+        /* --- Header Section --- */
+        .hero {
+            padding: 100px 20px 80px;
+            display: flex;
+            justify-content: center;
+        }
 
-#app{
-display:none;
-}
+        .hero-box {
+            border: 2px solid var(--primary);
+            padding: 60px 20px;
+            background: rgba(0, 30, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            animation: pulse-glow 3s infinite ease-in-out;
+            overflow: hidden;
+        }
 
-/* HEADER */
-header{
-text-align:center;
-padding:25px;
-font-size:22px;
-font-weight:800;
+        /* Scanline effect */
+        .hero-box::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 30, 255, 0.1), transparent);
+            animation: scan 4s linear infinite;
+            left: 0;
+        }
 
-background:linear-gradient(90deg,#0ff,#f0f,#0f0,#ff0,#f00);
-background-size:400%;
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.2rem, 8vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
+            text-transform: uppercase;
+        }
 
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+        .subtitle {
+            color: var(--accent);
+            font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
 
-animation:rgb 5s linear infinite;
+        /* --- Grid & Cards --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
 
-text-shadow:
-0 0 10px #0ff,
-0 0 20px #f0f,
-0 0 30px #0f0;
-}
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(20px);
+            animation: float 6s infinite ease-in-out;
+        }
 
-/* CONTAINER */
-.container{
-max-width:500px;
-margin:auto;
-padding:10px;
-}
+        .card:hover {
+            transform: scale(1.03);
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(0, 30, 255, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+        }
 
-/* TABS */
-.tabs{
-display:flex;
-background:#111;
-border-radius:14px;
-padding:5px;
-margin-bottom:15px;
-border:1px solid #222;
-}
+        .card-content {
+            position: relative;
+            z-index: 2;
+        }
 
-.tabs button{
-flex:1;
-padding:12px;
-border:none;
-background:none;
-color:#666;
-font-weight:700;
-font-family:'Orbitron',sans-serif;
-font-size:14px;
-cursor:pointer;
-transition:.3s;
-}
+        .verify-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 30, 255, 0.2);
+            border: 1px solid var(--primary);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: fit-content;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
 
-#btnMid.active{
-color:#22c55e;
-text-shadow:0 0 10px #22c55e;
-}
+        .check-icon {
+            background: #25d366;
+            color: black;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 900;
+        }
 
-#btnSeller.active{
-color:#3b82f6;
-text-shadow:0 0 10px #3b82f6;
-}
+        .name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 2px;
+        }
 
-#btnScam.active{
-color:#ef4444;
-text-shadow:0 0 10px #ef4444;
-}
+        .tagline {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
 
-/* CARD */
-.card{
-padding:2px;
-border-radius:18px;
-margin-bottom:15px;
+        .wa-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 30, 255, 0.3);
+        }
 
-background:linear-gradient(
-270deg,
-#ff00ff,
-#00ffff,
-#00ff00,
-#ffff00,
-#ff0000,
-#ff00ff
-);
+        .wa-btn:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 0 25px var(--primary);
+            letter-spacing: 1px;
+        }
 
-background-size:600%;
-animation:rgb 5s linear infinite;
-}
+        /* Reflection Light Effect */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
 
-.inner{
-background:#0b0b0b;
-border-radius:16px;
-padding:15px;
-}
-
-/* TEXT */
-.name{
-font-size:16px;
-font-weight:800;
-cursor:pointer;
-word-break:break-word;
-}
-
-.phone{
-font-size:13px;
-color:#aaa;
-margin-top:5px;
-}
-
-/* VERIFY */
-.verify{
-display:inline-block;
-margin-left:6px;
-width:17px;
-height:17px;
-border-radius:50%;
-background:#25D366;
-color:#fff;
-font-size:11px;
-text-align:center;
-line-height:17px;
-box-shadow:
-0 0 8px #25D366,
-0 0 16px #25D366;
-}
-
-/* BUTTON */
-.btn{
-display:block;
-margin-top:12px;
-padding:12px;
-text-align:center;
-border-radius:12px;
-text-decoration:none;
-color:#fff;
-font-weight:700;
-
-background:linear-gradient(90deg,#ff00ff,#00ffff,#ff00ff);
-background-size:300%;
-
-animation:rgb 3s linear infinite;
-
-box-shadow:
-0 0 10px #0ff,
-0 0 20px #f0f;
-}
-</style>
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .hero-box { padding: 40px 15px; border-radius: 20px; }
+            .card { animation: none; } /* Disable float on mobile for better perf */
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- INTRO -->
-<div id="splash">
-<div class="typing" id="typing"></div>
-</div>
+    <section class="hero">
+        <div class="hero-box">
+            <h1>LIST MIDMAN<br>TRUSTED MALAYSIA</h1>
+            <p class="subtitle">Semua midman ini telah melepasi semakkan midman</p>
+        </div>
+    </section>
 
-<!-- APP -->
-<div id="app">
+    <main class="grid" id="list-container">
+        </main>
 
-<header>LIST MIDMAN TRUSTED MALAYSIA</header>
+    <script>
+        const midmen = [
+            { name: "MID EPOL", link: "https://wa.me/60137314591" },
+            { name: "EPOL BACKUP", link: "https://wa.me/60105491599" },
+            { name: "MID IPANZZ", link: "https://wa.me/60175970694" },
+            { name: "MID KUSA", link: "https://wa.me/601170130314" },
+            { name: "SLRMY", link: "https://wa.me/601136871190" },
+            { name: "AASHOP", link: "https://wa.me/60179981705" },
+            { name: "MID LEX", link: "https://wa.me/60166105139" },
+            { name: "ANOS", link: "https://wa.me/601161324347" },
+            { name: "MILO SIANG", link: "https://wa.me/60184035510" },
+            { name: "MILO MALAM", link: "https://wa.me/60187905510" },
+            { name: "MILO OFFICIAL", link: "https://wa.me/60163025510" },
+            { name: "MANN STORE", link: "https://wa.me/601163174853" }
+        ];
 
-<div class="container">
+        const container = document.getElementById('list-container');
 
-<div class="tabs">
-<button onclick="setTab('midman')" id="btnMid" class="active">
-Midman
-</button>
-
-<button onclick="setTab('seller')" id="btnSeller">
-Seller
-</button>
-
-<button onclick="setTab('scam')" id="btnScam">
-Scammer
-</button>
-</div>
-
-<div id="list"></div>
-
-</div>
-</div>
-
-<script>
-
-/* INTRO TYPING */
-const texts=[
-"WELCOME",
-"LIST MIDMAN TRUSTED",
-"MALAYSIA"
-];
-
-let i=0;
-let j=0;
-
-function type(){
-typing.innerHTML=texts[i].substring(0,j++);
-
-if(j>texts[i].length){
-j=0;
-i++;
-
-if(i>=texts.length){
-setTimeout(startApp,800);
-return;
-}
-}
-
-setTimeout(type,70);
-}
-
-type();
-
-function startApp(){
-splash.style.display="none";
-app.style.display="block";
-}
-
-setTimeout(startApp,4000);
-
-/* DATA */
-let data=[
-
-/* MIDMAN */
-{nama:"MID KALZ (OWNER)",phone:"60193499867",type:"midman",verified:true},
-{nama:"MID IPANZZ",phone:"60175970694",type:"midman",verified:true},
-{nama:"MID SYAH",phone:"60169229210",type:"midman",verified:true},
-{nama:"MIDMAN KERIZ",phone:"60162531397",type:"midman",verified:true},
-{nama:"MIDMAN DAMZZ",phone:"601133169293",type:"midman",verified:true},
-{nama:"MIDMAN KRYZEN",phone:"60136734585",type:"midman",verified:true},
-{nama:"MIDMAN MANN",phone:"60142815551",type:"midman",verified:true},
-{nama:"MIDMAN SKYY",phone:"601165130657",type:"midman",verified:true},
-{nama:"MIDMAN YANZZ",phone:"601133468572",type:"midman",verified:true},
-{nama:"MIDMAN AMIRA",phone:"601173807270",type:"midman",verified:true},
-{nama:"MIDMAN LEX",phone:"60166105139",type:"midman",verified:true},
-{nama:"EPOL BACKUP",phone:"60105491599",type:"midman",verified:true},
-{nama:"MIDMAN MILO",phone:"60163025510",type:"midman",verified:true},
-{nama:"MILO MALAM",phone:"60187905510",type:"midman",verified:true},
-{nama:"MIDMAN AASHOP",phone:"60179981705",type:"midman",verified:true},
-{nama:"MIDMAN ANOS",phone:"601161324347",type:"midman",verified:true},
-{nama:"MIDMAN BUNGA",phone:"601116677812",type:"midman",verified:true},
-{nama:"MIDMAN BELLA",phone:"60106677912",type:"midman",verified:true},
-{nama:"SLRMY",phone:"601136871190",type:"midman",verified:true},
-{nama:"MIDMAN YURI",phone:"601123706841",type:"midman",verified:true},
-{nama:"MIDMAN ACAI",phone:"601160603580",type:"midman",verified:true},
-{nama:"MIDMAN KUSA",phone:"601170130314",type:"midman",verified:true},
-
-/* SELLER */
-{nama:"AEMANSHOPP",phone:"60169719916",type:"seller",verified:true},
-{nama:"IMIY STORE",phone:"60146007120",type:"seller",verified:true},
-{nama:"ZANN RESELLER",phone:"60198393679",type:"seller",verified:true},
-{nama:"DEKWANZ OFFICIAL",phone:"60196278757",type:"seller",verified:true},
-{nama:"DANZ STORE",phone:"601112052429",type:"seller",verified:true},
-{nama:"IPANX OFFICIAL",phone:"60109629672",type:"seller",verified:true},
-{nama:"YANZARY STORE",phone:"601137650485",type:"seller",verified:true},
-{nama:"RAZZ STORE",phone:"60149372700",type:"seller",verified:true},
-{nama:"APIS STORE",phone:"60195655818",type:"seller",verified:true},
-{nama:"LUFFY STORE",phone:"60166263378",type:"seller",verified:true},
-{nama:"ZUL STORE",phone:"601111871355",type:"seller",verified:true},
-{nama:"FAYY STORE",phone:"601139934138",type:"seller",verified:true},
-{nama:"SAZZX STORE",phone:"601139369702",type:"seller",verified:true},
-{nama:"PROBE STORE",phone:"60102802305",type:"seller",verified:true},
-{nama:"YUXO OFFICIAL",phone:"601167450056",type:"seller",verified:true},
-
-/* SCAMMER */
-{nama:"MID KIMZ",phone:"60198511351",type:"scam",verified:false},
-{nama:"KANG HB ACC (MID IPANZZ)",phone:"60163560906",type:"scam",verified:false}
-
-];
-
-let tab="midman";
-
-/* COPY */
-function copyWa(num){
-navigator.clipboard.writeText("https://wa.me/"+num);
-alert("Copied");
-}
-
-/* RENDER */
-function render(){
-
-let html="";
-
-data.forEach(d=>{
-
-if(d.type!==tab) return;
-
-html+=`
-<div class="card">
-<div class="inner">
-
-<div class="name" onclick="copyWa('${d.phone}')">
-${d.nama}
-${d.verified ? '<span class="verify">✔</span>' : ''}
-</div>
-
-<div class="phone">${d.phone}</div>
-
-<a class="btn" href="https://wa.me/${d.phone}" target="_blank">
-WhatsApp
-</a>
-
-</div>
-</div>
-`;
-
-});
-
-list.innerHTML=html;
-}
-
-/* TAB */
-function setTab(t){
-
-tab=t;
-
-document.querySelectorAll(".tabs button")
-.forEach(b=>b.classList.remove("active"));
-
-if(t==="midman") btnMid.classList.add("active");
-if(t==="seller") btnSeller.classList.add("active");
-if(t==="scam") btnScam.classList.add("active");
-
-render();
-}
-
-render();
-
-</script>
-
+        midmen.forEach((m, i) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            // Staggered floating delay
+            card.style.animationDelay = `${i * 0.2}s`;
+            
+            card.innerHTML = `
+                <div class="card-content">
+                    <div class="verify-badge">
+                        <span class="check-icon">✓</span>
+                        VERIFIED
+                    </div>
+                    <div class="name">${m.name}</div>
+                    <div class="tagline">Verified Midman</div>
+                    <a href="${m.link}" target="_blank" class="wa-btn">
+                        WHATSAPP NOW
+                    </a>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    </script>
 </body>
 </html>
